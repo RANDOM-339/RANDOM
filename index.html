@@ -3,210 +3,286 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RANDOM</title>
+<title>RANDOM — Beyond the Expected</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-html,body{
+:root{
+    --red:#ff284d;
+    --blue:#287cff;
+    --white:#f4f6ff;
+    --dim:rgba(235,240,255,.48);
+}
+
+html,
+body{
     width:100%;
     height:100%;
     overflow:hidden;
 }
 
 body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#050509;
-    color:white;
+    background:#020307;
+    color:var(--white);
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
 }
 
-/* ================================
-   RANDOM WORLD
-================================ */
 
-.world{
+/* =====================================================
+   UNIVERSE
+===================================================== */
+
+.universe{
     position:fixed;
-    inset:-8%;
+    inset:0;
     overflow:hidden;
-    transition:background 1.5s ease;
+    background:#020307;
 }
 
-/* Red universe */
-.world.red{
-    background:
-        radial-gradient(
-            ellipse at 18% 52%,
-            rgba(180,10,35,.42),
-            transparent 30%
-        ),
-        radial-gradient(
-            ellipse at 82% 35%,
-            rgba(95,0,18,.42),
-            transparent 35%
-        ),
-        radial-gradient(
-            ellipse at 50% 100%,
-            rgba(90,5,25,.30),
-            transparent 45%
-        ),
-        #070407;
-}
 
-/* Blue universe */
-.world.blue{
-    background:
-        radial-gradient(
-            ellipse at 82% 52%,
-            rgba(20,75,190,.42),
-            transparent 30%
-        ),
-        radial-gradient(
-            ellipse at 18% 35%,
-            rgba(10,35,120,.42),
-            transparent 35%
-        ),
-        radial-gradient(
-            ellipse at 50% 100%,
-            rgba(15,55,130,.30),
-            transparent 45%
-        ),
-        #03060d;
-}
+/* central darkness */
 
-/* ================================
-   MOVING NEBULA
-================================ */
-
-.nebula{
+.universe::after{
+    content:"";
     position:absolute;
-    width:70vw;
-    height:70vw;
-    max-width:800px;
-    max-height:800px;
-    border-radius:50%;
+    inset:0;
 
-    left:50%;
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 0%,
+            rgba(0,0,0,.18) 45%,
+            rgba(0,0,0,.75) 100%
+        );
+
+    pointer-events:none;
+}
+
+
+/* =====================================================
+   RED UNIVERSE
+===================================================== */
+
+.red-field{
+    position:absolute;
+
+    width:75vw;
+    height:75vw;
+
+    min-width:500px;
+    min-height:500px;
+
+    left:-27vw;
     top:50%;
 
-    transform:translate(-50%,-50%);
+    transform:
+        translateY(-50%)
+        rotate(-14deg);
 
-    filter:blur(55px);
-    opacity:.52;
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 65% 50%,
+            rgba(255,25,65,.75),
+            rgba(170,8,38,.35) 30%,
+            rgba(90,3,20,.15) 52%,
+            transparent 72%
+        );
+
+    filter:blur(35px);
 
     animation:
-        nebulaMove 18s ease-in-out infinite alternate,
-        nebulaRotate 45s linear infinite;
+        redFloat 18s ease-in-out infinite alternate;
 }
 
-.red .nebula{
-    background:
-        conic-gradient(
-            from 30deg,
-            rgba(255,20,55,.55),
-            transparent 25%,
-            rgba(120,0,30,.40),
-            transparent 52%,
-            rgba(255,35,70,.35),
-            transparent 78%
-        );
-}
 
-.blue .nebula{
-    background:
-        conic-gradient(
-            from 30deg,
-            rgba(35,110,255,.55),
-            transparent 25%,
-            rgba(15,45,160,.40),
-            transparent 52%,
-            rgba(50,140,255,.35),
-            transparent 78%
-        );
-}
+@keyframes redFloat{
 
-@keyframes nebulaMove{
     0%{
-        margin-left:-4%;
-        margin-top:-2%;
-        transform:translate(-50%,-50%) scale(.95);
-    }
-
-    50%{
-        margin-left:4%;
-        margin-top:3%;
-        transform:translate(-50%,-50%) scale(1.05);
+        transform:
+            translateY(-50%)
+            rotate(-14deg)
+            scale(.95);
     }
 
     100%{
-        margin-left:-2%;
-        margin-top:5%;
-        transform:translate(-50%,-50%) scale(.98);
+        transform:
+            translateY(-48%)
+            rotate(-4deg)
+            scale(1.08);
     }
 }
 
-@keyframes nebulaRotate{
-    to{
-        rotate:360deg;
-    }
-}
 
-/* ================================
-   ORBIT LINES
-================================ */
+/* =====================================================
+   BLUE UNIVERSE
+===================================================== */
 
-.orbits{
+.blue-field{
     position:absolute;
-    width:min(90vw,850px);
-    height:min(90vw,850px);
 
-    left:50%;
+    width:75vw;
+    height:75vw;
+
+    min-width:500px;
+    min-height:500px;
+
+    right:-27vw;
     top:50%;
 
-    transform:translate(-50%,-50%);
-    opacity:.17;
+    transform:
+        translateY(-50%)
+        rotate(14deg);
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 50%,
+            rgba(35,110,255,.75),
+            rgba(12,62,190,.35) 30%,
+            rgba(5,30,100,.15) 52%,
+            transparent 72%
+        );
+
+    filter:blur(35px);
+
+    animation:
+        blueFloat 20s ease-in-out infinite alternate;
 }
 
-.orbit{
+
+@keyframes blueFloat{
+
+    0%{
+        transform:
+            translateY(-50%)
+            rotate(14deg)
+            scale(.95);
+    }
+
+    100%{
+        transform:
+            translateY(-52%)
+            rotate(4deg)
+            scale(1.08);
+    }
+}
+
+
+/* =====================================================
+   PARTICLE STREAMS
+===================================================== */
+
+.streams{
     position:absolute;
     inset:0;
-    border:1px solid rgba(255,255,255,.30);
-    border-radius:50%;
+    opacity:.4;
 }
 
-.orbit.one{
-    transform:rotate(25deg) scaleY(.27);
-    animation:orbitA 22s linear infinite;
+.stream{
+    position:absolute;
+
+    height:1px;
+
+    transform-origin:left center;
+
+    animation:
+        streamMove 9s linear infinite;
 }
 
-.orbit.two{
-    transform:rotate(-35deg) scaleY(.18);
-    animation:orbitB 30s linear infinite;
+.stream.red{
+    width:32vw;
+    left:0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,40,70,.65),
+            transparent
+        );
 }
 
-.orbit.three{
-    transform:rotate(70deg) scaleY(.11);
-    animation:orbitC 38s linear infinite;
+.stream.blue{
+    width:32vw;
+    right:0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(45,120,255,.65),
+            transparent
+        );
+
+    transform-origin:right center;
 }
 
-@keyframes orbitA{
-    to{rotate:360deg;}
+
+.stream:nth-child(1){
+    top:31%;
+    transform:rotate(7deg);
+    animation-delay:-2s;
 }
 
-@keyframes orbitB{
-    to{rotate:-360deg;}
+.stream:nth-child(2){
+    top:43%;
+    transform:rotate(-4deg);
+    animation-delay:-5s;
 }
 
-@keyframes orbitC{
-    to{rotate:360deg;}
+.stream:nth-child(3){
+    top:62%;
+    transform:rotate(5deg);
+    animation-delay:-1s;
 }
 
-/* ================================
+.stream:nth-child(4){
+    top:72%;
+    transform:rotate(-7deg);
+    animation-delay:-7s;
+}
+
+
+@keyframes streamMove{
+
+    0%{
+        opacity:0;
+        transform:translateX(-30%) scaleX(.5);
+    }
+
+    20%{
+        opacity:.7;
+    }
+
+    80%{
+        opacity:.5;
+    }
+
+    100%{
+        opacity:0;
+        transform:translateX(30%) scaleX(1.1);
+    }
+}
+
+
+/* =====================================================
    STARS
-================================ */
+===================================================== */
 
 .stars{
     position:absolute;
@@ -215,31 +291,41 @@ body{
 
 .star{
     position:absolute;
+
     width:2px;
     height:2px;
+
     border-radius:50%;
+
     background:white;
+
     opacity:.35;
-    animation:twinkle 4s ease-in-out infinite;
+
+    animation:
+        starPulse 5s ease-in-out infinite;
 }
 
-.s1{left:9%;top:19%;animation-delay:0s}
-.s2{left:17%;top:73%;animation-delay:1s}
-.s3{left:27%;top:31%;animation-delay:2s}
-.s4{left:39%;top:15%;animation-delay:.5s}
-.s5{left:48%;top:82%;animation-delay:1.7s}
-.s6{left:59%;top:24%;animation-delay:2.4s}
-.s7{left:69%;top:71%;animation-delay:.8s}
-.s8{left:78%;top:17%;animation-delay:1.2s}
-.s9{left:88%;top:47%;animation-delay:2.7s}
-.s10{left:93%;top:79%;animation-delay:1.5s}
-.s11{left:31%;top:89%;animation-delay:3s}
-.s12{left:73%;top:91%;animation-delay:.2s}
+.star:nth-child(1){left:7%;top:14%;animation-delay:-1s}
+.star:nth-child(2){left:15%;top:78%;animation-delay:-3s}
+.star:nth-child(3){left:25%;top:26%;animation-delay:-2s}
+.star:nth-child(4){left:34%;top:86%;animation-delay:-4s}
+.star:nth-child(5){left:46%;top:12%;animation-delay:-1.5s}
+.star:nth-child(6){left:54%;top:89%;animation-delay:-3.5s}
+.star:nth-child(7){left:64%;top:21%;animation-delay:-2.5s}
+.star:nth-child(8){left:74%;top:76%;animation-delay:-4.5s}
+.star:nth-child(9){left:83%;top:17%;animation-delay:-1.2s}
+.star:nth-child(10){left:92%;top:58%;animation-delay:-3.2s}
+.star:nth-child(11){left:12%;top:45%;animation-delay:-2.2s}
+.star:nth-child(12){left:88%;top:84%;animation-delay:-4.2s}
+.star:nth-child(13){left:42%;top:70%;animation-delay:-1.7s}
+.star:nth-child(14){left:59%;top:38%;animation-delay:-3.7s}
 
-@keyframes twinkle{
+
+@keyframes starPulse{
+
     0%,100%{
-        opacity:.18;
-        transform:scale(.8);
+        opacity:.15;
+        transform:scale(.7);
     }
 
     50%{
@@ -248,670 +334,838 @@ body{
     }
 }
 
-/* ================================
-   DARK GLASS
-================================ */
 
-.shade{
+/* =====================================================
+   CENTER PORTAL
+===================================================== */
+
+.center{
     position:absolute;
-    inset:0;
 
-    background:
-        radial-gradient(
-            ellipse at center,
-            transparent 18%,
-            rgba(0,0,0,.38) 100%
-        );
+    left:50%;
+    top:50%;
 
-    backdrop-filter:blur(1px);
+    width:440px;
+    height:440px;
+
+    transform:translate(-50%,-50%);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    z-index:5;
 }
 
-/* ================================
-   PORTAL
-================================ */
 
-.portal{
-    position:relative;
-    z-index:5;
+/* energy halo */
+
+.halo{
+    position:absolute;
 
     width:100%;
     height:100%;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    padding:25px;
-}
-
-.content{
-    width:min(620px,100%);
-    text-align:center;
-}
-
-/* ================================
-   RANDOM LOGO
-================================ */
-
-.logo{
-    position:relative;
-
-    width:132px;
-    height:132px;
-
-    margin:0 auto 25px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-/* outer universe */
-.logo::before{
-    content:"";
-
-    position:absolute;
-    inset:3px;
-
     border-radius:50%;
 
-    border:1px solid rgba(255,255,255,.55);
+    background:
+        conic-gradient(
+            from 0deg,
+            transparent,
+            rgba(255,35,65,.20),
+            transparent 25%,
+            rgba(50,120,255,.22),
+            transparent 50%,
+            rgba(255,35,65,.16),
+            transparent 75%
+        );
 
-    box-shadow:
-        0 0 25px rgba(255,255,255,.08),
-        inset 0 0 25px rgba(255,255,255,.05);
+    filter:blur(25px);
+
+    animation:
+        haloSpin 24s linear infinite;
 }
 
-/* orbit */
-.logo::after{
-    content:"";
 
-    position:absolute;
-
-    width:145px;
-    height:50px;
-
-    border-radius:50%;
-
-    border:2px solid rgba(255,255,255,.65);
-
-    transform:rotate(-32deg);
-
-    box-shadow:
-        0 0 15px rgba(255,255,255,.08);
-
-    animation:logoOrbit 9s linear infinite;
-}
-
-@keyframes logoOrbit{
+@keyframes haloSpin{
     to{
-        transform:rotate(328deg);
+        transform:rotate(360deg);
     }
 }
 
-/* core */
-.core{
-    width:78px;
-    height:78px;
+
+/* orbit */
+
+.orbit{
+    position:absolute;
+
+    width:330px;
+    height:125px;
 
     border-radius:50%;
 
+    border:1px solid rgba(255,255,255,.28);
+
+    transform:rotate(-25deg);
+
+    animation:
+        orbitSpin 16s linear infinite;
+}
+
+
+.orbit::before{
+    content:"";
+
+    position:absolute;
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+        0 0 15px white;
+
+    left:20%;
+    top:0;
+}
+
+
+.orbit::after{
+    content:"";
+
+    position:absolute;
+
+    width:5px;
+    height:5px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+        0 0 13px white;
+
+    right:18%;
+    bottom:0;
+}
+
+
+@keyframes orbitSpin{
+
+    0%{
+        transform:rotate(-25deg);
+    }
+
+    100%{
+        transform:rotate(335deg);
+    }
+}
+
+
+/* =====================================================
+   RANDOM CORE
+===================================================== */
+
+.core{
     position:relative;
 
+    width:215px;
+    height:215px;
+
+    border-radius:50%;
+
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
 
     background:
         radial-gradient(
             circle at 35% 30%,
-            rgba(255,255,255,.25),
-            rgba(20,20,35,.96) 55%,
-            #020207
+            rgba(255,255,255,.15),
+            rgba(8,10,18,.95) 48%,
+            #010207 72%
         );
 
-    border:1px solid rgba(255,255,255,.35);
+    border:1px solid rgba(255,255,255,.20);
 
     box-shadow:
-        0 0 30px rgba(255,255,255,.10),
-        inset 0 0 25px rgba(255,255,255,.06);
+        0 0 50px rgba(255,255,255,.08),
+        0 0 100px rgba(80,90,255,.08),
+        inset 0 0 40px rgba(255,255,255,.035);
 }
 
-/* RANDOM cosmic symbol */
-.symbol{
-    width:43px;
-    height:43px;
 
+/* =====================================================
+   RANDOM SYMBOL
+===================================================== */
+
+.symbol{
     position:relative;
+
+    width:85px;
+    height:85px;
+}
+
+
+.symbol::before{
+    content:"";
+
+    position:absolute;
+
+    inset:8px;
 
     border-radius:50%;
 
     border:3px solid white;
 
     box-shadow:
-        0 0 12px rgba(255,255,255,.5);
+        0 0 15px rgba(255,255,255,.35);
 }
 
-/* crossing universe paths */
+
+/* crossing cosmic paths */
+
 .symbol span{
     position:absolute;
 
-    width:54px;
-    height:18px;
+    left:50%;
+    top:50%;
+
+    width:105px;
+    height:34px;
+
+    border:2px solid rgba(255,255,255,.85);
+
+    border-radius:50%;
+
+    transform:
+        translate(-50%,-50%)
+        rotate(32deg);
+}
+
+
+.symbol span:nth-child(2){
+    transform:
+        translate(-50%,-50%)
+        rotate(-32deg);
+}
+
+
+/* central point */
+
+.symbol i{
+    position:absolute;
+
+    width:13px;
+    height:13px;
+
+    border-radius:50%;
 
     left:50%;
     top:50%;
 
     transform:translate(-50%,-50%);
 
-    border:2px solid white;
-    border-radius:50%;
+    background:white;
+
+    box-shadow:
+        0 0 15px white,
+        0 0 30px rgba(90,120,255,.8);
 }
 
-.symbol span:nth-child(1){
-    rotate:32deg;
-}
 
-.symbol span:nth-child(2){
-    rotate:-32deg;
-}
-
-/* ================================
+/* =====================================================
    BRAND
-================================ */
+===================================================== */
 
-.title{
-    font-size:clamp(48px,12vw,82px);
+.brand{
+    position:absolute;
 
-    font-weight:900;
+    left:50%;
+    top:50%;
 
-    letter-spacing:.22em;
+    transform:
+        translate(-50%,98px);
 
-    margin-left:.22em;
+    white-space:nowrap;
 
-    line-height:1;
+    font-size:14px;
 
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #c8cbd5,
-            #ffffff
-        );
+    font-weight:700;
 
-    -webkit-background-clip:text;
-    background-clip:text;
+    letter-spacing:.52em;
 
-    color:transparent;
+    margin-left:.52em;
 
-    text-shadow:
-        0 0 30px rgba(255,255,255,.05);
+    color:rgba(255,255,255,.75);
 }
 
-.subtitle{
-    margin-top:16px;
 
-    color:rgba(255,255,255,.55);
+/* =====================================================
+   MAIN CONTENT
+===================================================== */
 
-    font-size:12px;
+.interface{
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,265px);
+
+    z-index:10;
+
+    width:min(520px,calc(100vw - 36px));
+
+    text-align:center;
+}
+
+
+.motto{
+    font-size:10px;
+
+    text-transform:uppercase;
 
     letter-spacing:.30em;
 
-    text-transform:uppercase;
-}
-
-/* ================================
-   PORTAL LINE
-================================ */
-
-.portal-line{
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-    width:min(420px,85%);
-
-    margin:38px auto 26px;
-
     color:rgba(255,255,255,.42);
 
-    font-size:10px;
-
-    letter-spacing:.24em;
-
-    text-transform:uppercase;
+    margin-bottom:20px;
 }
 
-.portal-line::before,
-.portal-line::after{
-    content:"";
-    height:1px;
-    flex:1;
 
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.30)
-        );
-}
-
-.portal-line::after{
-    background:
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.30),
-            transparent
-        );
-}
-
-/* ================================
-   ENTRY BUTTONS
-================================ */
+/* =====================================================
+   ENTRY OPTIONS
+===================================================== */
 
 .entries{
-    display:grid;
+    display:flex;
 
-    grid-template-columns:1fr 1fr;
+    gap:10px;
 
-    gap:14px;
-
-    width:min(500px,100%);
-
-    margin:auto;
+    justify-content:center;
 }
+
 
 .entry{
     position:relative;
 
-    min-height:115px;
+    min-width:190px;
 
-    border-radius:20px;
+    height:58px;
 
-    border:1px solid rgba(255,255,255,.13);
+    border-radius:15px;
 
-    background:rgba(5,7,15,.38);
+    border:1px solid rgba(255,255,255,.14);
 
-    backdrop-filter:blur(12px);
+    background:rgba(3,5,11,.55);
+
+    color:white;
 
     cursor:pointer;
 
     overflow:hidden;
 
+    backdrop-filter:blur(12px);
+
     transition:
-        transform .35s ease,
-        border-color .35s ease,
-        background .35s ease;
+        transform .3s ease,
+        border-color .3s ease,
+        background .3s ease;
 }
+
+
+.entry:hover{
+    transform:translateY(-4px);
+}
+
 
 .entry::before{
     content:"";
 
     position:absolute;
 
-    width:120px;
-    height:120px;
+    width:100px;
+    height:100px;
 
     border-radius:50%;
 
-    filter:blur(35px);
+    filter:blur(25px);
 
     opacity:0;
 
     transition:.35s ease;
 }
 
-.entry.visitor::before{
-    background:rgba(50,110,255,.35);
-    right:-50px;
-    bottom:-70px;
-}
-
-.entry.rid::before{
-    background:rgba(255,30,60,.35);
-    left:-50px;
-    bottom:-70px;
-}
-
-.entry:hover{
-    transform:translateY(-5px);
-    background:rgba(255,255,255,.07);
-}
 
 .entry:hover::before{
-    opacity:1;
+    opacity:.7;
 }
 
-.entry.visitor:hover{
-    border-color:rgba(65,125,255,.50);
+
+.entry.visitor::before{
+    background:var(--blue);
+
+    left:-45px;
+    top:-55px;
 }
 
-.entry.rid:hover{
-    border-color:rgba(255,50,75,.50);
+
+.entry.rid::before{
+    background:var(--red);
+
+    right:-45px;
+    top:-55px;
 }
 
-.entry-inner{
+
+.entry:hover{
+    border-color:rgba(255,255,255,.30);
+}
+
+
+.entry-content{
     position:relative;
+
     z-index:2;
 
     height:100%;
 
     display:flex;
-    flex-direction:column;
 
-    justify-content:center;
     align-items:center;
 
-    padding:20px;
+    justify-content:center;
+
+    gap:11px;
 }
 
-.entry-symbol{
-    font-size:22px;
-    margin-bottom:10px;
+
+.entry-icon{
+    font-size:17px;
+
+    opacity:.8;
 }
+
 
 .entry-name{
-    font-size:15px;
+    font-size:12px;
 
-    font-weight:800;
+    font-weight:700;
 
-    letter-spacing:.15em;
+    letter-spacing:.20em;
 }
 
-.entry-text{
-    margin-top:7px;
 
-    color:rgba(255,255,255,.42);
+.entry-desc{
+    display:block;
+
+    margin-top:3px;
+
+    color:rgba(255,255,255,.36);
+
+    font-size:8px;
+
+    letter-spacing:.05em;
+}
+
+
+/* =====================================================
+   TOP BRAND
+===================================================== */
+
+.top{
+    position:absolute;
+
+    left:28px;
+    right:28px;
+    top:24px;
+
+    z-index:20;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+}
+
+
+.mini-brand{
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    color:rgba(255,255,255,.60);
 
     font-size:10px;
 
-    letter-spacing:.03em;
+    font-weight:700;
+
+    letter-spacing:.28em;
 }
 
-/* ================================
-   BOTTOM
-================================ */
 
-.bottom{
-    margin-top:24px;
+.mini-dot{
+    width:8px;
+    height:8px;
 
-    font-size:9px;
+    border-radius:50%;
 
-    color:rgba(255,255,255,.25);
+    background:white;
 
-    letter-spacing:.20em;
+    box-shadow:
+        0 0 12px rgba(255,255,255,.8);
+}
+
+
+.status{
+    color:rgba(255,255,255,.28);
+
+    font-size:8px;
+
+    letter-spacing:.18em;
 
     text-transform:uppercase;
 }
 
-/* ================================
+
+/* =====================================================
    MOBILE
-================================ */
+===================================================== */
 
-@media(max-width:600px){
+@media(max-width:650px){
 
-    .portal{
-        padding:18px;
+    .center{
+        width:330px;
+        height:330px;
     }
 
-    .logo{
-        width:105px;
-        height:105px;
-        margin-bottom:21px;
-    }
-
-    .logo::after{
-        width:118px;
-        height:42px;
+    .orbit{
+        width:255px;
+        height:95px;
     }
 
     .core{
-        width:64px;
-        height:64px;
+        width:165px;
+        height:165px;
     }
 
     .symbol{
-        width:36px;
-        height:36px;
+        transform:scale(.75);
     }
 
-    .symbol span{
-        width:45px;
-        height:15px;
+    .brand{
+        transform:
+            translate(-50%,77px);
+
+        font-size:10px;
     }
 
-    .title{
-        font-size:43px;
-        letter-spacing:.16em;
-        margin-left:.16em;
+    .interface{
+        transform:
+            translate(-50%,210px);
     }
 
-    .subtitle{
-        font-size:9px;
+    .motto{
+        font-size:8px;
+
         letter-spacing:.22em;
-        margin-top:13px;
-    }
 
-    .portal-line{
-        margin-top:30px;
-        margin-bottom:20px;
+        margin-bottom:14px;
     }
 
     .entries{
-        grid-template-columns:1fr;
-        gap:10px;
+        flex-direction:column;
+
+        gap:8px;
     }
 
     .entry{
-        min-height:88px;
+        width:100%;
+        min-width:0;
+
+        height:54px;
     }
 
-    .entry-inner{
-        flex-direction:row;
+    .entry-content{
         justify-content:flex-start;
-        text-align:left;
-        padding:17px 20px;
+
+        padding-left:22px;
     }
 
-    .entry-symbol{
-        margin:0 15px 0 0;
-        font-size:20px;
+    .status{
+        display:none;
     }
 
-    .entry-name{
-        font-size:14px;
+    .top{
+        left:18px;
+        right:18px;
+        top:19px;
     }
 
-    .entry-text{
-        margin-top:4px;
-    }
-
-    .bottom{
-        margin-top:17px;
+    .mini-brand{
+        font-size:9px;
     }
 }
+
+
+@media(max-height:700px) and (min-width:651px){
+
+    .center{
+        transform:
+            translate(-50%,-56%);
+    }
+
+    .interface{
+        transform:
+            translate(-50%,235px);
+    }
+}
+
 </style>
 </head>
 
+
 <body>
 
-<!-- RANDOM WILL CHOOSE ONE UNIVERSE -->
-<div id="world" class="world">
 
-    <div class="nebula"></div>
+<!-- ==========================================
+     COSMIC ENVIRONMENT
+========================================== -->
 
-    <div class="orbits">
-        <div class="orbit one"></div>
-        <div class="orbit two"></div>
-        <div class="orbit three"></div>
+<div class="universe">
+
+    <div class="red-field"></div>
+
+    <div class="blue-field"></div>
+
+
+    <div class="streams">
+
+        <div class="stream red"></div>
+        <div class="stream blue"></div>
+
+        <div class="stream red"></div>
+        <div class="stream blue"></div>
+
     </div>
+
 
     <div class="stars">
-        <span class="star s1"></span>
-        <span class="star s2"></span>
-        <span class="star s3"></span>
-        <span class="star s4"></span>
-        <span class="star s5"></span>
-        <span class="star s6"></span>
-        <span class="star s7"></span>
-        <span class="star s8"></span>
-        <span class="star s9"></span>
-        <span class="star s10"></span>
-        <span class="star s11"></span>
-        <span class="star s12"></span>
-    </div>
 
-    <div class="shade"></div>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+
+    </div>
 
 </div>
 
 
-<main class="portal">
+<!-- ==========================================
+     TOP IDENTITY
+========================================== -->
 
-    <section class="content">
+<header class="top">
 
-        <!-- RANDOM LOGO -->
-        <div class="logo">
+    <div class="mini-brand">
 
-            <div class="core">
+        <span class="mini-dot"></span>
 
-                <div class="symbol">
-                    <span></span>
-                    <span></span>
-                </div>
+        RANDOM
+
+    </div>
+
+
+    <div class="status">
+
+        SYSTEM // UNDEFINED
+
+    </div>
+
+</header>
+
+
+<!-- ==========================================
+     CENTER
+========================================== -->
+
+<section class="center">
+
+    <div class="halo"></div>
+
+    <div class="orbit"></div>
+
+
+    <div class="core">
+
+        <div class="symbol">
+
+            <span></span>
+            <span></span>
+
+            <i></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="brand">
+
+        RANDOM
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+     ENTRY INTERFACE
+========================================== -->
+
+<section class="interface">
+
+    <div class="motto">
+
+        Choose how you enter
+
+    </div>
+
+
+    <div class="entries">
+
+
+        <!-- VISITOR -->
+
+        <button
+            class="entry visitor"
+            onclick="visitor()"
+        >
+
+            <div class="entry-content">
+
+                <span class="entry-icon">
+                    ◉
+                </span>
+
+                <span>
+
+                    <span class="entry-name">
+                        VISITOR
+                    </span>
+
+                    <span class="entry-desc">
+                        Explore the universe
+                    </span>
+
+                </span>
 
             </div>
 
-        </div>
+        </button>
 
 
-        <!-- BRAND -->
-        <div class="title">
-            RANDOM
-        </div>
+        <!-- CREATE RID -->
 
-        <div class="subtitle">
-            Enter a universe without limits
-        </div>
+        <button
+            class="entry rid"
+            onclick="createRID()"
+        >
 
+            <div class="entry-content">
 
-        <!-- ENTRY -->
-        <div class="portal-line">
-            Choose your entry
-        </div>
+                <span class="entry-icon">
+                    ✦
+                </span>
 
+                <span>
 
-        <div class="entries">
+                    <span class="entry-name">
+                        CREATE RID
+                    </span>
 
-            <button
-                class="entry visitor"
-                onclick="visitor()"
-            >
+                    <span class="entry-desc">
+                        Create your identity
+                    </span>
 
-                <div class="entry-inner">
+                </span>
 
-                    <div class="entry-symbol">
-                        ◉
-                    </div>
+            </div>
 
-                    <div>
-                        <div class="entry-name">
-                            VISITOR
-                        </div>
-
-                        <div class="entry-text">
-                            Explore RANDOM
-                        </div>
-                    </div>
-
-                </div>
-
-            </button>
+        </button>
 
 
-            <button
-                class="entry rid"
-                onclick="createRID()"
-            >
+    </div>
 
-                <div class="entry-inner">
-
-                    <div class="entry-symbol">
-                        ✦
-                    </div>
-
-                    <div>
-                        <div class="entry-name">
-                            CREATE RID
-                        </div>
-
-                        <div class="entry-text">
-                            Create your identity
-                        </div>
-                    </div>
-
-                </div>
-
-            </button>
-
-        </div>
-
-
-        <div class="bottom">
-            RANDOM // Identity • Gaming • Creation • More
-        </div>
-
-    </section>
-
-</main>
+</section>
 
 
 <script>
 
 /*
-========================================
-RANDOM UNIVERSE SELECTOR
-
-Every new visit gets either:
-RED UNIVERSE
-or
-BLUE UNIVERSE
-========================================
+=================================================
+RANDOM MICRO-INTERACTION
+=================================================
 */
 
-const world = document.getElementById("world");
+const center = document.querySelector(".center");
 
-const universe =
-    Math.random() < 0.5
-    ? "red"
-    : "blue";
+window.addEventListener("mousemove", (event)=>{
 
-world.classList.add(universe);
+    const x =
+        (event.clientX / window.innerWidth - .5);
+
+    const y =
+        (event.clientY / window.innerHeight - .5);
+
+    center.style.transform =
+        `
+        translate(-50%,-50%)
+        rotateX(${y * -3}deg)
+        rotateY(${x * 3}deg)
+        `;
+});
 
 
 /*
-========================================
-TEMPORARY ACTIONS
-
-These will later connect to the
-real RANDOM system.
-========================================
+=================================================
+TEMPORARY ENTRY ACTIONS
+=================================================
 */
 
 function visitor(){
 
     alert(
-        "VISITOR selected.\n\n" +
-        "RANDOM exploration will open here."
+        "VISITOR\n\n" +
+        "Your journey into RANDOM begins here."
     );
 
 }
 
+
 function createRID(){
 
     alert(
-        "CREATE RID selected.\n\n" +
-        "Your RANDOM identity creation will begin here."
+        "CREATE RID\n\n" +
+        "Your RANDOM identity will be created here."
     );
 
 }
@@ -919,4 +1173,4 @@ function createRID(){
 </script>
 
 </body>
-                </html>
+    </html>
