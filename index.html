@@ -1,1 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>RANDOM</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #05050a;
+      color: white;
+    }
+
+    body {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* =========================
+       MOVING BACKGROUND
+       ========================= */
+
+    .background {
+      position: fixed;
+      inset: -15%;
+      z-index: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(
+          circle at 20% 25%,
+          rgba(100, 0, 25, 0.65),
+          transparent 38%
+        ),
+        radial-gradient(
+          circle at 80% 70%,
+          rgba(10, 30, 100, 0.65),
+          transparent 40%
+        ),
+        #05050a;
+      filter: blur(18px);
+      transform: scale(1.08);
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(55px);
+      opacity: 0.65;
+      animation: float 14s ease-in-out infinite alternate;
+    }
+
+    .orb-one {
+      width: 45vw;
+      height: 45vw;
+      min-width: 280px;
+      min-height: 280px;
+      background: rgba(120, 0, 30, 0.55);
+      top: -10%;
+      left: -8%;
+    }
+
+    .orb-two {
+      width: 40vw;
+      height: 40vw;
+      min-width: 250px;
+      min-height: 250px;
+      background: rgba(15, 35, 130, 0.55);
+      right: -8%;
+      bottom: -10%;
+      animation-delay: -6s;
+    }
+
+    .orb-three {
+      width: 25vw;
+      height: 25vw;
+      min-width: 180px;
+      min-height: 180px;
+      background: rgba(80, 20, 100, 0.35);
+      left: 45%;
+      top: 40%;
+      animation-duration: 18s;
+      animation-delay: -3s;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate(35px, -25px) scale(1.08);
+      }
+
+      100% {
+        transform: translate(-25px, 30px) scale(0.96);
+      }
+    }
+
+    /* =========================
+       STARS
+       ========================= */
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.5;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px);
+      background-size: 95px 95px, 145px 145px;
+      background-position: 15px 20px, 70px 55px;
+      animation: starsMove 30s linear infinite;
+    }
+
+    @keyframes starsMove {
+      from {
+        transform: translate(0, 0);
+      }
+
+      to {
+        transform: translate(-40px, -25px);
+      }
+    }
+
+    /* =========================
+       DARK GLASS OVERLAY
+       ========================= */
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.27);
+      backdrop-filter: blur(2px);
+    }
+
+    /* =========================
+       MAIN PORTAL
+       ========================= */
+
+    .portal {
+      position: relative;
+      z-index: 3;
+      width: min(92%, 500px);
+      min-height: 570px;
+      padding: 55px 30px 35px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+
+      background: rgba(8, 8, 15, 0.48);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 32px;
+
+      box-shadow:
+        0 30px 100px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+      backdrop-filter: blur(18px);
+    }
+
+    /* =========================
+       UNIVERSE LOGO
+       ========================= */
+
+    .logo {
+      position: relative;
+      width: 112px;
+      height: 112px;
+      margin-bottom: 28px;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle at 35% 30%,
+          #ffffff 0 2%,
+          #8da0ff 3%,
+          #3528a8 17%,
+          #09091c 52%,
+          #020207 100%
+        );
+
+      box-shadow:
+        0 0 35px rgba(70, 70, 255, 0.38),
+        0 0 90px rgba(120, 0, 60, 0.20);
+
+      animation: logoFloat 6s ease-in-out infinite;
+    }
+
+    .logo::before,
+    .logo::after {
+      content: "";
+      position: absolute;
+      inset: 18px;
+
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 50%;
+
+      transform: rotate(35deg);
+    }
+
+    .logo::after {
+      inset: 27px;
+      transform: rotate(-45deg) scaleX(1.25);
+      border-color: rgba(130,150,255,0.45);
+    }
+
+    .logo-core {
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      left: 50%;
+      top: 50%;
+
+      transform: translate(-50%, -50%);
+
+      border-radius: 50%;
+      background: white;
+
+      box-shadow:
+        0 0 12px white,
+        0 0 30px rgba(120,150,255,0.9);
+    }
+
+    @keyframes logoFloat {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-7px) rotate(4deg);
+      }
+    }
+
+    /* =========================
+       BRAND
+       ========================= */
+
+    .brand {
+      font-size: clamp(42px, 12vw, 72px);
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      margin-left: 0.16em;
+
+      background:
+        linear-gradient(
+          120deg,
+          #ffffff,
+          #b8c1ff,
+          #ffffff,
+          #ffb6c8
+        );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+
+      text-shadow: 0 0 35px rgba(120, 120, 255, 0.18);
+    }
+
+    .tagline {
+      margin-top: 8px;
+      margin-bottom: 45px;
+
+      color: rgba(255,255,255,0.52);
+      font-size: 13px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+
+    /* =========================
+       BUTTONS
+       ========================= */
+
+    .actions {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .portal-button {
+      position: relative;
+      width: 100%;
+      min-height: 64px;
+
+      border-radius: 17px;
+      border: 1px solid rgba(255,255,255,0.12);
+
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+
+      overflow: hidden;
+    }
+
+    .portal-button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 80%;
+      height: 100%;
+
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.16),
+        transparent
+      );
+
+      transform: skewX(-20deg);
+      transition: left 0.6s ease;
+    }
+
+    .portal-button:hover::before {
+      left: 140%;
+    }
+
+    .portal-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .visitor {
+      background:
+        linear-gradient(
+          135deg,
+          rgba(30, 45, 110, 0.75),
+          rgba(20, 20, 55, 0.75)
+        );
+
+      box-shadow:
+        0 12px 35px rgba(20, 40, 120, 0.18);
+    }
+
+    .visitor:hover {
+      border-color: rgba(120,150,255,0.5);
+      box-shadow:
+        0 15px 45px rgba(30,50,160,0.25);
+    }
+
+    .rid {
+      background:
+        linear-gradient(
+          135deg,
+          rgba(110, 20, 45, 0.72),
+          rgba(45, 10, 25, 0.78)
+        );
+
+      box-shadow:
+        0 12px 35px rgba(120, 15, 45, 0.16);
+    }
+
+    .rid:hover {
+      border-color: rgba(255,110,145,0.5);
+      box-shadow:
+        0 15px 45px rgba(160,20,60,0.24);
+    }
+
+    .button-small {
+      display: block;
+      margin-top: 7px;
+
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+
+      color: rgba(255,255,255,0.42);
+    }
+
+    /* =========================
+       FOOTER
+       ========================= */
+
+    .footer {
+      position: absolute;
+      bottom: 18px;
+
+      color: rgba(255,255,255,0.25);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+    }
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media (max-width: 500px) {
+      .portal {
+        min-height: 535px;
+        padding: 40px 22px 35px;
+        border-radius: 27px;
+      }
+
+      .logo {
+        width: 95px;
+        height: 95px;
+        margin-bottom: 22px;
+      }
+
+      .tagline {
+        margin-bottom: 38px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="background">
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+    <div class="orb orb-three"></div>
+  </div>
+
+  <div class="stars"></div>
+
+  <div class="overlay"></div>
+
+  <main class="portal">
+
+    <div class="logo" aria-label="RANDOM Universe Logo">
+      <div class="logo-core"></div>
+    </div>
+
+    <h1 class="brand">RANDOM</h1>
+
+    <p class="tagline">
+      Enter the unexpected
+    </p>
+
+    <div class="actions">
+
+      <button
+        class="portal-button visitor"
+        onclick="visitorMode()"
+      >
+        VISITOR
+        <span class="button-small">
+          Explore RANDOM
+        </span>
+      </button>
+
+      <button
+        class="portal-button rid"
+        onclick="createRID()"
+      >
+        CREATE RID
+        <span class="button-small">
+          Create your RANDOM identity
+        </span>
+      </button>
+
+    </div>
+
+    <div class="footer">
+      RANDOM • EVERYTHING CAN CHANGE
+    </div>
+
+  </main>
+
+  <script>
+    function visitorMode() {
+      alert("Visitor mode — coming next.");
+    }
+
+    function createRID() {
+      alert("RID creation — coming next.");
+    }
+  </script>
+
+</body>
+  </html>
