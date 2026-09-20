@@ -3,515 +3,731 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RANDOM — Enter the Unknown</title>
+<title>RANDOM</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-:root {
-    --red: #ff294d;
-    --blue: #3478ff;
-    --white: #f5f7ff;
-    --muted: #9ba4bd;
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
 }
 
-html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #03050c;
-    color: var(--white);
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#050509;
+    color:white;
 }
 
-body {
-    position: relative;
+/* ================================
+   RANDOM WORLD
+================================ */
+
+.world{
+    position:fixed;
+    inset:-8%;
+    overflow:hidden;
+    transition:background 1.5s ease;
 }
 
-/* =========================
-   COSMIC BACKGROUND
-========================= */
-
-.space {
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
+/* Red universe */
+.world.red{
     background:
-        radial-gradient(circle at 15% 45%,
-            rgba(255, 20, 65, .22),
-            transparent 32%),
-        radial-gradient(circle at 85% 50%,
-            rgba(40, 100, 255, .22),
-            transparent 32%),
-        radial-gradient(circle at 50% 50%,
-            rgba(110, 70, 255, .06),
-            transparent 42%),
-        #03050c;
+        radial-gradient(
+            ellipse at 18% 52%,
+            rgba(180,10,35,.42),
+            transparent 30%
+        ),
+        radial-gradient(
+            ellipse at 82% 35%,
+            rgba(95,0,18,.42),
+            transparent 35%
+        ),
+        radial-gradient(
+            ellipse at 50% 100%,
+            rgba(90,5,25,.30),
+            transparent 45%
+        ),
+        #070407;
 }
 
-.space::before {
-    content: "";
-    position: absolute;
-    width: 75vw;
-    height: 75vw;
-    max-width: 850px;
-    max-height: 850px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
+/* Blue universe */
+.world.blue{
+    background:
+        radial-gradient(
+            ellipse at 82% 52%,
+            rgba(20,75,190,.42),
+            transparent 30%
+        ),
+        radial-gradient(
+            ellipse at 18% 35%,
+            rgba(10,35,120,.42),
+            transparent 35%
+        ),
+        radial-gradient(
+            ellipse at 50% 100%,
+            rgba(15,55,130,.30),
+            transparent 45%
+        ),
+        #03060d;
+}
+
+/* ================================
+   MOVING NEBULA
+================================ */
+
+.nebula{
+    position:absolute;
+    width:70vw;
+    height:70vw;
+    max-width:800px;
+    max-height:800px;
+    border-radius:50%;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    filter:blur(55px);
+    opacity:.52;
+
+    animation:
+        nebulaMove 18s ease-in-out infinite alternate,
+        nebulaRotate 45s linear infinite;
+}
+
+.red .nebula{
     background:
         conic-gradient(
-            from 0deg,
-            rgba(255, 30, 65, .13),
+            from 30deg,
+            rgba(255,20,55,.55),
+            transparent 25%,
+            rgba(120,0,30,.40),
+            transparent 52%,
+            rgba(255,35,70,.35),
+            transparent 78%
+        );
+}
+
+.blue .nebula{
+    background:
+        conic-gradient(
+            from 30deg,
+            rgba(35,110,255,.55),
+            transparent 25%,
+            rgba(15,45,160,.40),
+            transparent 52%,
+            rgba(50,140,255,.35),
+            transparent 78%
+        );
+}
+
+@keyframes nebulaMove{
+    0%{
+        margin-left:-4%;
+        margin-top:-2%;
+        transform:translate(-50%,-50%) scale(.95);
+    }
+
+    50%{
+        margin-left:4%;
+        margin-top:3%;
+        transform:translate(-50%,-50%) scale(1.05);
+    }
+
+    100%{
+        margin-left:-2%;
+        margin-top:5%;
+        transform:translate(-50%,-50%) scale(.98);
+    }
+}
+
+@keyframes nebulaRotate{
+    to{
+        rotate:360deg;
+    }
+}
+
+/* ================================
+   ORBIT LINES
+================================ */
+
+.orbits{
+    position:absolute;
+    width:min(90vw,850px);
+    height:min(90vw,850px);
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+    opacity:.17;
+}
+
+.orbit{
+    position:absolute;
+    inset:0;
+    border:1px solid rgba(255,255,255,.30);
+    border-radius:50%;
+}
+
+.orbit.one{
+    transform:rotate(25deg) scaleY(.27);
+    animation:orbitA 22s linear infinite;
+}
+
+.orbit.two{
+    transform:rotate(-35deg) scaleY(.18);
+    animation:orbitB 30s linear infinite;
+}
+
+.orbit.three{
+    transform:rotate(70deg) scaleY(.11);
+    animation:orbitC 38s linear infinite;
+}
+
+@keyframes orbitA{
+    to{rotate:360deg;}
+}
+
+@keyframes orbitB{
+    to{rotate:-360deg;}
+}
+
+@keyframes orbitC{
+    to{rotate:360deg;}
+}
+
+/* ================================
+   STARS
+================================ */
+
+.stars{
+    position:absolute;
+    inset:0;
+}
+
+.star{
+    position:absolute;
+    width:2px;
+    height:2px;
+    border-radius:50%;
+    background:white;
+    opacity:.35;
+    animation:twinkle 4s ease-in-out infinite;
+}
+
+.s1{left:9%;top:19%;animation-delay:0s}
+.s2{left:17%;top:73%;animation-delay:1s}
+.s3{left:27%;top:31%;animation-delay:2s}
+.s4{left:39%;top:15%;animation-delay:.5s}
+.s5{left:48%;top:82%;animation-delay:1.7s}
+.s6{left:59%;top:24%;animation-delay:2.4s}
+.s7{left:69%;top:71%;animation-delay:.8s}
+.s8{left:78%;top:17%;animation-delay:1.2s}
+.s9{left:88%;top:47%;animation-delay:2.7s}
+.s10{left:93%;top:79%;animation-delay:1.5s}
+.s11{left:31%;top:89%;animation-delay:3s}
+.s12{left:73%;top:91%;animation-delay:.2s}
+
+@keyframes twinkle{
+    0%,100%{
+        opacity:.18;
+        transform:scale(.8);
+    }
+
+    50%{
+        opacity:.75;
+        transform:scale(1.7);
+    }
+}
+
+/* ================================
+   DARK GLASS
+================================ */
+
+.shade{
+    position:absolute;
+    inset:0;
+
+    background:
+        radial-gradient(
+            ellipse at center,
             transparent 18%,
-            rgba(40, 100, 255, .12),
-            transparent 40%,
-            rgba(255, 30, 65, .08),
-            transparent 65%,
-            rgba(40, 100, 255, .12),
-            transparent 82%
-        );
-    filter: blur(35px);
-    animation: cosmicRotate 30s linear infinite;
-}
-
-@keyframes cosmicRotate {
-    from {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-    to {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
-}
-
-/* =========================
-   PARTICLES
-========================= */
-
-.stars {
-    position: absolute;
-    inset: 0;
-}
-
-.star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    border-radius: 50%;
-    background: white;
-    opacity: .35;
-    animation: floatStar linear infinite;
-}
-
-.star:nth-child(1) { left: 8%; top: 20%; animation-duration: 9s; }
-.star:nth-child(2) { left: 18%; top: 70%; animation-duration: 12s; }
-.star:nth-child(3) { left: 27%; top: 32%; animation-duration: 8s; }
-.star:nth-child(4) { left: 37%; top: 82%; animation-duration: 11s; }
-.star:nth-child(5) { left: 48%; top: 17%; animation-duration: 13s; }
-.star:nth-child(6) { left: 59%; top: 73%; animation-duration: 10s; }
-.star:nth-child(7) { left: 68%; top: 28%; animation-duration: 14s; }
-.star:nth-child(8) { left: 78%; top: 61%; animation-duration: 9s; }
-.star:nth-child(9) { left: 88%; top: 18%; animation-duration: 12s; }
-.star:nth-child(10) { left: 94%; top: 80%; animation-duration: 15s; }
-.star:nth-child(11) { left: 12%; top: 48%; animation-duration: 16s; }
-.star:nth-child(12) { left: 72%; top: 88%; animation-duration: 11s; }
-
-@keyframes floatStar {
-    0%,100% {
-        transform: translateY(0) scale(1);
-        opacity: .25;
-    }
-    50% {
-        transform: translateY(-18px) scale(1.5);
-        opacity: .75;
-    }
-}
-
-/* =========================
-   MAIN
-========================= */
-
-.portal {
-    position: relative;
-    z-index: 5;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-}
-
-/* =========================
-   MAIN PANEL
-========================= */
-
-.panel {
-    width: min(920px, 100%);
-    padding: 42px 30px 34px;
-    text-align: center;
-
-    background: rgba(7, 10, 20, .52);
-    border: 1px solid rgba(255,255,255,.09);
-    border-radius: 34px;
-
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
-
-    box-shadow:
-        0 30px 100px rgba(0,0,0,.55),
-        inset 0 1px 0 rgba(255,255,255,.05);
-}
-
-/* =========================
-   LOGO
-========================= */
-
-.logo-wrap {
-    width: 112px;
-    height: 112px;
-    margin: 0 auto 20px;
-    position: relative;
-}
-
-.logo-ring {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-
-    background:
-        conic-gradient(
-            from 20deg,
-            var(--red),
-            #ff6b81,
-            #693cff,
-            var(--blue),
-            #49a4ff,
-            var(--red)
+            rgba(0,0,0,.38) 100%
         );
 
-    animation: logoSpin 14s linear infinite;
+    backdrop-filter:blur(1px);
+}
+
+/* ================================
+   PORTAL
+================================ */
+
+.portal{
+    position:relative;
+    z-index:5;
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:25px;
+}
+
+.content{
+    width:min(620px,100%);
+    text-align:center;
+}
+
+/* ================================
+   RANDOM LOGO
+================================ */
+
+.logo{
+    position:relative;
+
+    width:132px;
+    height:132px;
+
+    margin:0 auto 25px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* outer universe */
+.logo::before{
+    content:"";
+
+    position:absolute;
+    inset:3px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(255,255,255,.55);
 
     box-shadow:
-        0 0 30px rgba(255, 35, 75, .22),
-        0 0 55px rgba(45, 110, 255, .18);
+        0 0 25px rgba(255,255,255,.08),
+        inset 0 0 25px rgba(255,255,255,.05);
 }
 
-.logo-ring::after {
-    content: "";
-    position: absolute;
-    inset: 7px;
-    border-radius: 50%;
-    background: #060914;
+/* orbit */
+.logo::after{
+    content:"";
+
+    position:absolute;
+
+    width:145px;
+    height:50px;
+
+    border-radius:50%;
+
+    border:2px solid rgba(255,255,255,.65);
+
+    transform:rotate(-32deg);
+
+    box-shadow:
+        0 0 15px rgba(255,255,255,.08);
+
+    animation:logoOrbit 9s linear infinite;
 }
 
-@keyframes logoSpin {
-    to {
-        transform: rotate(360deg);
+@keyframes logoOrbit{
+    to{
+        transform:rotate(328deg);
     }
 }
 
-.logo-core {
-    position: absolute;
-    inset: 18px;
-    border-radius: 50%;
-    z-index: 2;
+/* core */
+.core{
+    width:78px;
+    height:78px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius:50%;
+
+    position:relative;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
     background:
-        radial-gradient(circle at 35% 30%,
-            #303b69,
-            #090c19 58%);
+        radial-gradient(
+            circle at 35% 30%,
+            rgba(255,255,255,.25),
+            rgba(20,20,35,.96) 55%,
+            #020207
+        );
 
-    border: 1px solid rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.35);
 
     box-shadow:
-        inset 0 0 22px rgba(70,90,255,.25);
+        0 0 30px rgba(255,255,255,.10),
+        inset 0 0 25px rgba(255,255,255,.06);
 }
 
-/* RANDOM universe symbol */
-.universe-symbol {
-    width: 43px;
-    height: 43px;
-    position: relative;
-}
+/* RANDOM cosmic symbol */
+.symbol{
+    width:43px;
+    height:43px;
 
-.universe-symbol::before,
-.universe-symbol::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-}
+    position:relative;
 
-.universe-symbol::before {
-    width: 38px;
-    height: 15px;
-    border: 2px solid rgba(255,255,255,.9);
-    transform: translate(-50%, -50%) rotate(28deg);
-}
+    border-radius:50%;
 
-.universe-symbol::after {
-    width: 15px;
-    height: 38px;
-    border: 2px solid rgba(255,255,255,.7);
-    transform: translate(-50%, -50%) rotate(-28deg);
-}
+    border:3px solid white;
 
-.universe-symbol {
-    border-radius: 50%;
-    border: 4px solid #fff;
     box-shadow:
-        0 0 15px rgba(255,255,255,.5),
-        0 0 25px rgba(85,90,255,.35);
+        0 0 12px rgba(255,255,255,.5);
 }
 
-/* =========================
+/* crossing universe paths */
+.symbol span{
+    position:absolute;
+
+    width:54px;
+    height:18px;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    border:2px solid white;
+    border-radius:50%;
+}
+
+.symbol span:nth-child(1){
+    rotate:32deg;
+}
+
+.symbol span:nth-child(2){
+    rotate:-32deg;
+}
+
+/* ================================
    BRAND
-========================= */
+================================ */
 
-.brand {
-    font-size: clamp(42px, 9vw, 78px);
-    font-weight: 900;
-    letter-spacing: .16em;
-    margin-left: .16em;
+.title{
+    font-size:clamp(48px,12vw,82px);
 
-    background: linear-gradient(
-        100deg,
-        #fff,
-        #dce4ff 35%,
-        #ffffff 50%,
-        #9fb7ff
-    );
+    font-weight:900;
 
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    letter-spacing:.22em;
+
+    margin-left:.22em;
+
+    line-height:1;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #c8cbd5,
+            #ffffff
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    color:transparent;
+
+    text-shadow:
+        0 0 30px rgba(255,255,255,.05);
 }
 
-.tagline {
-    margin-top: 8px;
-    color: var(--muted);
-    font-size: 14px;
-    letter-spacing: .22em;
-    text-transform: uppercase;
+.subtitle{
+    margin-top:16px;
+
+    color:rgba(255,255,255,.55);
+
+    font-size:12px;
+
+    letter-spacing:.30em;
+
+    text-transform:uppercase;
 }
 
-/* =========================
-   DIVIDER
-========================= */
+/* ================================
+   PORTAL LINE
+================================ */
 
-.divider {
-    width: 130px;
-    height: 1px;
-    margin: 28px auto;
+.portal-line{
+    display:flex;
+    align-items:center;
+    gap:12px;
 
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,.55),
-        transparent
-    );
+    width:min(420px,85%);
+
+    margin:38px auto 26px;
+
+    color:rgba(255,255,255,.42);
+
+    font-size:10px;
+
+    letter-spacing:.24em;
+
+    text-transform:uppercase;
 }
 
-/* =========================
-   CHOICES
-========================= */
+.portal-line::before,
+.portal-line::after{
+    content:"";
+    height:1px;
+    flex:1;
 
-.choice-title {
-    font-size: 13px;
-    color: #79839e;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    margin-bottom: 18px;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.30)
+        );
 }
 
-.choices {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    max-width: 650px;
-    margin: auto;
+.portal-line::after{
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.30),
+            transparent
+        );
 }
 
-.choice {
-    position: relative;
-    min-height: 145px;
-    padding: 25px 20px;
+/* ================================
+   ENTRY BUTTONS
+================================ */
 
-    border-radius: 22px;
-    border: 1px solid rgba(255,255,255,.10);
+.entries{
+    display:grid;
 
-    background: rgba(255,255,255,.035);
+    grid-template-columns:1fr 1fr;
 
-    overflow: hidden;
-    cursor: pointer;
+    gap:14px;
+
+    width:min(500px,100%);
+
+    margin:auto;
+}
+
+.entry{
+    position:relative;
+
+    min-height:115px;
+
+    border-radius:20px;
+
+    border:1px solid rgba(255,255,255,.13);
+
+    background:rgba(5,7,15,.38);
+
+    backdrop-filter:blur(12px);
+
+    cursor:pointer;
+
+    overflow:hidden;
 
     transition:
-        transform .3s ease,
-        border-color .3s ease,
-        background .3s ease,
-        box-shadow .3s ease;
+        transform .35s ease,
+        border-color .35s ease,
+        background .35s ease;
 }
 
-.choice::before {
-    content: "";
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    filter: blur(35px);
-    opacity: 0;
-    transition: opacity .35s ease;
+.entry::before{
+    content:"";
+
+    position:absolute;
+
+    width:120px;
+    height:120px;
+
+    border-radius:50%;
+
+    filter:blur(35px);
+
+    opacity:0;
+
+    transition:.35s ease;
 }
 
-.choice.visitor::before {
-    background: rgba(45,105,255,.35);
-    right: -80px;
-    bottom: -100px;
+.entry.visitor::before{
+    background:rgba(50,110,255,.35);
+    right:-50px;
+    bottom:-70px;
 }
 
-.choice.rid::before {
-    background: rgba(255,35,70,.35);
-    left: -80px;
-    bottom: -100px;
+.entry.rid::before{
+    background:rgba(255,30,60,.35);
+    left:-50px;
+    bottom:-70px;
 }
 
-.choice:hover {
-    transform: translateY(-5px);
-    background: rgba(255,255,255,.065);
+.entry:hover{
+    transform:translateY(-5px);
+    background:rgba(255,255,255,.07);
 }
 
-.choice:hover::before {
-    opacity: 1;
+.entry:hover::before{
+    opacity:1;
 }
 
-.choice.visitor:hover {
-    border-color: rgba(65,125,255,.45);
-    box-shadow: 0 15px 45px rgba(30,90,255,.13);
+.entry.visitor:hover{
+    border-color:rgba(65,125,255,.50);
 }
 
-.choice.rid:hover {
-    border-color: rgba(255,45,80,.45);
-    box-shadow: 0 15px 45px rgba(255,25,60,.13);
+.entry.rid:hover{
+    border-color:rgba(255,50,75,.50);
 }
 
-.choice-icon {
-    font-size: 27px;
-    margin-bottom: 13px;
+.entry-inner{
+    position:relative;
+    z-index:2;
+
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
+
+    padding:20px;
 }
 
-.choice-name {
-    position: relative;
-    z-index: 2;
-    font-size: 19px;
-    font-weight: 800;
-    letter-spacing: .08em;
+.entry-symbol{
+    font-size:22px;
+    margin-bottom:10px;
 }
 
-.choice-description {
-    position: relative;
-    z-index: 2;
-    margin-top: 7px;
-    font-size: 12px;
-    line-height: 1.5;
-    color: #8791aa;
+.entry-name{
+    font-size:15px;
+
+    font-weight:800;
+
+    letter-spacing:.15em;
 }
 
-/* =========================
-   FOOTER
-========================= */
+.entry-text{
+    margin-top:7px;
 
-.footer {
-    margin-top: 25px;
-    font-size: 10px;
-    color: #596177;
-    letter-spacing: .12em;
-    text-transform: uppercase;
+    color:rgba(255,255,255,.42);
+
+    font-size:10px;
+
+    letter-spacing:.03em;
 }
 
-/* =========================
+/* ================================
+   BOTTOM
+================================ */
+
+.bottom{
+    margin-top:24px;
+
+    font-size:9px;
+
+    color:rgba(255,255,255,.25);
+
+    letter-spacing:.20em;
+
+    text-transform:uppercase;
+}
+
+/* ================================
    MOBILE
-========================= */
+================================ */
 
-@media (max-width: 620px) {
+@media(max-width:600px){
 
-    .portal {
-        padding: 14px;
+    .portal{
+        padding:18px;
     }
 
-    .panel {
-        padding: 32px 17px 25px;
-        border-radius: 28px;
+    .logo{
+        width:105px;
+        height:105px;
+        margin-bottom:21px;
     }
 
-    .logo-wrap {
-        width: 88px;
-        height: 88px;
+    .logo::after{
+        width:118px;
+        height:42px;
     }
 
-    .logo-core {
-        inset: 15px;
+    .core{
+        width:64px;
+        height:64px;
     }
 
-    .universe-symbol {
-        transform: scale(.78);
+    .symbol{
+        width:36px;
+        height:36px;
     }
 
-    .brand {
-        font-size: 40px;
-        letter-spacing: .12em;
-        margin-left: .12em;
+    .symbol span{
+        width:45px;
+        height:15px;
     }
 
-    .tagline {
-        font-size: 10px;
-        letter-spacing: .16em;
+    .title{
+        font-size:43px;
+        letter-spacing:.16em;
+        margin-left:.16em;
     }
 
-    .divider {
-        margin: 22px auto;
+    .subtitle{
+        font-size:9px;
+        letter-spacing:.22em;
+        margin-top:13px;
     }
 
-    .choices {
-        grid-template-columns: 1fr;
-        gap: 11px;
+    .portal-line{
+        margin-top:30px;
+        margin-bottom:20px;
     }
 
-    .choice {
-        min-height: 112px;
-        padding: 19px;
-        text-align: left;
+    .entries{
+        grid-template-columns:1fr;
+        gap:10px;
     }
 
-    .choice-icon {
-        display: inline-block;
-        margin-right: 8px;
-        margin-bottom: 0;
+    .entry{
+        min-height:88px;
     }
 
-    .choice-name {
-        display: inline-block;
-        font-size: 16px;
+    .entry-inner{
+        flex-direction:row;
+        justify-content:flex-start;
+        text-align:left;
+        padding:17px 20px;
     }
 
-    .choice-description {
-        margin-top: 7px;
-        padding-left: 38px;
+    .entry-symbol{
+        margin:0 15px 0 0;
+        font-size:20px;
     }
 
-    .footer {
-        margin-top: 17px;
+    .entry-name{
+        font-size:14px;
+    }
+
+    .entry-text{
+        margin-top:4px;
+    }
+
+    .bottom{
+        margin-top:17px;
     }
 }
 </style>
@@ -519,94 +735,188 @@ body {
 
 <body>
 
-<div class="space">
-    <div class="stars">
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
+<!-- RANDOM WILL CHOOSE ONE UNIVERSE -->
+<div id="world" class="world">
+
+    <div class="nebula"></div>
+
+    <div class="orbits">
+        <div class="orbit one"></div>
+        <div class="orbit two"></div>
+        <div class="orbit three"></div>
     </div>
+
+    <div class="stars">
+        <span class="star s1"></span>
+        <span class="star s2"></span>
+        <span class="star s3"></span>
+        <span class="star s4"></span>
+        <span class="star s5"></span>
+        <span class="star s6"></span>
+        <span class="star s7"></span>
+        <span class="star s8"></span>
+        <span class="star s9"></span>
+        <span class="star s10"></span>
+        <span class="star s11"></span>
+        <span class="star s12"></span>
+    </div>
+
+    <div class="shade"></div>
+
 </div>
+
 
 <main class="portal">
 
-    <section class="panel">
+    <section class="content">
 
-        <div class="logo-wrap">
-            <div class="logo-ring"></div>
+        <!-- RANDOM LOGO -->
+        <div class="logo">
 
-            <div class="logo-core">
-                <div class="universe-symbol"></div>
-            </div>
-        </div>
+            <div class="core">
 
-        <div class="brand">RANDOM</div>
-
-        <div class="tagline">
-            One universe · infinite possibilities
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="choice-title">
-            Choose your way in
-        </div>
-
-        <div class="choices">
-
-            <div class="choice visitor" onclick="visitorAction()">
-                <div class="choice-icon">◉</div>
-
-                <div class="choice-name">
-                    VISITOR
+                <div class="symbol">
+                    <span></span>
+                    <span></span>
                 </div>
 
-                <div class="choice-description">
-                    Explore RANDOM without creating an identity.
-                </div>
-            </div>
-
-            <div class="choice rid" onclick="ridAction()">
-                <div class="choice-icon">✦</div>
-
-                <div class="choice-name">
-                    CREATE RID
-                </div>
-
-                <div class="choice-description">
-                    Create your RANDOM identity and unlock more.
-                </div>
             </div>
 
         </div>
 
-        <div class="footer">
-            RANDOM // Enter the unknown
+
+        <!-- BRAND -->
+        <div class="title">
+            RANDOM
+        </div>
+
+        <div class="subtitle">
+            Enter a universe without limits
+        </div>
+
+
+        <!-- ENTRY -->
+        <div class="portal-line">
+            Choose your entry
+        </div>
+
+
+        <div class="entries">
+
+            <button
+                class="entry visitor"
+                onclick="visitor()"
+            >
+
+                <div class="entry-inner">
+
+                    <div class="entry-symbol">
+                        ◉
+                    </div>
+
+                    <div>
+                        <div class="entry-name">
+                            VISITOR
+                        </div>
+
+                        <div class="entry-text">
+                            Explore RANDOM
+                        </div>
+                    </div>
+
+                </div>
+
+            </button>
+
+
+            <button
+                class="entry rid"
+                onclick="createRID()"
+            >
+
+                <div class="entry-inner">
+
+                    <div class="entry-symbol">
+                        ✦
+                    </div>
+
+                    <div>
+                        <div class="entry-name">
+                            CREATE RID
+                        </div>
+
+                        <div class="entry-text">
+                            Create your identity
+                        </div>
+                    </div>
+
+                </div>
+
+            </button>
+
+        </div>
+
+
+        <div class="bottom">
+            RANDOM // Identity • Gaming • Creation • More
         </div>
 
     </section>
 
 </main>
 
+
 <script>
 
-function visitorAction() {
-    alert("VISITOR mode selected — exploration system coming next.");
+/*
+========================================
+RANDOM UNIVERSE SELECTOR
+
+Every new visit gets either:
+RED UNIVERSE
+or
+BLUE UNIVERSE
+========================================
+*/
+
+const world = document.getElementById("world");
+
+const universe =
+    Math.random() < 0.5
+    ? "red"
+    : "blue";
+
+world.classList.add(universe);
+
+
+/*
+========================================
+TEMPORARY ACTIONS
+
+These will later connect to the
+real RANDOM system.
+========================================
+*/
+
+function visitor(){
+
+    alert(
+        "VISITOR selected.\n\n" +
+        "RANDOM exploration will open here."
+    );
+
 }
 
-function ridAction() {
-    alert("RID creation selected — identity system coming next.");
+function createRID(){
+
+    alert(
+        "CREATE RID selected.\n\n" +
+        "Your RANDOM identity creation will begin here."
+    );
+
 }
 
 </script>
 
 </body>
-</html>
+                </html>
