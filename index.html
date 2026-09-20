@@ -6,392 +6,461 @@
 <title>RANDOM</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-html,body{
+html,
+body{
     width:100%;
     height:100%;
     overflow:hidden;
 }
 
 body{
-    background:#020205;
+    background:#010208;
     color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
 }
 
 
-/* =====================================================
-   ENVIRONMENT
-===================================================== */
+/* =========================================================
+   WORLD
+========================================================= */
 
-.scene{
+.world{
     position:fixed;
     inset:0;
     overflow:hidden;
-    background:#020205;
+    background:#010208;
 }
 
 
-/* red atmosphere */
+/* =========================================================
+   MASSIVE COSMIC FIELDS
+========================================================= */
 
-.red-glow{
+.field{
     position:absolute;
 
-    width:70vw;
-    height:70vw;
+    width:65vw;
+    height:65vw;
 
-    left:-35vw;
+    min-width:520px;
+    min-height:520px;
+
+    border-radius:50%;
+
+    filter:blur(55px);
+
+    opacity:.65;
+}
+
+.field.red{
+    left:-32vw;
     top:50%;
 
     transform:translateY(-50%);
 
-    border-radius:50%;
-
     background:
         radial-gradient(
             circle,
-            rgba(255,20,55,.34),
-            rgba(150,5,35,.13) 38%,
+            rgba(255,24,60,.42),
+            rgba(180,8,40,.17) 38%,
             transparent 70%
         );
 
-    filter:blur(45px);
-
-    animation:redMove 16s ease-in-out infinite alternate;
+    animation:
+        redField 17s ease-in-out infinite alternate;
 }
 
-
-/* blue atmosphere */
-
-.blue-glow{
-    position:absolute;
-
-    width:70vw;
-    height:70vw;
-
-    right:-35vw;
+.field.blue{
+    right:-32vw;
     top:50%;
 
     transform:translateY(-50%);
 
-    border-radius:50%;
-
     background:
         radial-gradient(
             circle,
-            rgba(35,105,255,.34),
-            rgba(10,55,170,.13) 38%,
+            rgba(35,110,255,.42),
+            rgba(12,55,180,.17) 38%,
             transparent 70%
         );
 
-    filter:blur(45px);
+    animation:
+        blueField 19s ease-in-out infinite alternate;
+}
 
-    animation:blueMove 18s ease-in-out infinite alternate;
+@keyframes redField{
+
+    from{
+        transform:
+            translateY(-50%)
+            translateX(-2%)
+            scale(.92);
+    }
+
+    to{
+        transform:
+            translateY(-48%)
+            translateX(5%)
+            scale(1.08);
+    }
+
+}
+
+@keyframes blueField{
+
+    from{
+        transform:
+            translateY(-50%)
+            translateX(2%)
+            scale(1);
+    }
+
+    to{
+        transform:
+            translateY(-52%)
+            translateX(-5%)
+            scale(.94);
+    }
+
 }
 
 
-@keyframes redMove{
-    0%{
-        transform:translateY(-50%) scale(.92);
-    }
+/* =========================================================
+   CENTER VIGNETTE
+========================================================= */
 
-    100%{
-        transform:translateY(-48%) scale(1.08);
-    }
-}
-
-
-@keyframes blueMove{
-    0%{
-        transform:translateY(-50%) scale(1);
-    }
-
-    100%{
-        transform:translateY(-53%) scale(.94);
-    }
-}
-
-
-/* =====================================================
-   RANDOM ATMOSPHERIC NOISE
-===================================================== */
-
-.noise{
+.vignette{
     position:absolute;
-    inset:-50%;
+    inset:0;
 
-    opacity:.035;
-
-    background-image:
+    background:
         radial-gradient(
-            circle,
-            white 1px,
-            transparent 1px
+            ellipse at center,
+            transparent 10%,
+            rgba(0,0,0,.28) 55%,
+            rgba(0,0,0,.88) 100%
         );
 
-    background-size:4px 4px;
-
-    animation:noiseMove .8s steps(2) infinite;
+    pointer-events:none;
 }
 
-@keyframes noiseMove{
-    0%{
-        transform:translate(0,0);
-    }
 
-    25%{
-        transform:translate(2%,1%);
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+.particles{
+    position:absolute;
+    inset:0;
+}
+
+.particle{
+    position:absolute;
+
+    width:2px;
+    height:2px;
+
+    border-radius:50%;
+
+    background:white;
+
+    opacity:.28;
+
+    animation:
+        drift 9s ease-in-out infinite;
+}
+
+.p1{left:8%;top:19%;animation-delay:-1s}
+.p2{left:14%;top:67%;animation-delay:-5s}
+.p3{left:22%;top:34%;animation-delay:-3s}
+.p4{left:31%;top:82%;animation-delay:-7s}
+.p5{left:39%;top:13%;animation-delay:-2s}
+.p6{left:47%;top:91%;animation-delay:-4s}
+.p7{left:55%;top:20%;animation-delay:-8s}
+.p8{left:63%;top:77%;animation-delay:-1.5s}
+.p9{left:71%;top:31%;animation-delay:-6s}
+.p10{left:79%;top:15%;animation-delay:-3.5s}
+.p11{left:87%;top:61%;animation-delay:-7.5s}
+.p12{left:93%;top:84%;animation-delay:-2.5s}
+.p13{left:18%;top:90%;animation-delay:-6.5s}
+.p14{left:83%;top:42%;animation-delay:-4.5s}
+
+@keyframes drift{
+
+    0%,100%{
+        transform:
+            translate(0,0)
+            scale(.7);
+
+        opacity:.15;
     }
 
     50%{
-        transform:translate(-1%,2%);
+        transform:
+            translate(8px,-16px)
+            scale(1.7);
+
+        opacity:.75;
     }
 
-    75%{
-        transform:translate(1%,-1%);
-    }
-
-    100%{
-        transform:translate(0,0);
-    }
 }
 
 
-/* =====================================================
-   EDGE LINES
-===================================================== */
-
-.edge{
-    position:absolute;
-    pointer-events:none;
-    opacity:.16;
-}
-
-.edge.left{
-    left:0;
-    top:0;
-    bottom:0;
-    width:1px;
-
-    background:
-        linear-gradient(
-            transparent,
-            rgba(255,30,60,.7),
-            transparent
-        );
-}
-
-.edge.right{
-    right:0;
-    top:0;
-    bottom:0;
-    width:1px;
-
-    background:
-        linear-gradient(
-            transparent,
-            rgba(40,110,255,.7),
-            transparent
-        );
-}
-
-
-/* =====================================================
+/* =========================================================
    TOP BRAND
-===================================================== */
+========================================================= */
 
-.topbar{
+.top{
     position:absolute;
 
-    top:28px;
-    left:34px;
-    right:34px;
+    top:27px;
+    left:30px;
+    right:30px;
+
+    z-index:20;
 
     display:flex;
     justify-content:space-between;
     align-items:center;
-
-    z-index:10;
 }
 
-.small-brand{
+.brand-mini{
     display:flex;
     align-items:center;
     gap:9px;
 
     font-size:10px;
-    font-weight:700;
+
+    font-weight:800;
 
     letter-spacing:.34em;
 
     color:rgba(255,255,255,.62);
 }
 
-.small-mark{
+.brand-mini-dot{
     width:7px;
     height:7px;
 
     border-radius:50%;
 
-    background:#fff;
+    background:white;
 
     box-shadow:
-        0 0 12px #fff;
+        0 0 14px white;
 }
 
-.version{
+.system{
     font-size:8px;
+
     letter-spacing:.20em;
-    color:rgba(255,255,255,.22);
+
+    color:rgba(255,255,255,.20);
 }
 
 
-/* =====================================================
-   MAIN PORTAL
-===================================================== */
+/* =========================================================
+   CORE AREA
+========================================================= */
 
-.portal{
+.core-area{
     position:absolute;
 
     left:50%;
     top:50%;
 
-    transform:translate(-50%,-50%);
+    width:430px;
+    height:430px;
 
-    width:min(700px,92vw);
-
-    text-align:center;
+    transform:translate(-50%,-53%);
 
     z-index:5;
-}
-
-
-/* =====================================================
-   LOGO SYSTEM
-===================================================== */
-
-.logo{
-    position:relative;
-
-    width:180px;
-    height:180px;
-
-    margin:0 auto 30px;
 
     display:flex;
-    justify-content:center;
     align-items:center;
-
-    transition:transform .25s ease;
+    justify-content:center;
 }
 
 
-/* outer orbit */
+/* =========================================================
+   ENERGY RING
+========================================================= */
 
-.logo-orbit{
+.energy-ring{
     position:absolute;
 
-    inset:4px;
+    width:100%;
+    height:100%;
 
     border-radius:50%;
 
-    border:1px solid rgba(255,255,255,.22);
+    background:
+        conic-gradient(
+            from 0deg,
+            transparent 0deg,
+            rgba(255,35,65,.42) 60deg,
+            transparent 110deg,
+            transparent 160deg,
+            rgba(45,120,255,.46) 220deg,
+            transparent 280deg,
+            rgba(255,35,65,.28) 320deg,
+            transparent 360deg
+        );
 
-    transform:rotate(18deg) scaleX(1.18);
+    -webkit-mask:
+        radial-gradient(
+            transparent 64%,
+            #000 65%,
+            #000 66%,
+            transparent 67%
+        );
 
-    animation:orbitOne 18s linear infinite;
+    mask:
+        radial-gradient(
+            transparent 64%,
+            #000 65%,
+            #000 66%,
+            transparent 67%
+        );
+
+    animation:
+        energyRotate 21s linear infinite;
 }
 
+@keyframes energyRotate{
 
-/* second orbit */
-
-.logo-orbit.two{
-    inset:15px;
-
-    transform:rotate(-42deg) scaleX(1.42);
-
-    border-color:rgba(255,255,255,.14);
-
-    animation:orbitTwo 23s linear infinite;
-}
-
-
-/* third orbit */
-
-.logo-orbit.three{
-    inset:29px;
-
-    transform:rotate(73deg) scaleX(1.1);
-
-    border-color:rgba(255,255,255,.10);
-
-    animation:orbitThree 29s linear infinite;
-}
-
-
-@keyframes orbitOne{
     to{
         rotate:360deg;
     }
+
+}
+
+
+/* =========================================================
+   ORBIT 1
+========================================================= */
+
+.orbit{
+    position:absolute;
+
+    border-radius:50%;
+
+    border:1px solid rgba(255,255,255,.16);
+}
+
+.orbit.one{
+    width:350px;
+    height:120px;
+
+    transform:rotate(22deg);
+
+    animation:
+        orbitOne 17s linear infinite;
+}
+
+.orbit.two{
+    width:350px;
+    height:120px;
+
+    transform:rotate(-22deg);
+
+    border-color:rgba(255,255,255,.11);
+
+    animation:
+        orbitTwo 22s linear infinite;
+}
+
+.orbit.three{
+    width:290px;
+    height:90px;
+
+    transform:rotate(67deg);
+
+    border-color:rgba(255,255,255,.09);
+
+    animation:
+        orbitThree 26s linear infinite;
+}
+
+@keyframes orbitOne{
+
+    to{
+        rotate:360deg;
+    }
+
 }
 
 @keyframes orbitTwo{
+
     to{
         rotate:-360deg;
     }
+
 }
 
 @keyframes orbitThree{
+
     to{
         rotate:360deg;
     }
+
 }
 
 
-/* orbit particles */
+/* =========================================================
+   ORBIT PARTICLES
+========================================================= */
 
-.logo-orbit::before,
-.logo-orbit::after{
-    content:"";
-
+.orbit-dot{
     position:absolute;
 
-    width:5px;
-    height:5px;
+    width:6px;
+    height:6px;
 
     border-radius:50%;
 
-    background:#fff;
+    background:white;
 
     box-shadow:
-        0 0 12px #fff;
+        0 0 14px white;
 }
 
-.logo-orbit::before{
-    left:13%;
-    top:4%;
+.orbit-dot.a{
+    top:-3px;
+    left:23%;
 }
 
-.logo-orbit::after{
-    right:14%;
-    bottom:3%;
+.orbit-dot.b{
+    right:-3px;
+    top:47%;
+}
+
+.orbit-dot.c{
+    bottom:-3px;
+    left:67%;
 }
 
 
-/* =====================================================
-   LOGO CORE
-===================================================== */
+/* =========================================================
+   CORE
+========================================================= */
 
-.logo-core{
+.core{
     position:relative;
 
-    width:92px;
-    height:92px;
+    width:205px;
+    height:205px;
 
     border-radius:50%;
 
@@ -401,245 +470,270 @@ body{
 
     background:
         radial-gradient(
-            circle at 35% 28%,
+            circle at 32% 25%,
             rgba(255,255,255,.18),
-            rgba(8,9,16,.96) 57%,
-            #010106
+            rgba(13,15,25,.97) 48%,
+            #010207 74%
         );
 
-    border:1px solid rgba(255,255,255,.28);
+    border:
+        1px solid rgba(255,255,255,.22);
 
     box-shadow:
-        0 0 30px rgba(255,255,255,.08),
-        inset 0 0 30px rgba(255,255,255,.05);
+        0 0 55px rgba(255,255,255,.06),
+        0 0 110px rgba(55,85,255,.07),
+        inset 0 0 45px rgba(255,255,255,.045);
+
+    animation:
+        coreBreath 6s ease-in-out infinite;
+}
+
+@keyframes coreBreath{
+
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.025);
+    }
+
 }
 
 
-/* universe symbol */
+/* =========================================================
+   LOGO
+========================================================= */
 
-.symbol{
+.logo{
     position:relative;
 
-    width:48px;
-    height:48px;
+    width:82px;
+    height:82px;
 
-    border:3px solid white;
-
-    border-radius:50%;
-
-    box-shadow:
-        0 0 16px rgba(255,255,255,.45);
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 
-.symbol::before,
-.symbol::after{
+/* outer circle */
+
+.logo::before{
     content:"";
 
     position:absolute;
 
-    left:50%;
-    top:50%;
+    inset:8px;
 
-    width:58px;
-    height:18px;
-
-    border:2px solid rgba(255,255,255,.9);
-
-    border-radius:50%;
-
-    transform:translate(-50%,-50%);
-}
-
-
-.symbol::before{
-    rotate:32deg;
-}
-
-.symbol::after{
-    rotate:-32deg;
-}
-
-
-.symbol-dot{
-    position:absolute;
-
-    width:8px;
-    height:8px;
-
-    left:50%;
-    top:50%;
-
-    transform:translate(-50%,-50%);
-
-    background:white;
+    border:
+        3px solid rgba(255,255,255,.92);
 
     border-radius:50%;
 
     box-shadow:
+        0 0 16px rgba(255,255,255,.40);
+}
+
+
+/* crossing paths */
+
+.logo::after{
+    content:"";
+
+    position:absolute;
+
+    width:100px;
+    height:32px;
+
+    border:
+        2px solid rgba(255,255,255,.88);
+
+    border-radius:50%;
+
+    transform:rotate(31deg);
+}
+
+
+/* second path */
+
+.logo-path{
+    position:absolute;
+
+    width:100px;
+    height:32px;
+
+    border:
+        2px solid rgba(255,255,255,.70);
+
+    border-radius:50%;
+
+    transform:rotate(-31deg);
+}
+
+
+/* center */
+
+.logo-center{
+    width:12px;
+    height:12px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
         0 0 15px white,
-        0 0 25px rgba(90,120,255,.7);
+        0 0 32px rgba(65,110,255,.75);
 }
 
 
-/* =====================================================
-   BRAND
-===================================================== */
+/* =========================================================
+   RANDOM WORD
+========================================================= */
 
-.title{
-    font-size:clamp(50px,10vw,86px);
+.word{
+    position:absolute;
 
-    font-weight:900;
+    left:50%;
+    top:50%;
 
-    letter-spacing:.25em;
+    transform:
+        translate(-50%,115px);
 
-    margin-left:.25em;
+    white-space:nowrap;
 
-    line-height:1;
+    font-size:13px;
 
-    color:#fff;
+    font-weight:800;
 
-    text-shadow:
-        0 0 35px rgba(255,255,255,.08);
+    letter-spacing:.52em;
+
+    margin-left:.52em;
+
+    color:rgba(255,255,255,.72);
 }
 
 
-.tagline{
-    margin-top:16px;
+/* =========================================================
+   BOTTOM INTERFACE
+========================================================= */
 
-    color:rgba(255,255,255,.40);
+.interface{
+    position:absolute;
 
-    font-size:10px;
+    left:50%;
+    top:50%;
 
-    letter-spacing:.34em;
+    transform:
+        translate(-50%,245px);
 
-    text-transform:uppercase;
+    width:min(520px,calc(100vw - 36px));
+
+    text-align:center;
+
+    z-index:15;
 }
 
-
-/* =====================================================
-   DIVIDER
-===================================================== */
-
-.divider{
-    width:min(410px,75vw);
-
-    height:1px;
-
-    margin:38px auto 27px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.28),
-            transparent
-        );
-}
-
-
-/* =====================================================
-   ENTRY
-===================================================== */
-
-.entry-label{
-    font-size:8px;
-
-    letter-spacing:.28em;
-
-    color:rgba(255,255,255,.28);
-
-    text-transform:uppercase;
-
+.prompt{
     margin-bottom:16px;
+
+    font-size:9px;
+
+    text-transform:uppercase;
+
+    letter-spacing:.30em;
+
+    color:rgba(255,255,255,.30);
 }
 
 
-.entries{
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.actions{
     display:flex;
 
     justify-content:center;
 
-    gap:12px;
+    gap:11px;
 }
 
-
-.entry{
+.action{
     position:relative;
 
     width:220px;
-    height:65px;
+    height:60px;
 
-    border:1px solid rgba(255,255,255,.14);
+    border-radius:15px;
 
-    border-radius:14px;
+    border:
+        1px solid rgba(255,255,255,.13);
 
-    background:rgba(2,3,8,.45);
+    background:
+        rgba(2,4,10,.48);
 
-    color:white;
+    color:#fff;
 
     cursor:pointer;
 
     overflow:hidden;
 
-    backdrop-filter:blur(10px);
+    backdrop-filter:blur(12px);
 
     transition:
-        transform .3s ease,
-        border-color .3s ease,
-        background .3s ease;
+        transform .30s ease,
+        border-color .30s ease,
+        background .30s ease;
 }
 
+.action:hover{
+    transform:translateY(-5px);
 
-.entry::before{
+    border-color:
+        rgba(255,255,255,.30);
+
+    background:
+        rgba(255,255,255,.055);
+}
+
+.action::before{
     content:"";
 
     position:absolute;
 
-    width:170px;
-    height:170px;
+    width:160px;
+    height:160px;
 
     border-radius:50%;
 
-    filter:blur(35px);
+    filter:blur(38px);
 
     opacity:0;
 
     transition:.4s ease;
 }
 
-
-.entry.red::before{
-    background:rgba(255,30,65,.32);
-
-    left:-80px;
-    top:-80px;
+.action:hover::before{
+    opacity:.7;
 }
 
+.action.visitor::before{
+    background:rgba(40,110,255,.34);
 
-.entry.blue::before{
-    background:rgba(35,110,255,.32);
-
-    right:-80px;
-    top:-80px;
+    right:-90px;
+    top:-90px;
 }
 
+.action.rid::before{
+    background:rgba(255,25,60,.34);
 
-.entry:hover{
-    transform:translateY(-5px);
-
-    background:rgba(255,255,255,.055);
-
-    border-color:rgba(255,255,255,.32);
+    left:-90px;
+    top:-90px;
 }
 
-
-.entry:hover::before{
-    opacity:1;
-}
-
-
-.entry-inner{
+.action-content{
     position:relative;
 
     z-index:2;
@@ -652,18 +746,16 @@ body{
 
     justify-content:center;
 
-    gap:12px;
+    gap:11px;
 }
 
+.icon{
+    font-size:16px;
 
-.entry-icon{
-    font-size:17px;
-
-    opacity:.8;
+    opacity:.82;
 }
 
-
-.entry-name{
+.name{
     display:block;
 
     font-size:11px;
@@ -673,155 +765,172 @@ body{
     letter-spacing:.20em;
 }
 
-
-.entry-description{
+.description{
     display:block;
 
     margin-top:4px;
 
     font-size:8px;
 
-    color:rgba(255,255,255,.35);
-
-    letter-spacing:.04em;
+    color:rgba(255,255,255,.34);
 }
 
 
-/* =====================================================
-   BOTTOM MESSAGE
-===================================================== */
+/* =========================================================
+   FOOTER
+========================================================= */
 
-.bottom{
-    margin-top:26px;
-
-    color:rgba(255,255,255,.20);
-
-    font-size:8px;
-
-    letter-spacing:.24em;
-
-    text-transform:uppercase;
-}
-
-
-/* =====================================================
-   RANDOMNESS
-===================================================== */
-
-.random-state{
-    position:absolute;
-
-    bottom:25px;
-    left:50%;
-
-    transform:translateX(-50%);
-
-    z-index:10;
-
-    color:rgba(255,255,255,.17);
+.footer{
+    margin-top:21px;
 
     font-size:7px;
 
-    letter-spacing:.18em;
+    letter-spacing:.25em;
+
+    color:rgba(255,255,255,.18);
 
     text-transform:uppercase;
-
-    white-space:nowrap;
 }
 
 
-/* =====================================================
+/* =========================================================
+   RANDOM STATE
+========================================================= */
+
+.state{
+    position:absolute;
+
+    left:50%;
+    bottom:22px;
+
+    transform:translateX(-50%);
+
+    z-index:20;
+
+    white-space:nowrap;
+
+    font-size:7px;
+
+    letter-spacing:.20em;
+
+    color:rgba(255,255,255,.15);
+
+    text-transform:uppercase;
+}
+
+
+/* =========================================================
    MOBILE
-===================================================== */
+========================================================= */
 
-@media(max-width:600px){
+@media(max-width:650px){
 
-    .topbar{
+    .top{
         top:19px;
         left:18px;
         right:18px;
     }
 
-    .version{
+    .system{
         display:none;
     }
 
-    .portal{
-        width:92vw;
+    .core-area{
+        width:330px;
+        height:330px;
+
+        transform:
+            translate(-50%,-57%);
+    }
+
+    .energy-ring{
+        width:100%;
+        height:100%;
+    }
+
+    .orbit.one,
+    .orbit.two{
+        width:270px;
+        height:95px;
+    }
+
+    .orbit.three{
+        width:220px;
+        height:72px;
+    }
+
+    .core{
+        width:160px;
+        height:160px;
     }
 
     .logo{
-        width:145px;
-        height:145px;
-
-        margin-bottom:22px;
+        transform:scale(.75);
     }
 
-    .logo-core{
-        width:76px;
-        height:76px;
+    .word{
+        transform:
+            translate(-50%,91px);
+
+        font-size:9px;
+
+        letter-spacing:.42em;
+
+        margin-left:.42em;
     }
 
-    .symbol{
-        transform:scale(.78);
+    .interface{
+        transform:
+            translate(-50%,198px);
     }
 
-    .title{
-        font-size:45px;
-
-        letter-spacing:.17em;
-
-        margin-left:.17em;
-    }
-
-    .tagline{
+    .prompt{
         font-size:8px;
 
-        letter-spacing:.23em;
+        letter-spacing:.22em;
 
-        margin-top:13px;
+        margin-bottom:12px;
     }
 
-    .divider{
-        margin-top:29px;
-        margin-bottom:21px;
-    }
-
-    .entries{
+    .actions{
         flex-direction:column;
 
-        gap:9px;
+        gap:8px;
+    }
 
+    .action{
         width:100%;
+
+        height:55px;
     }
 
-    .entry{
-        width:100%;
-        height:58px;
+    .footer{
+        margin-top:14px;
     }
 
-    .bottom{
-        margin-top:18px;
-    }
-
-    .random-state{
-        bottom:15px;
+    .state{
+        bottom:12px;
     }
 }
 
 
-@media(max-height:700px){
+/* =========================================================
+   SMALL HEIGHT DEVICES
+========================================================= */
 
-    .logo{
-        transform:scale(.78);
+@media(max-height:680px){
 
-        margin-bottom:-3px;
+    .core-area{
+        transform:
+            translate(-50%,-59%)
+            scale(.82);
     }
 
-    .divider{
-        margin-top:22px;
-        margin-bottom:18px;
+    .interface{
+        transform:
+            translate(-50%,184px);
     }
+
 }
 
 </style>
@@ -831,125 +940,150 @@ body{
 <body>
 
 
-<div class="scene">
+<!-- =====================================================
+     WORLD
+===================================================== -->
 
-    <div class="red-glow"></div>
+<div class="world">
 
-    <div class="blue-glow"></div>
+    <div class="field red"></div>
 
-    <div class="noise"></div>
+    <div class="field blue"></div>
 
-    <div class="edge left"></div>
-    <div class="edge right"></div>
+    <div class="particles">
+
+        <span class="particle p1"></span>
+        <span class="particle p2"></span>
+        <span class="particle p3"></span>
+        <span class="particle p4"></span>
+        <span class="particle p5"></span>
+        <span class="particle p6"></span>
+        <span class="particle p7"></span>
+        <span class="particle p8"></span>
+        <span class="particle p9"></span>
+        <span class="particle p10"></span>
+        <span class="particle p11"></span>
+        <span class="particle p12"></span>
+        <span class="particle p13"></span>
+        <span class="particle p14"></span>
+
+    </div>
+
+    <div class="vignette"></div>
 
 </div>
 
 
-<header class="topbar">
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
-    <div class="small-brand">
+<header class="top">
 
-        <span class="small-mark"></span>
+    <div class="brand-mini">
+
+        <span class="brand-mini-dot"></span>
 
         RANDOM
 
     </div>
 
-    <div class="version">
+    <div class="system">
 
-        UNKNOWN / 001
+        RANDOM SYSTEM / 007
 
     </div>
 
 </header>
 
 
-<main class="portal">
+<!-- =====================================================
+     CORE
+===================================================== -->
+
+<section class="core-area" id="coreArea">
+
+    <div class="energy-ring"></div>
 
 
-    <!-- =========================================
-         LOGO
-    ========================================== -->
+    <div class="orbit one">
 
-    <div
-        class="logo"
-        id="logo"
-    >
+        <span class="orbit-dot a"></span>
 
-        <div class="logo-orbit"></div>
-
-        <div class="logo-orbit two"></div>
-
-        <div class="logo-orbit three"></div>
+    </div>
 
 
-        <div class="logo-core">
+    <div class="orbit two">
 
-            <div class="symbol">
+        <span class="orbit-dot b"></span>
 
-                <span class="symbol-dot"></span>
+    </div>
 
-            </div>
+
+    <div class="orbit three">
+
+        <span class="orbit-dot c"></span>
+
+    </div>
+
+
+    <div class="core">
+
+        <div class="logo">
+
+            <div class="logo-path"></div>
+
+            <div class="logo-center"></div>
 
         </div>
 
     </div>
 
 
-    <!-- =========================================
-         BRAND
-    ========================================== -->
-
-    <h1 class="title">
+    <div class="word">
 
         RANDOM
 
-    </h1>
+    </div>
+
+</section>
 
 
-    <p class="tagline">
+<!-- =====================================================
+     ENTRY
+===================================================== -->
 
-        Nothing here is predetermined.
+<section class="interface">
 
-    </p>
+    <div class="prompt">
 
-
-    <div class="divider"></div>
-
-
-    <!-- =========================================
-         ENTRY
-    ========================================== -->
-
-    <div class="entry-label">
-
-        Choose your beginning
+        Choose your way into RANDOM
 
     </div>
 
 
-    <div class="entries">
+    <div class="actions">
 
 
         <button
-            class="entry blue"
+            class="action visitor"
             onclick="visitor()"
         >
 
-            <div class="entry-inner">
+            <div class="action-content">
 
-                <span class="entry-icon">
+                <span class="icon">
                     ◉
                 </span>
 
                 <span>
 
-                    <span class="entry-name">
+                    <span class="name">
                         VISITOR
                     </span>
 
-                    <span class="entry-description">
-                        Explore without an identity
+                    <span class="description">
+                        Explore RANDOM
                     </span>
 
                 </span>
@@ -960,24 +1094,24 @@ body{
 
 
         <button
-            class="entry red"
+            class="action rid"
             onclick="createRID()"
         >
 
-            <div class="entry-inner">
+            <div class="action-content">
 
-                <span class="entry-icon">
+                <span class="icon">
                     ✦
                 </span>
 
                 <span>
 
-                    <span class="entry-name">
+                    <span class="name">
                         CREATE RID
                     </span>
 
-                    <span class="entry-description">
-                        Begin your RANDOM identity
+                    <span class="description">
+                        Create your identity
                     </span>
 
                 </span>
@@ -990,129 +1124,89 @@ body{
     </div>
 
 
-    <div class="bottom">
+    <div class="footer">
 
-        RANDOM / ENTER THE UNEXPECTED
+        Nothing here is predetermined
 
     </div>
 
-</main>
+</section>
 
 
-<div class="random-state" id="state">
+<div class="state" id="state">
 
-    RANDOM STATE // CALCULATING
+    RANDOM // CORE ACTIVE
 
 </div>
 
 
 <script>
 
-/* =====================================================
-   RANDOM ATMOSPHERE
-
-   Every refresh creates a slightly different
-   visual atmosphere.
-===================================================== */
-
-const redGlow =
-    document.querySelector(".red-glow");
-
-const blueGlow =
-    document.querySelector(".blue-glow");
-
-const logo =
-    document.getElementById("logo");
+/* =========================================================
+   RANDOM VISUAL STATE
+========================================================= */
 
 const state =
     document.getElementById("state");
 
-
-const randomNumber =
-    Math.random();
-
-
-/*
-Different refresh = slightly different
-scale/intensity/position.
-*/
-
-const redScale =
-    .92 + Math.random() * .18;
-
-const blueScale =
-    .92 + Math.random() * .18;
-
-
-redGlow.style.opacity =
-    (.75 + Math.random() * .25).toFixed(2);
-
-blueGlow.style.opacity =
-    (.75 + Math.random() * .25).toFixed(2);
-
-redGlow.style.transform =
-    `translateY(-50%) scale(${redScale})`;
-
-blueGlow.style.transform =
-    `translateY(-50%) scale(${blueScale})`;
-
-
-/*
-Random visual state label.
-*/
-
 const states = [
-    "RANDOM STATE // UNDEFINED",
-    "RANDOM STATE // UNSTABLE",
-    "RANDOM STATE // UNKNOWN",
-    "RANDOM STATE // OPEN",
-    "RANDOM STATE // DISCOVERED"
+
+    "RANDOM // CORE ACTIVE",
+    "RANDOM // UNDEFINED",
+    "RANDOM // UNSTABLE",
+    "RANDOM // UNKNOWN",
+    "RANDOM // OPEN"
+
 ];
 
 state.textContent =
-    states[Math.floor(Math.random() * states.length)];
+    states[
+        Math.floor(
+            Math.random() * states.length
+        )
+    ];
 
 
-/* =====================================================
-   SUBTLE MOUSE MOVEMENT
-===================================================== */
+/* =========================================================
+   SUBTLE PARALLAX
+========================================================= */
+
+const coreArea =
+    document.getElementById("coreArea");
 
 document.addEventListener(
     "mousemove",
     function(event){
 
         const x =
-            (event.clientX /
-            window.innerWidth - .5);
+            event.clientX /
+            window.innerWidth -
+            .5;
 
         const y =
-            (event.clientY /
-            window.innerHeight - .5);
+            event.clientY /
+            window.innerHeight -
+            .5;
 
+        coreArea.style.marginLeft =
+            `${x * 8}px`;
 
-        logo.style.transform =
-            `
-            translate(
-                ${x * 7}px,
-                ${y * 7}px
-            )
-            `;
+        coreArea.style.marginTop =
+            `${y * 8}px`;
 
     }
 );
 
 
-/* =====================================================
+/* =========================================================
    TEMPORARY ACTIONS
-
-   Real RID/login flow comes later.
-===================================================== */
+========================================================= */
 
 function visitor(){
 
     alert(
         "VISITOR MODE\n\n" +
-        "RANDOM exploration begins here."
+        "The RANDOM universe awaits."
     );
 
 }
@@ -1130,4 +1224,4 @@ function createRID(){
 </script>
 
 </body>
-    </html>
+</html>
