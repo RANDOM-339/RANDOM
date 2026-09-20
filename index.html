@@ -1,1227 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RANDOM</title>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html,
-body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-}
-
-body{
-    background:#010208;
-    color:#fff;
-    font-family:
-        Inter,
-        Arial,
-        Helvetica,
-        sans-serif;
-}
-
-
-/* =========================================================
-   WORLD
-========================================================= */
-
-.world{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
-    background:#010208;
-}
-
-
-/* =========================================================
-   MASSIVE COSMIC FIELDS
-========================================================= */
-
-.field{
-    position:absolute;
-
-    width:65vw;
-    height:65vw;
-
-    min-width:520px;
-    min-height:520px;
-
-    border-radius:50%;
-
-    filter:blur(55px);
-
-    opacity:.65;
-}
-
-.field.red{
-    left:-32vw;
-    top:50%;
-
-    transform:translateY(-50%);
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,24,60,.42),
-            rgba(180,8,40,.17) 38%,
-            transparent 70%
-        );
-
-    animation:
-        redField 17s ease-in-out infinite alternate;
-}
-
-.field.blue{
-    right:-32vw;
-    top:50%;
-
-    transform:translateY(-50%);
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(35,110,255,.42),
-            rgba(12,55,180,.17) 38%,
-            transparent 70%
-        );
-
-    animation:
-        blueField 19s ease-in-out infinite alternate;
-}
-
-@keyframes redField{
-
-    from{
-        transform:
-            translateY(-50%)
-            translateX(-2%)
-            scale(.92);
-    }
-
-    to{
-        transform:
-            translateY(-48%)
-            translateX(5%)
-            scale(1.08);
-    }
-
-}
-
-@keyframes blueField{
-
-    from{
-        transform:
-            translateY(-50%)
-            translateX(2%)
-            scale(1);
-    }
-
-    to{
-        transform:
-            translateY(-52%)
-            translateX(-5%)
-            scale(.94);
-    }
-
-}
-
-
-/* =========================================================
-   CENTER VIGNETTE
-========================================================= */
-
-.vignette{
-    position:absolute;
-    inset:0;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            transparent 10%,
-            rgba(0,0,0,.28) 55%,
-            rgba(0,0,0,.88) 100%
-        );
-
-    pointer-events:none;
-}
-
-
-/* =========================================================
-   PARTICLES
-========================================================= */
-
-.particles{
-    position:absolute;
-    inset:0;
-}
-
-.particle{
-    position:absolute;
-
-    width:2px;
-    height:2px;
-
-    border-radius:50%;
-
-    background:white;
-
-    opacity:.28;
-
-    animation:
-        drift 9s ease-in-out infinite;
-}
-
-.p1{left:8%;top:19%;animation-delay:-1s}
-.p2{left:14%;top:67%;animation-delay:-5s}
-.p3{left:22%;top:34%;animation-delay:-3s}
-.p4{left:31%;top:82%;animation-delay:-7s}
-.p5{left:39%;top:13%;animation-delay:-2s}
-.p6{left:47%;top:91%;animation-delay:-4s}
-.p7{left:55%;top:20%;animation-delay:-8s}
-.p8{left:63%;top:77%;animation-delay:-1.5s}
-.p9{left:71%;top:31%;animation-delay:-6s}
-.p10{left:79%;top:15%;animation-delay:-3.5s}
-.p11{left:87%;top:61%;animation-delay:-7.5s}
-.p12{left:93%;top:84%;animation-delay:-2.5s}
-.p13{left:18%;top:90%;animation-delay:-6.5s}
-.p14{left:83%;top:42%;animation-delay:-4.5s}
-
-@keyframes drift{
-
-    0%,100%{
-        transform:
-            translate(0,0)
-            scale(.7);
-
-        opacity:.15;
-    }
-
-    50%{
-        transform:
-            translate(8px,-16px)
-            scale(1.7);
-
-        opacity:.75;
-    }
-
-}
-
-
-/* =========================================================
-   TOP BRAND
-========================================================= */
-
-.top{
-    position:absolute;
-
-    top:27px;
-    left:30px;
-    right:30px;
-
-    z-index:20;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.brand-mini{
-    display:flex;
-    align-items:center;
-    gap:9px;
-
-    font-size:10px;
-
-    font-weight:800;
-
-    letter-spacing:.34em;
-
-    color:rgba(255,255,255,.62);
-}
-
-.brand-mini-dot{
-    width:7px;
-    height:7px;
-
-    border-radius:50%;
-
-    background:white;
-
-    box-shadow:
-        0 0 14px white;
-}
-
-.system{
-    font-size:8px;
-
-    letter-spacing:.20em;
-
-    color:rgba(255,255,255,.20);
-}
-
-
-/* =========================================================
-   CORE AREA
-========================================================= */
-
-.core-area{
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    width:430px;
-    height:430px;
-
-    transform:translate(-50%,-53%);
-
-    z-index:5;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-
-/* =========================================================
-   ENERGY RING
-========================================================= */
-
-.energy-ring{
-    position:absolute;
-
-    width:100%;
-    height:100%;
-
-    border-radius:50%;
-
-    background:
-        conic-gradient(
-            from 0deg,
-            transparent 0deg,
-            rgba(255,35,65,.42) 60deg,
-            transparent 110deg,
-            transparent 160deg,
-            rgba(45,120,255,.46) 220deg,
-            transparent 280deg,
-            rgba(255,35,65,.28) 320deg,
-            transparent 360deg
-        );
-
-    -webkit-mask:
-        radial-gradient(
-            transparent 64%,
-            #000 65%,
-            #000 66%,
-            transparent 67%
-        );
-
-    mask:
-        radial-gradient(
-            transparent 64%,
-            #000 65%,
-            #000 66%,
-            transparent 67%
-        );
-
-    animation:
-        energyRotate 21s linear infinite;
-}
-
-@keyframes energyRotate{
-
-    to{
-        rotate:360deg;
-    }
-
-}
-
-
-/* =========================================================
-   ORBIT 1
-========================================================= */
-
-.orbit{
-    position:absolute;
-
-    border-radius:50%;
-
-    border:1px solid rgba(255,255,255,.16);
-}
-
-.orbit.one{
-    width:350px;
-    height:120px;
-
-    transform:rotate(22deg);
-
-    animation:
-        orbitOne 17s linear infinite;
-}
-
-.orbit.two{
-    width:350px;
-    height:120px;
-
-    transform:rotate(-22deg);
-
-    border-color:rgba(255,255,255,.11);
-
-    animation:
-        orbitTwo 22s linear infinite;
-}
-
-.orbit.three{
-    width:290px;
-    height:90px;
-
-    transform:rotate(67deg);
-
-    border-color:rgba(255,255,255,.09);
-
-    animation:
-        orbitThree 26s linear infinite;
-}
-
-@keyframes orbitOne{
-
-    to{
-        rotate:360deg;
-    }
-
-}
-
-@keyframes orbitTwo{
-
-    to{
-        rotate:-360deg;
-    }
-
-}
-
-@keyframes orbitThree{
-
-    to{
-        rotate:360deg;
-    }
-
-}
-
-
-/* =========================================================
-   ORBIT PARTICLES
-========================================================= */
-
-.orbit-dot{
-    position:absolute;
-
-    width:6px;
-    height:6px;
-
-    border-radius:50%;
-
-    background:white;
-
-    box-shadow:
-        0 0 14px white;
-}
-
-.orbit-dot.a{
-    top:-3px;
-    left:23%;
-}
-
-.orbit-dot.b{
-    right:-3px;
-    top:47%;
-}
-
-.orbit-dot.c{
-    bottom:-3px;
-    left:67%;
-}
-
-
-/* =========================================================
-   CORE
-========================================================= */
-
-.core{
-    position:relative;
-
-    width:205px;
-    height:205px;
-
-    border-radius:50%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:
-        radial-gradient(
-            circle at 32% 25%,
-            rgba(255,255,255,.18),
-            rgba(13,15,25,.97) 48%,
-            #010207 74%
-        );
-
-    border:
-        1px solid rgba(255,255,255,.22);
-
-    box-shadow:
-        0 0 55px rgba(255,255,255,.06),
-        0 0 110px rgba(55,85,255,.07),
-        inset 0 0 45px rgba(255,255,255,.045);
-
-    animation:
-        coreBreath 6s ease-in-out infinite;
-}
-
-@keyframes coreBreath{
-
-    0%,100%{
-        transform:scale(1);
-    }
-
-    50%{
-        transform:scale(1.025);
-    }
-
-}
-
-
-/* =========================================================
-   LOGO
-========================================================= */
-
-.logo{
-    position:relative;
-
-    width:82px;
-    height:82px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-
-/* outer circle */
-
-.logo::before{
-    content:"";
-
-    position:absolute;
-
-    inset:8px;
-
-    border:
-        3px solid rgba(255,255,255,.92);
-
-    border-radius:50%;
-
-    box-shadow:
-        0 0 16px rgba(255,255,255,.40);
-}
-
-
-/* crossing paths */
-
-.logo::after{
-    content:"";
-
-    position:absolute;
-
-    width:100px;
-    height:32px;
-
-    border:
-        2px solid rgba(255,255,255,.88);
-
-    border-radius:50%;
-
-    transform:rotate(31deg);
-}
-
-
-/* second path */
-
-.logo-path{
-    position:absolute;
-
-    width:100px;
-    height:32px;
-
-    border:
-        2px solid rgba(255,255,255,.70);
-
-    border-radius:50%;
-
-    transform:rotate(-31deg);
-}
-
-
-/* center */
-
-.logo-center{
-    width:12px;
-    height:12px;
-
-    border-radius:50%;
-
-    background:white;
-
-    box-shadow:
-        0 0 15px white,
-        0 0 32px rgba(65,110,255,.75);
-}
-
-
-/* =========================================================
-   RANDOM WORD
-========================================================= */
-
-.word{
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    transform:
-        translate(-50%,115px);
-
-    white-space:nowrap;
-
-    font-size:13px;
-
-    font-weight:800;
-
-    letter-spacing:.52em;
-
-    margin-left:.52em;
-
-    color:rgba(255,255,255,.72);
-}
-
-
-/* =========================================================
-   BOTTOM INTERFACE
-========================================================= */
-
-.interface{
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    transform:
-        translate(-50%,245px);
-
-    width:min(520px,calc(100vw - 36px));
-
-    text-align:center;
-
-    z-index:15;
-}
-
-.prompt{
-    margin-bottom:16px;
-
-    font-size:9px;
-
-    text-transform:uppercase;
-
-    letter-spacing:.30em;
-
-    color:rgba(255,255,255,.30);
-}
-
-
-/* =========================================================
-   BUTTONS
-========================================================= */
-
-.actions{
-    display:flex;
-
-    justify-content:center;
-
-    gap:11px;
-}
-
-.action{
-    position:relative;
-
-    width:220px;
-    height:60px;
-
-    border-radius:15px;
-
-    border:
-        1px solid rgba(255,255,255,.13);
-
-    background:
-        rgba(2,4,10,.48);
-
-    color:#fff;
-
-    cursor:pointer;
-
-    overflow:hidden;
-
-    backdrop-filter:blur(12px);
-
-    transition:
-        transform .30s ease,
-        border-color .30s ease,
-        background .30s ease;
-}
-
-.action:hover{
-    transform:translateY(-5px);
-
-    border-color:
-        rgba(255,255,255,.30);
-
-    background:
-        rgba(255,255,255,.055);
-}
-
-.action::before{
-    content:"";
-
-    position:absolute;
-
-    width:160px;
-    height:160px;
-
-    border-radius:50%;
-
-    filter:blur(38px);
-
-    opacity:0;
-
-    transition:.4s ease;
-}
-
-.action:hover::before{
-    opacity:.7;
-}
-
-.action.visitor::before{
-    background:rgba(40,110,255,.34);
-
-    right:-90px;
-    top:-90px;
-}
-
-.action.rid::before{
-    background:rgba(255,25,60,.34);
-
-    left:-90px;
-    top:-90px;
-}
-
-.action-content{
-    position:relative;
-
-    z-index:2;
-
-    height:100%;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:11px;
-}
-
-.icon{
-    font-size:16px;
-
-    opacity:.82;
-}
-
-.name{
-    display:block;
-
-    font-size:11px;
-
-    font-weight:800;
-
-    letter-spacing:.20em;
-}
-
-.description{
-    display:block;
-
-    margin-top:4px;
-
-    font-size:8px;
-
-    color:rgba(255,255,255,.34);
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-.footer{
-    margin-top:21px;
-
-    font-size:7px;
-
-    letter-spacing:.25em;
-
-    color:rgba(255,255,255,.18);
-
-    text-transform:uppercase;
-}
-
-
-/* =========================================================
-   RANDOM STATE
-========================================================= */
-
-.state{
-    position:absolute;
-
-    left:50%;
-    bottom:22px;
-
-    transform:translateX(-50%);
-
-    z-index:20;
-
-    white-space:nowrap;
-
-    font-size:7px;
-
-    letter-spacing:.20em;
-
-    color:rgba(255,255,255,.15);
-
-    text-transform:uppercase;
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:650px){
-
-    .top{
-        top:19px;
-        left:18px;
-        right:18px;
-    }
-
-    .system{
-        display:none;
-    }
-
-    .core-area{
-        width:330px;
-        height:330px;
-
-        transform:
-            translate(-50%,-57%);
-    }
-
-    .energy-ring{
-        width:100%;
-        height:100%;
-    }
-
-    .orbit.one,
-    .orbit.two{
-        width:270px;
-        height:95px;
-    }
-
-    .orbit.three{
-        width:220px;
-        height:72px;
-    }
-
-    .core{
-        width:160px;
-        height:160px;
-    }
-
-    .logo{
-        transform:scale(.75);
-    }
-
-    .word{
-        transform:
-            translate(-50%,91px);
-
-        font-size:9px;
-
-        letter-spacing:.42em;
-
-        margin-left:.42em;
-    }
-
-    .interface{
-        transform:
-            translate(-50%,198px);
-    }
-
-    .prompt{
-        font-size:8px;
-
-        letter-spacing:.22em;
-
-        margin-bottom:12px;
-    }
-
-    .actions{
-        flex-direction:column;
-
-        gap:8px;
-    }
-
-    .action{
-        width:100%;
-
-        height:55px;
-    }
-
-    .footer{
-        margin-top:14px;
-    }
-
-    .state{
-        bottom:12px;
-    }
-}
-
-
-/* =========================================================
-   SMALL HEIGHT DEVICES
-========================================================= */
-
-@media(max-height:680px){
-
-    .core-area{
-        transform:
-            translate(-50%,-59%)
-            scale(.82);
-    }
-
-    .interface{
-        transform:
-            translate(-50%,184px);
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RANDOM Portal</title>
+    <script src="https://tailwindcss.com"></script>
+    <style>
+        @import url('https://googleapis.com');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #0a0a0c;
+            overflow: hidden;
+        }
+
+        /* Animated Background Gradients */
+        .bg-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(0,0,0,0) 70%);
+            top: -10%;
+            left: -10%;
+            animation: drift 20s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+
+        .bg-glow-2 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, rgba(0,0,0,0) 70%);
+            bottom: -10%;
+            right: -10%;
+            animation: drift 25s infinite alternate-reverse ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 50px) scale(1.2); }
+        }
+
+        /* Watermark Logo styling */
+        .watermark-logo {
+            font-size: 14vw;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            user-select: none;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        /* Interactive 3D Perspective Card Setup */
+        .portal-container {
+            perspective: 1000px;
+        }
+
+        .interactive-card {
+            transition: transform 0.1s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .card-content {
+            transform: translateZ(30px);
+        }
+    </style>
 </head>
+<body class="h-screen w-screen flex flex-col items-center justify-center relative text-white antialiased">
 
+    <!-- Ambient Background FX -->
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
 
-<body>
-
-
-<!-- =====================================================
-     WORLD
-===================================================== -->
-
-<div class="world">
-
-    <div class="field red"></div>
-
-    <div class="field blue"></div>
-
-    <div class="particles">
-
-        <span class="particle p1"></span>
-        <span class="particle p2"></span>
-        <span class="particle p3"></span>
-        <span class="particle p4"></span>
-        <span class="particle p5"></span>
-        <span class="particle p6"></span>
-        <span class="particle p7"></span>
-        <span class="particle p8"></span>
-        <span class="particle p9"></span>
-        <span class="particle p10"></span>
-        <span class="particle p11"></span>
-        <span class="particle p12"></span>
-        <span class="particle p13"></span>
-        <span class="particle p14"></span>
-
+    <!-- Massive Cool Watermark Logo -->
+    <div class="absolute inset-0 flex items-center justify-center z-0 overflow-hidden">
+        <div class="watermark-logo transform -rotate-12 scale-110 tracking-widest uppercase select-none animate-pulse duration-[8s]">
+            RANDOM
+        </div>
     </div>
 
-    <div class="vignette"></div>
+    <!-- Content Header -->
+    <header class="z-10 text-center mb-12 animate-fade-in">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50 backdrop-blur-md mb-4 text-xs font-semibold tracking-wider text-indigo-400 uppercase">
+            <span class="w-2 h-2 rounded-full bg-indigo-500 animate-ping"></span>
+            Gateway Active
+        </div>
+        <h1 class="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent">
+            Welcome to RANDOM
+        </h1>
+        <p class="text-zinc-500 mt-2 text-sm max-w-sm mx-auto">
+            Choose an interface mode below to shape your session sandbox.
+        </p>
+    </header>
 
-</div>
-
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
-
-<header class="top">
-
-    <div class="brand-mini">
-
-        <span class="brand-mini-dot"></span>
-
-        RANDOM
-
-    </div>
-
-    <div class="system">
-
-        RANDOM SYSTEM / 007
-
-    </div>
-
-</header>
-
-
-<!-- =====================================================
-     CORE
-===================================================== -->
-
-<section class="core-area" id="coreArea">
-
-    <div class="energy-ring"></div>
-
-
-    <div class="orbit one">
-
-        <span class="orbit-dot a"></span>
-
-    </div>
-
-
-    <div class="orbit two">
-
-        <span class="orbit-dot b"></span>
-
-    </div>
-
-
-    <div class="orbit three">
-
-        <span class="orbit-dot c"></span>
-
-    </div>
-
-
-    <div class="core">
-
-        <div class="logo">
-
-            <div class="logo-path"></div>
-
-            <div class="logo-center"></div>
-
+    <!-- Main Dynamic Portal Controls -->
+    <main class="portal-container z-10 flex flex-col sm:flex-row gap-6 max-w-4xl w-full px-6 justify-center items-center">
+        
+        <!-- VISITOR MODE CARD -->
+        <div class="interactive-card w-full sm:w-80 h-48 rounded-2xl border border-zinc-800/80 bg-zinc-900/40 backdrop-blur-xl p-6 cursor-pointer flex flex-col justify-between shadow-2xl hover:border-zinc-700/80 group" onclick="navigate('visitors')">
+            <div class="card-content flex flex-col justify-between h-full">
+                <div class="flex justify-between items-start">
+                    <div class="p-3 bg-zinc-800/50 rounded-xl border border-zinc-700/50 group-hover:bg-zinc-800 group-hover:text-indigo-400 transition-colors">
+                        <svg xmlns="http://w3.org" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                    </div>
+                    <span class="text-xs font-mono text-zinc-600 group-hover:text-zinc-400 transition-colors">MODE // 01</span>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-zinc-200 group-hover:text-white transition-colors">VISITORS</h2>
+                    <p class="text-xs text-zinc-500 mt-1">Explore, read public streams, and interact casually.</p>
+                </div>
+            </div>
         </div>
 
-    </div>
-
-
-    <div class="word">
-
-        RANDOM
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     ENTRY
-===================================================== -->
-
-<section class="interface">
-
-    <div class="prompt">
-
-        Choose your way into RANDOM
-
-    </div>
-
-
-    <div class="actions">
-
-
-        <button
-            class="action visitor"
-            onclick="visitor()"
-        >
-
-            <div class="action-content">
-
-                <span class="icon">
-                    ◉
-                </span>
-
-                <span>
-
-                    <span class="name">
-                        VISITOR
-                    </span>
-
-                    <span class="description">
-                        Explore RANDOM
-                    </span>
-
-                </span>
-
+        <!-- CREATE READ MODE CARD -->
+        <div class="interactive-card w-full sm:w-80 h-48 rounded-2xl border border-zinc-800/80 bg-zinc-900/40 backdrop-blur-xl p-6 cursor-pointer flex flex-col justify-between shadow-2xl hover:border-zinc-700/80 group" onclick="navigate('create-read')">
+            <div class="card-content flex flex-col justify-between h-full">
+                <div class="flex justify-between items-start">
+                    <div class="p-3 bg-zinc-800/50 rounded-xl border border-zinc-700/50 group-hover:bg-zinc-800 group-hover:text-pink-400 transition-colors">
+                        <svg xmlns="http://w3.org" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                    </div>
+                    <span class="text-xs font-mono text-zinc-600 group-hover:text-zinc-400 transition-colors">MODE // 02</span>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-zinc-200 group-hover:text-white transition-colors">CREATE READ</h2>
+                    <p class="text-xs text-zinc-500 mt-1">Author new entries, sync content, and structure data blocks.</p>
+                </div>
             </div>
+        </div>
 
-        </button>
+    </main>
 
+    
+    <footer class="absolute bottom-6 z-10 text-xs text-zinc-600 tracking-widest font-mono">
+        RANDOM APPARATUS &copy; 2026
+    </footer>
 
-        <button
-            class="action rid"
-            onclick="createRID()"
-        >
+    <!-- Script to calculate mouse tracking and 3D tilts -->
+    <script>
+        const cards = document.querySelectorAll('.interactive-card');
+        
+        cards.forEach(card => {
+            document.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const cardX = rect.left + rect.width / 2;
+                const cardY = rect.top + rect.height / 2;
+                
+                // Calculate absolute distance vectorized from cursor to card center
+                const angleX = (cardY - e.clientY) / 25; 
+                const angleY = (e.clientX - cardX) / 25;
+                
+                // Limit maximum rotational shift angle
+                const maxTilt = 15;
+                const tiltX = Math.max(-maxTilt, Math.min(maxTilt, angleX));
+                const tiltY = Math.max(-maxTilt, Math.min(maxTilt, angleY));
 
-            <div class="action-content">
+                card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+            });
 
-                <span class="icon">
-                    ✦
-                </span>
+            // Smoothly reset position when cursor leaves active viewport elements
+            document.addEventListener('mouseleave', () => {
+                card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+            });
+        });
 
-                <span>
-
-                    <span class="name">
-                        CREATE RID
-                    </span>
-
-                    <span class="description">
-                        Create your identity
-                    </span>
-
-                </span>
-
-            </div>
-
-        </button>
-
-
-    </div>
-
-
-    <div class="footer">
-
-        Nothing here is predetermined
-
-    </div>
-
-</section>
-
-
-<div class="state" id="state">
-
-    RANDOM // CORE ACTIVE
-
-</div>
-
-
-<script>
-
-/* =========================================================
-   RANDOM VISUAL STATE
-========================================================= */
-
-const state =
-    document.getElementById("state");
-
-const states = [
-
-    "RANDOM // CORE ACTIVE",
-    "RANDOM // UNDEFINED",
-    "RANDOM // UNSTABLE",
-    "RANDOM // UNKNOWN",
-    "RANDOM // OPEN"
-
-];
-
-state.textContent =
-    states[
-        Math.floor(
-            Math.random() * states.length
-        )
-    ];
-
-
-/* =========================================================
-   SUBTLE PARALLAX
-========================================================= */
-
-const coreArea =
-    document.getElementById("coreArea");
-
-document.addEventListener(
-    "mousemove",
-    function(event){
-
-        const x =
-            event.clientX /
-            window.innerWidth -
-            .5;
-
-        const y =
-            event.clientY /
-            window.innerHeight -
-            .5;
-
-        coreArea.style.marginLeft =
-            `${x * 8}px`;
-
-        coreArea.style.marginTop =
-            `${y * 8}px`;
-
-    }
-);
-
-
-/* =========================================================
-   TEMPORARY ACTIONS
-========================================================= */
-
-function visitor(){
-
-    alert(
-        "VISITOR MODE\n\n" +
-        "The RANDOM universe awaits."
-    );
-
-}
-
-
-function createRID(){
-
-    alert(
-        "CREATE RID\n\n" +
-        "Your RANDOM identity begins here."
-    );
-
-}
-
-</script>
-
+        // Click Handler Action simulation
+        function navigate(destination) {
+            // Flash effect for the unexpected feel
+            document.body.style.background = '#ffffff';
+            setTimeout(() => {
+                document.body.style.transition = 'background 0.5s ease';
+                document.body.style.background = '#0a0a0c';
+                alert(`Navigating to the [${destination.toUpperCase()}] segment of RANDOM.`);
+            }, 60);
+        }
+    </script>
 </body>
 </html>
