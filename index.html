@@ -3,437 +3,360 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RANDOM — Beyond the Expected</title>
+<title>RANDOM</title>
 
 <style>
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-:root{
-    --red:#ff284d;
-    --blue:#287cff;
-    --white:#f4f6ff;
-    --dim:rgba(235,240,255,.48);
-}
-
-html,
-body{
+html,body{
     width:100%;
     height:100%;
     overflow:hidden;
 }
 
 body{
-    background:#020307;
-    color:var(--white);
-    font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        sans-serif;
+    background:#020205;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 
 /* =====================================================
-   UNIVERSE
+   ENVIRONMENT
 ===================================================== */
 
-.universe{
+.scene{
     position:fixed;
     inset:0;
     overflow:hidden;
-    background:#020307;
+    background:#020205;
 }
 
 
-/* central darkness */
+/* red atmosphere */
 
-.universe::after{
-    content:"";
-    position:absolute;
-    inset:0;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            transparent 0%,
-            rgba(0,0,0,.18) 45%,
-            rgba(0,0,0,.75) 100%
-        );
-
-    pointer-events:none;
-}
-
-
-/* =====================================================
-   RED UNIVERSE
-===================================================== */
-
-.red-field{
+.red-glow{
     position:absolute;
 
-    width:75vw;
-    height:75vw;
+    width:70vw;
+    height:70vw;
 
-    min-width:500px;
-    min-height:500px;
-
-    left:-27vw;
+    left:-35vw;
     top:50%;
 
-    transform:
-        translateY(-50%)
-        rotate(-14deg);
+    transform:translateY(-50%);
 
     border-radius:50%;
 
     background:
         radial-gradient(
-            circle at 65% 50%,
-            rgba(255,25,65,.75),
-            rgba(170,8,38,.35) 30%,
-            rgba(90,3,20,.15) 52%,
-            transparent 72%
+            circle,
+            rgba(255,20,55,.34),
+            rgba(150,5,35,.13) 38%,
+            transparent 70%
         );
 
-    filter:blur(35px);
+    filter:blur(45px);
 
-    animation:
-        redFloat 18s ease-in-out infinite alternate;
+    animation:redMove 16s ease-in-out infinite alternate;
 }
 
 
-@keyframes redFloat{
+/* blue atmosphere */
 
-    0%{
-        transform:
-            translateY(-50%)
-            rotate(-14deg)
-            scale(.95);
-    }
-
-    100%{
-        transform:
-            translateY(-48%)
-            rotate(-4deg)
-            scale(1.08);
-    }
-}
-
-
-/* =====================================================
-   BLUE UNIVERSE
-===================================================== */
-
-.blue-field{
+.blue-glow{
     position:absolute;
 
-    width:75vw;
-    height:75vw;
+    width:70vw;
+    height:70vw;
 
-    min-width:500px;
-    min-height:500px;
-
-    right:-27vw;
+    right:-35vw;
     top:50%;
 
-    transform:
-        translateY(-50%)
-        rotate(14deg);
+    transform:translateY(-50%);
 
     border-radius:50%;
 
     background:
         radial-gradient(
-            circle at 35% 50%,
-            rgba(35,110,255,.75),
-            rgba(12,62,190,.35) 30%,
-            rgba(5,30,100,.15) 52%,
-            transparent 72%
+            circle,
+            rgba(35,105,255,.34),
+            rgba(10,55,170,.13) 38%,
+            transparent 70%
         );
 
-    filter:blur(35px);
+    filter:blur(45px);
 
-    animation:
-        blueFloat 20s ease-in-out infinite alternate;
+    animation:blueMove 18s ease-in-out infinite alternate;
 }
 
 
-@keyframes blueFloat{
-
+@keyframes redMove{
     0%{
-        transform:
-            translateY(-50%)
-            rotate(14deg)
-            scale(.95);
+        transform:translateY(-50%) scale(.92);
     }
 
     100%{
-        transform:
-            translateY(-52%)
-            rotate(4deg)
-            scale(1.08);
+        transform:translateY(-48%) scale(1.08);
+    }
+}
+
+
+@keyframes blueMove{
+    0%{
+        transform:translateY(-50%) scale(1);
+    }
+
+    100%{
+        transform:translateY(-53%) scale(.94);
     }
 }
 
 
 /* =====================================================
-   PARTICLE STREAMS
+   RANDOM ATMOSPHERIC NOISE
 ===================================================== */
 
-.streams{
+.noise{
     position:absolute;
-    inset:0;
-    opacity:.4;
-}
+    inset:-50%;
 
-.stream{
-    position:absolute;
+    opacity:.035;
 
-    height:1px;
-
-    transform-origin:left center;
-
-    animation:
-        streamMove 9s linear infinite;
-}
-
-.stream.red{
-    width:32vw;
-    left:0;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,40,70,.65),
-            transparent
-        );
-}
-
-.stream.blue{
-    width:32vw;
-    right:0;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(45,120,255,.65),
-            transparent
+    background-image:
+        radial-gradient(
+            circle,
+            white 1px,
+            transparent 1px
         );
 
-    transform-origin:right center;
+    background-size:4px 4px;
+
+    animation:noiseMove .8s steps(2) infinite;
 }
 
-
-.stream:nth-child(1){
-    top:31%;
-    transform:rotate(7deg);
-    animation-delay:-2s;
-}
-
-.stream:nth-child(2){
-    top:43%;
-    transform:rotate(-4deg);
-    animation-delay:-5s;
-}
-
-.stream:nth-child(3){
-    top:62%;
-    transform:rotate(5deg);
-    animation-delay:-1s;
-}
-
-.stream:nth-child(4){
-    top:72%;
-    transform:rotate(-7deg);
-    animation-delay:-7s;
-}
-
-
-@keyframes streamMove{
-
+@keyframes noiseMove{
     0%{
-        opacity:0;
-        transform:translateX(-30%) scaleX(.5);
+        transform:translate(0,0);
     }
 
-    20%{
-        opacity:.7;
-    }
-
-    80%{
-        opacity:.5;
-    }
-
-    100%{
-        opacity:0;
-        transform:translateX(30%) scaleX(1.1);
-    }
-}
-
-
-/* =====================================================
-   STARS
-===================================================== */
-
-.stars{
-    position:absolute;
-    inset:0;
-}
-
-.star{
-    position:absolute;
-
-    width:2px;
-    height:2px;
-
-    border-radius:50%;
-
-    background:white;
-
-    opacity:.35;
-
-    animation:
-        starPulse 5s ease-in-out infinite;
-}
-
-.star:nth-child(1){left:7%;top:14%;animation-delay:-1s}
-.star:nth-child(2){left:15%;top:78%;animation-delay:-3s}
-.star:nth-child(3){left:25%;top:26%;animation-delay:-2s}
-.star:nth-child(4){left:34%;top:86%;animation-delay:-4s}
-.star:nth-child(5){left:46%;top:12%;animation-delay:-1.5s}
-.star:nth-child(6){left:54%;top:89%;animation-delay:-3.5s}
-.star:nth-child(7){left:64%;top:21%;animation-delay:-2.5s}
-.star:nth-child(8){left:74%;top:76%;animation-delay:-4.5s}
-.star:nth-child(9){left:83%;top:17%;animation-delay:-1.2s}
-.star:nth-child(10){left:92%;top:58%;animation-delay:-3.2s}
-.star:nth-child(11){left:12%;top:45%;animation-delay:-2.2s}
-.star:nth-child(12){left:88%;top:84%;animation-delay:-4.2s}
-.star:nth-child(13){left:42%;top:70%;animation-delay:-1.7s}
-.star:nth-child(14){left:59%;top:38%;animation-delay:-3.7s}
-
-
-@keyframes starPulse{
-
-    0%,100%{
-        opacity:.15;
-        transform:scale(.7);
+    25%{
+        transform:translate(2%,1%);
     }
 
     50%{
-        opacity:.75;
-        transform:scale(1.7);
+        transform:translate(-1%,2%);
+    }
+
+    75%{
+        transform:translate(1%,-1%);
+    }
+
+    100%{
+        transform:translate(0,0);
     }
 }
 
 
 /* =====================================================
-   CENTER PORTAL
+   EDGE LINES
 ===================================================== */
 
-.center{
+.edge{
     position:absolute;
-
-    left:50%;
-    top:50%;
-
-    width:440px;
-    height:440px;
-
-    transform:translate(-50%,-50%);
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    z-index:5;
+    pointer-events:none;
+    opacity:.16;
 }
 
-
-/* energy halo */
-
-.halo{
-    position:absolute;
-
-    width:100%;
-    height:100%;
-
-    border-radius:50%;
+.edge.left{
+    left:0;
+    top:0;
+    bottom:0;
+    width:1px;
 
     background:
-        conic-gradient(
-            from 0deg,
+        linear-gradient(
             transparent,
-            rgba(255,35,65,.20),
-            transparent 25%,
-            rgba(50,120,255,.22),
-            transparent 50%,
-            rgba(255,35,65,.16),
-            transparent 75%
+            rgba(255,30,60,.7),
+            transparent
         );
+}
 
-    filter:blur(25px);
+.edge.right{
+    right:0;
+    top:0;
+    bottom:0;
+    width:1px;
 
-    animation:
-        haloSpin 24s linear infinite;
+    background:
+        linear-gradient(
+            transparent,
+            rgba(40,110,255,.7),
+            transparent
+        );
 }
 
 
-@keyframes haloSpin{
-    to{
-        transform:rotate(360deg);
-    }
-}
+/* =====================================================
+   TOP BRAND
+===================================================== */
 
-
-/* orbit */
-
-.orbit{
+.topbar{
     position:absolute;
 
-    width:330px;
-    height:125px;
+    top:28px;
+    left:34px;
+    right:34px;
 
-    border-radius:50%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-    border:1px solid rgba(255,255,255,.28);
-
-    transform:rotate(-25deg);
-
-    animation:
-        orbitSpin 16s linear infinite;
+    z-index:10;
 }
 
+.small-brand{
+    display:flex;
+    align-items:center;
+    gap:9px;
 
-.orbit::before{
-    content:"";
+    font-size:10px;
+    font-weight:700;
 
-    position:absolute;
+    letter-spacing:.34em;
 
+    color:rgba(255,255,255,.62);
+}
+
+.small-mark{
     width:7px;
     height:7px;
 
     border-radius:50%;
 
-    background:white;
+    background:#fff;
 
     box-shadow:
-        0 0 15px white;
+        0 0 12px #fff;
+}
 
-    left:20%;
-    top:0;
+.version{
+    font-size:8px;
+    letter-spacing:.20em;
+    color:rgba(255,255,255,.22);
 }
 
 
-.orbit::after{
+/* =====================================================
+   MAIN PORTAL
+===================================================== */
+
+.portal{
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:min(700px,92vw);
+
+    text-align:center;
+
+    z-index:5;
+}
+
+
+/* =====================================================
+   LOGO SYSTEM
+===================================================== */
+
+.logo{
+    position:relative;
+
+    width:180px;
+    height:180px;
+
+    margin:0 auto 30px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    transition:transform .25s ease;
+}
+
+
+/* outer orbit */
+
+.logo-orbit{
+    position:absolute;
+
+    inset:4px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(255,255,255,.22);
+
+    transform:rotate(18deg) scaleX(1.18);
+
+    animation:orbitOne 18s linear infinite;
+}
+
+
+/* second orbit */
+
+.logo-orbit.two{
+    inset:15px;
+
+    transform:rotate(-42deg) scaleX(1.42);
+
+    border-color:rgba(255,255,255,.14);
+
+    animation:orbitTwo 23s linear infinite;
+}
+
+
+/* third orbit */
+
+.logo-orbit.three{
+    inset:29px;
+
+    transform:rotate(73deg) scaleX(1.1);
+
+    border-color:rgba(255,255,255,.10);
+
+    animation:orbitThree 29s linear infinite;
+}
+
+
+@keyframes orbitOne{
+    to{
+        rotate:360deg;
+    }
+}
+
+@keyframes orbitTwo{
+    to{
+        rotate:-360deg;
+    }
+}
+
+@keyframes orbitThree{
+    to{
+        rotate:360deg;
+    }
+}
+
+
+/* orbit particles */
+
+.logo-orbit::before,
+.logo-orbit::after{
     content:"";
 
     position:absolute;
@@ -443,37 +366,32 @@ body{
 
     border-radius:50%;
 
-    background:white;
+    background:#fff;
 
     box-shadow:
-        0 0 13px white;
-
-    right:18%;
-    bottom:0;
+        0 0 12px #fff;
 }
 
+.logo-orbit::before{
+    left:13%;
+    top:4%;
+}
 
-@keyframes orbitSpin{
-
-    0%{
-        transform:rotate(-25deg);
-    }
-
-    100%{
-        transform:rotate(335deg);
-    }
+.logo-orbit::after{
+    right:14%;
+    bottom:3%;
 }
 
 
 /* =====================================================
-   RANDOM CORE
+   LOGO CORE
 ===================================================== */
 
-.core{
+.logo-core{
     position:relative;
 
-    width:215px;
-    height:215px;
+    width:92px;
+    height:92px;
 
     border-radius:50%;
 
@@ -483,86 +401,71 @@ body{
 
     background:
         radial-gradient(
-            circle at 35% 30%,
-            rgba(255,255,255,.15),
-            rgba(8,10,18,.95) 48%,
-            #010207 72%
+            circle at 35% 28%,
+            rgba(255,255,255,.18),
+            rgba(8,9,16,.96) 57%,
+            #010106
         );
 
-    border:1px solid rgba(255,255,255,.20);
+    border:1px solid rgba(255,255,255,.28);
 
     box-shadow:
-        0 0 50px rgba(255,255,255,.08),
-        0 0 100px rgba(80,90,255,.08),
-        inset 0 0 40px rgba(255,255,255,.035);
+        0 0 30px rgba(255,255,255,.08),
+        inset 0 0 30px rgba(255,255,255,.05);
 }
 
 
-/* =====================================================
-   RANDOM SYMBOL
-===================================================== */
+/* universe symbol */
 
 .symbol{
     position:relative;
 
-    width:85px;
-    height:85px;
-}
-
-
-.symbol::before{
-    content:"";
-
-    position:absolute;
-
-    inset:8px;
-
-    border-radius:50%;
+    width:48px;
+    height:48px;
 
     border:3px solid white;
 
+    border-radius:50%;
+
     box-shadow:
-        0 0 15px rgba(255,255,255,.35);
+        0 0 16px rgba(255,255,255,.45);
 }
 
 
-/* crossing cosmic paths */
+.symbol::before,
+.symbol::after{
+    content:"";
 
-.symbol span{
     position:absolute;
 
     left:50%;
     top:50%;
 
-    width:105px;
-    height:34px;
+    width:58px;
+    height:18px;
 
-    border:2px solid rgba(255,255,255,.85);
+    border:2px solid rgba(255,255,255,.9);
 
     border-radius:50%;
 
-    transform:
-        translate(-50%,-50%)
-        rotate(32deg);
+    transform:translate(-50%,-50%);
 }
 
 
-.symbol span:nth-child(2){
-    transform:
-        translate(-50%,-50%)
-        rotate(-32deg);
+.symbol::before{
+    rotate:32deg;
+}
+
+.symbol::after{
+    rotate:-32deg;
 }
 
 
-/* central point */
-
-.symbol i{
+.symbol-dot{
     position:absolute;
 
-    width:13px;
-    height:13px;
-
-    border-radius:50%;
+    width:8px;
+    height:8px;
 
     left:50%;
     top:50%;
@@ -571,9 +474,11 @@ body{
 
     background:white;
 
+    border-radius:50%;
+
     box-shadow:
         0 0 15px white,
-        0 0 30px rgba(90,120,255,.8);
+        0 0 25px rgba(90,120,255,.7);
 }
 
 
@@ -581,87 +486,95 @@ body{
    BRAND
 ===================================================== */
 
-.brand{
-    position:absolute;
+.title{
+    font-size:clamp(50px,10vw,86px);
 
-    left:50%;
-    top:50%;
+    font-weight:900;
 
-    transform:
-        translate(-50%,98px);
+    letter-spacing:.25em;
 
-    white-space:nowrap;
+    margin-left:.25em;
 
-    font-size:14px;
+    line-height:1;
 
-    font-weight:700;
+    color:#fff;
 
-    letter-spacing:.52em;
+    text-shadow:
+        0 0 35px rgba(255,255,255,.08);
+}
 
-    margin-left:.52em;
 
-    color:rgba(255,255,255,.75);
+.tagline{
+    margin-top:16px;
+
+    color:rgba(255,255,255,.40);
+
+    font-size:10px;
+
+    letter-spacing:.34em;
+
+    text-transform:uppercase;
 }
 
 
 /* =====================================================
-   MAIN CONTENT
+   DIVIDER
 ===================================================== */
 
-.interface{
-    position:absolute;
+.divider{
+    width:min(410px,75vw);
 
-    left:50%;
-    top:50%;
+    height:1px;
 
-    transform:translate(-50%,265px);
+    margin:38px auto 27px;
 
-    z-index:10;
-
-    width:min(520px,calc(100vw - 36px));
-
-    text-align:center;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.28),
+            transparent
+        );
 }
 
 
-.motto{
-    font-size:10px;
+/* =====================================================
+   ENTRY
+===================================================== */
+
+.entry-label{
+    font-size:8px;
+
+    letter-spacing:.28em;
+
+    color:rgba(255,255,255,.28);
 
     text-transform:uppercase;
 
-    letter-spacing:.30em;
-
-    color:rgba(255,255,255,.42);
-
-    margin-bottom:20px;
+    margin-bottom:16px;
 }
 
-
-/* =====================================================
-   ENTRY OPTIONS
-===================================================== */
 
 .entries{
     display:flex;
 
-    gap:10px;
-
     justify-content:center;
+
+    gap:12px;
 }
 
 
 .entry{
     position:relative;
 
-    min-width:190px;
-
-    height:58px;
-
-    border-radius:15px;
+    width:220px;
+    height:65px;
 
     border:1px solid rgba(255,255,255,.14);
 
-    background:rgba(3,5,11,.55);
+    border-radius:14px;
+
+    background:rgba(2,3,8,.45);
 
     color:white;
 
@@ -669,7 +582,7 @@ body{
 
     overflow:hidden;
 
-    backdrop-filter:blur(12px);
+    backdrop-filter:blur(10px);
 
     transition:
         transform .3s ease,
@@ -678,56 +591,55 @@ body{
 }
 
 
-.entry:hover{
-    transform:translateY(-4px);
-}
-
-
 .entry::before{
     content:"";
 
     position:absolute;
 
-    width:100px;
-    height:100px;
+    width:170px;
+    height:170px;
 
     border-radius:50%;
 
-    filter:blur(25px);
+    filter:blur(35px);
 
     opacity:0;
 
-    transition:.35s ease;
+    transition:.4s ease;
 }
 
 
-.entry:hover::before{
-    opacity:.7;
+.entry.red::before{
+    background:rgba(255,30,65,.32);
+
+    left:-80px;
+    top:-80px;
 }
 
 
-.entry.visitor::before{
-    background:var(--blue);
+.entry.blue::before{
+    background:rgba(35,110,255,.32);
 
-    left:-45px;
-    top:-55px;
-}
-
-
-.entry.rid::before{
-    background:var(--red);
-
-    right:-45px;
-    top:-55px;
+    right:-80px;
+    top:-80px;
 }
 
 
 .entry:hover{
-    border-color:rgba(255,255,255,.30);
+    transform:translateY(-5px);
+
+    background:rgba(255,255,255,.055);
+
+    border-color:rgba(255,255,255,.32);
 }
 
 
-.entry-content{
+.entry:hover::before{
+    opacity:1;
+}
+
+
+.entry-inner{
     position:relative;
 
     z-index:2;
@@ -740,7 +652,7 @@ body{
 
     justify-content:center;
 
-    gap:11px;
+    gap:12px;
 }
 
 
@@ -752,86 +664,69 @@ body{
 
 
 .entry-name{
-    font-size:12px;
+    display:block;
 
-    font-weight:700;
+    font-size:11px;
+
+    font-weight:800;
 
     letter-spacing:.20em;
 }
 
 
-.entry-desc{
+.entry-description{
     display:block;
 
-    margin-top:3px;
-
-    color:rgba(255,255,255,.36);
+    margin-top:4px;
 
     font-size:8px;
 
-    letter-spacing:.05em;
+    color:rgba(255,255,255,.35);
+
+    letter-spacing:.04em;
 }
 
 
 /* =====================================================
-   TOP BRAND
+   BOTTOM MESSAGE
 ===================================================== */
 
-.top{
-    position:absolute;
+.bottom{
+    margin-top:26px;
 
-    left:28px;
-    right:28px;
-    top:24px;
-
-    z-index:20;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-}
-
-
-.mini-brand{
-    display:flex;
-
-    align-items:center;
-
-    gap:9px;
-
-    color:rgba(255,255,255,.60);
-
-    font-size:10px;
-
-    font-weight:700;
-
-    letter-spacing:.28em;
-}
-
-
-.mini-dot{
-    width:8px;
-    height:8px;
-
-    border-radius:50%;
-
-    background:white;
-
-    box-shadow:
-        0 0 12px rgba(255,255,255,.8);
-}
-
-
-.status{
-    color:rgba(255,255,255,.28);
+    color:rgba(255,255,255,.20);
 
     font-size:8px;
+
+    letter-spacing:.24em;
+
+    text-transform:uppercase;
+}
+
+
+/* =====================================================
+   RANDOMNESS
+===================================================== */
+
+.random-state{
+    position:absolute;
+
+    bottom:25px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    z-index:10;
+
+    color:rgba(255,255,255,.17);
+
+    font-size:7px;
 
     letter-spacing:.18em;
 
     text-transform:uppercase;
+
+    white-space:nowrap;
 }
 
 
@@ -839,92 +734,93 @@ body{
    MOBILE
 ===================================================== */
 
-@media(max-width:650px){
+@media(max-width:600px){
 
-    .center{
-        width:330px;
-        height:330px;
+    .topbar{
+        top:19px;
+        left:18px;
+        right:18px;
     }
 
-    .orbit{
-        width:255px;
-        height:95px;
+    .version{
+        display:none;
     }
 
-    .core{
-        width:165px;
-        height:165px;
+    .portal{
+        width:92vw;
+    }
+
+    .logo{
+        width:145px;
+        height:145px;
+
+        margin-bottom:22px;
+    }
+
+    .logo-core{
+        width:76px;
+        height:76px;
     }
 
     .symbol{
-        transform:scale(.75);
+        transform:scale(.78);
     }
 
-    .brand{
-        transform:
-            translate(-50%,77px);
+    .title{
+        font-size:45px;
 
-        font-size:10px;
+        letter-spacing:.17em;
+
+        margin-left:.17em;
     }
 
-    .interface{
-        transform:
-            translate(-50%,210px);
-    }
-
-    .motto{
+    .tagline{
         font-size:8px;
 
-        letter-spacing:.22em;
+        letter-spacing:.23em;
 
-        margin-bottom:14px;
+        margin-top:13px;
+    }
+
+    .divider{
+        margin-top:29px;
+        margin-bottom:21px;
     }
 
     .entries{
         flex-direction:column;
 
-        gap:8px;
+        gap:9px;
+
+        width:100%;
     }
 
     .entry{
         width:100%;
-        min-width:0;
-
-        height:54px;
+        height:58px;
     }
 
-    .entry-content{
-        justify-content:flex-start;
-
-        padding-left:22px;
+    .bottom{
+        margin-top:18px;
     }
 
-    .status{
-        display:none;
-    }
-
-    .top{
-        left:18px;
-        right:18px;
-        top:19px;
-    }
-
-    .mini-brand{
-        font-size:9px;
+    .random-state{
+        bottom:15px;
     }
 }
 
 
-@media(max-height:700px) and (min-width:651px){
+@media(max-height:700px){
 
-    .center{
-        transform:
-            translate(-50%,-56%);
+    .logo{
+        transform:scale(.78);
+
+        margin-bottom:-3px;
     }
 
-    .interface{
-        transform:
-            translate(-50%,235px);
+    .divider{
+        margin-top:22px;
+        margin-bottom:18px;
     }
 }
 
@@ -935,117 +831,99 @@ body{
 <body>
 
 
-<!-- ==========================================
-     COSMIC ENVIRONMENT
-========================================== -->
+<div class="scene">
 
-<div class="universe">
+    <div class="red-glow"></div>
 
-    <div class="red-field"></div>
+    <div class="blue-glow"></div>
 
-    <div class="blue-field"></div>
+    <div class="noise"></div>
 
-
-    <div class="streams">
-
-        <div class="stream red"></div>
-        <div class="stream blue"></div>
-
-        <div class="stream red"></div>
-        <div class="stream blue"></div>
-
-    </div>
-
-
-    <div class="stars">
-
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-
-    </div>
+    <div class="edge left"></div>
+    <div class="edge right"></div>
 
 </div>
 
 
-<!-- ==========================================
-     TOP IDENTITY
-========================================== -->
+<header class="topbar">
 
-<header class="top">
+    <div class="small-brand">
 
-    <div class="mini-brand">
-
-        <span class="mini-dot"></span>
+        <span class="small-mark"></span>
 
         RANDOM
 
     </div>
 
+    <div class="version">
 
-    <div class="status">
-
-        SYSTEM // UNDEFINED
+        UNKNOWN / 001
 
     </div>
 
 </header>
 
 
-<!-- ==========================================
-     CENTER
-========================================== -->
-
-<section class="center">
-
-    <div class="halo"></div>
-
-    <div class="orbit"></div>
+<main class="portal">
 
 
-    <div class="core">
+    <!-- =========================================
+         LOGO
+    ========================================== -->
 
-        <div class="symbol">
+    <div
+        class="logo"
+        id="logo"
+    >
 
-            <span></span>
-            <span></span>
+        <div class="logo-orbit"></div>
 
-            <i></i>
+        <div class="logo-orbit two"></div>
+
+        <div class="logo-orbit three"></div>
+
+
+        <div class="logo-core">
+
+            <div class="symbol">
+
+                <span class="symbol-dot"></span>
+
+            </div>
 
         </div>
 
     </div>
 
 
-    <div class="brand">
+    <!-- =========================================
+         BRAND
+    ========================================== -->
+
+    <h1 class="title">
 
         RANDOM
 
-    </div>
-
-</section>
+    </h1>
 
 
-<!-- ==========================================
-     ENTRY INTERFACE
-========================================== -->
+    <p class="tagline">
 
-<section class="interface">
+        Nothing here is predetermined.
 
-    <div class="motto">
+    </p>
 
-        Choose how you enter
+
+    <div class="divider"></div>
+
+
+    <!-- =========================================
+         ENTRY
+    ========================================== -->
+
+    <div class="entry-label">
+
+        Choose your beginning
 
     </div>
 
@@ -1053,14 +931,12 @@ body{
     <div class="entries">
 
 
-        <!-- VISITOR -->
-
         <button
-            class="entry visitor"
+            class="entry blue"
             onclick="visitor()"
         >
 
-            <div class="entry-content">
+            <div class="entry-inner">
 
                 <span class="entry-icon">
                     ◉
@@ -1072,8 +948,8 @@ body{
                         VISITOR
                     </span>
 
-                    <span class="entry-desc">
-                        Explore the universe
+                    <span class="entry-description">
+                        Explore without an identity
                     </span>
 
                 </span>
@@ -1083,14 +959,12 @@ body{
         </button>
 
 
-        <!-- CREATE RID -->
-
         <button
-            class="entry rid"
+            class="entry red"
             onclick="createRID()"
         >
 
-            <div class="entry-content">
+            <div class="entry-inner">
 
                 <span class="entry-icon">
                     ✦
@@ -1102,8 +976,8 @@ body{
                         CREATE RID
                     </span>
 
-                    <span class="entry-desc">
-                        Create your identity
+                    <span class="entry-description">
+                        Begin your RANDOM identity
                     </span>
 
                 </span>
@@ -1115,47 +989,130 @@ body{
 
     </div>
 
-</section>
+
+    <div class="bottom">
+
+        RANDOM / ENTER THE UNEXPECTED
+
+    </div>
+
+</main>
+
+
+<div class="random-state" id="state">
+
+    RANDOM STATE // CALCULATING
+
+</div>
 
 
 <script>
 
+/* =====================================================
+   RANDOM ATMOSPHERE
+
+   Every refresh creates a slightly different
+   visual atmosphere.
+===================================================== */
+
+const redGlow =
+    document.querySelector(".red-glow");
+
+const blueGlow =
+    document.querySelector(".blue-glow");
+
+const logo =
+    document.getElementById("logo");
+
+const state =
+    document.getElementById("state");
+
+
+const randomNumber =
+    Math.random();
+
+
 /*
-=================================================
-RANDOM MICRO-INTERACTION
-=================================================
+Different refresh = slightly different
+scale/intensity/position.
 */
 
-const center = document.querySelector(".center");
+const redScale =
+    .92 + Math.random() * .18;
 
-window.addEventListener("mousemove", (event)=>{
+const blueScale =
+    .92 + Math.random() * .18;
 
-    const x =
-        (event.clientX / window.innerWidth - .5);
 
-    const y =
-        (event.clientY / window.innerHeight - .5);
+redGlow.style.opacity =
+    (.75 + Math.random() * .25).toFixed(2);
 
-    center.style.transform =
-        `
-        translate(-50%,-50%)
-        rotateX(${y * -3}deg)
-        rotateY(${x * 3}deg)
-        `;
-});
+blueGlow.style.opacity =
+    (.75 + Math.random() * .25).toFixed(2);
+
+redGlow.style.transform =
+    `translateY(-50%) scale(${redScale})`;
+
+blueGlow.style.transform =
+    `translateY(-50%) scale(${blueScale})`;
 
 
 /*
-=================================================
-TEMPORARY ENTRY ACTIONS
-=================================================
+Random visual state label.
 */
+
+const states = [
+    "RANDOM STATE // UNDEFINED",
+    "RANDOM STATE // UNSTABLE",
+    "RANDOM STATE // UNKNOWN",
+    "RANDOM STATE // OPEN",
+    "RANDOM STATE // DISCOVERED"
+];
+
+state.textContent =
+    states[Math.floor(Math.random() * states.length)];
+
+
+/* =====================================================
+   SUBTLE MOUSE MOVEMENT
+===================================================== */
+
+document.addEventListener(
+    "mousemove",
+    function(event){
+
+        const x =
+            (event.clientX /
+            window.innerWidth - .5);
+
+        const y =
+            (event.clientY /
+            window.innerHeight - .5);
+
+
+        logo.style.transform =
+            `
+            translate(
+                ${x * 7}px,
+                ${y * 7}px
+            )
+            `;
+
+    }
+);
+
+
+/* =====================================================
+   TEMPORARY ACTIONS
+
+   Real RID/login flow comes later.
+===================================================== */
 
 function visitor(){
 
     alert(
-        "VISITOR\n\n" +
-        "Your journey into RANDOM begins here."
+        "VISITOR MODE\n\n" +
+        "RANDOM exploration begins here."
     );
 
 }
@@ -1165,7 +1122,7 @@ function createRID(){
 
     alert(
         "CREATE RID\n\n" +
-        "Your RANDOM identity will be created here."
+        "Your RANDOM identity begins here."
     );
 
 }
