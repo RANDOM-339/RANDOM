@@ -1,10 +1,10 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>RANDOM</title>
+  <title>RANDOM — Enter the Unexpected</title>
 
   <style>
     * {
@@ -13,423 +13,618 @@
       padding: 0;
     }
 
+    :root {
+      --red: #ff304f;
+      --blue: #268cff;
+      --white: #f5f7ff;
+      --muted: #8d96aa;
+      --glass: rgba(8, 10, 20, 0.48);
+    }
+
     html,
     body {
       width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #05050a;
-      color: white;
+      min-height: 100%;
+      overflow-x: hidden;
+      background: #03040a;
+      color: var(--white);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
     }
 
     body {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      min-height: 100vh;
     }
 
     /* =========================
-       MOVING BACKGROUND
-       ========================= */
+       BACKGROUND
+    ========================= */
 
-    .background {
+    .universe {
       position: fixed;
-      inset: -15%;
-      z-index: 0;
+      inset: 0;
       overflow: hidden;
       background:
         radial-gradient(
-          circle at 20% 25%,
-          rgba(100, 0, 25, 0.65),
-          transparent 38%
+          circle at 18% 50%,
+          rgba(255, 26, 65, 0.22),
+          transparent 34%
         ),
         radial-gradient(
-          circle at 80% 70%,
-          rgba(10, 30, 100, 0.65),
-          transparent 40%
+          circle at 82% 50%,
+          rgba(25, 115, 255, 0.24),
+          transparent 34%
         ),
-        #05050a;
-      filter: blur(18px);
-      transform: scale(1.08);
+        #03040a;
+      z-index: -10;
     }
 
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(55px);
-      opacity: 0.65;
-      animation: float 14s ease-in-out infinite alternate;
-    }
-
-    .orb-one {
-      width: 45vw;
-      height: 45vw;
-      min-width: 280px;
-      min-height: 280px;
-      background: rgba(120, 0, 30, 0.55);
-      top: -10%;
-      left: -8%;
-    }
-
-    .orb-two {
-      width: 40vw;
-      height: 40vw;
-      min-width: 250px;
-      min-height: 250px;
-      background: rgba(15, 35, 130, 0.55);
-      right: -8%;
-      bottom: -10%;
-      animation-delay: -6s;
-    }
-
-    .orb-three {
-      width: 25vw;
-      height: 25vw;
-      min-width: 180px;
-      min-height: 180px;
-      background: rgba(80, 20, 100, 0.35);
-      left: 45%;
-      top: 40%;
-      animation-duration: 18s;
-      animation-delay: -3s;
-    }
-
-    @keyframes float {
-      0% {
-        transform: translate(0, 0) scale(1);
-      }
-
-      50% {
-        transform: translate(35px, -25px) scale(1.08);
-      }
-
-      100% {
-        transform: translate(-25px, 30px) scale(0.96);
-      }
-    }
-
-    /* =========================
-       STARS
-       ========================= */
-
-    .stars {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      opacity: 0.5;
-      background-image:
-        radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px),
-        radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px);
-      background-size: 95px 95px, 145px 145px;
-      background-position: 15px 20px, 70px 55px;
-      animation: starsMove 30s linear infinite;
-    }
-
-    @keyframes starsMove {
-      from {
-        transform: translate(0, 0);
-      }
-
-      to {
-        transform: translate(-40px, -25px);
-      }
-    }
-
-    /* =========================
-       DARK GLASS OVERLAY
-       ========================= */
-
-    .overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 2;
-      background: rgba(0, 0, 0, 0.27);
-      backdrop-filter: blur(2px);
-    }
-
-    /* =========================
-       MAIN PORTAL
-       ========================= */
-
-    .portal {
-      position: relative;
-      z-index: 3;
-      width: min(92%, 500px);
-      min-height: 570px;
-      padding: 55px 30px 35px;
-
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      text-align: center;
-
-      background: rgba(8, 8, 15, 0.48);
-      border: 1px solid rgba(255, 255, 255, 0.10);
-      border-radius: 32px;
-
-      box-shadow:
-        0 30px 100px rgba(0, 0, 0, 0.55),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
-
-      backdrop-filter: blur(18px);
-    }
-
-    /* =========================
-       UNIVERSE LOGO
-       ========================= */
-
-    .logo {
-      position: relative;
-      width: 112px;
-      height: 112px;
-      margin-bottom: 28px;
-
-      border-radius: 50%;
-
-      background:
-        radial-gradient(
-          circle at 35% 30%,
-          #ffffff 0 2%,
-          #8da0ff 3%,
-          #3528a8 17%,
-          #09091c 52%,
-          #020207 100%
-        );
-
-      box-shadow:
-        0 0 35px rgba(70, 70, 255, 0.38),
-        0 0 90px rgba(120, 0, 60, 0.20);
-
-      animation: logoFloat 6s ease-in-out infinite;
-    }
-
-    .logo::before,
-    .logo::after {
+    .universe::before {
       content: "";
       position: absolute;
-      inset: 18px;
-
-      border: 1px solid rgba(255,255,255,0.35);
-      border-radius: 50%;
-
-      transform: rotate(35deg);
+      inset: -20%;
+      background:
+        radial-gradient(circle, rgba(255,255,255,.7) 0 1px, transparent 1.5px);
+      background-size: 90px 90px;
+      opacity: .13;
+      animation: stars 35s linear infinite;
     }
 
-    .logo::after {
-      inset: 27px;
-      transform: rotate(-45deg) scaleX(1.25);
-      border-color: rgba(130,150,255,0.45);
-    }
-
-    .logo-core {
+    .universe::after {
+      content: "";
       position: absolute;
-      width: 17px;
-      height: 17px;
+      width: 70vw;
+      height: 70vw;
+      max-width: 900px;
+      max-height: 900px;
       left: 50%;
       top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background:
+        conic-gradient(
+          from 0deg,
+          rgba(255, 30, 65, 0),
+          rgba(255, 30, 65, .20),
+          rgba(255, 30, 65, 0),
+          rgba(30, 120, 255, 0),
+          rgba(30, 120, 255, .22),
+          rgba(30, 120, 255, 0)
+        );
+      filter: blur(60px);
+      animation: universeSpin 24s linear infinite;
+    }
 
+    @keyframes stars {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(90px);
+      }
+    }
+
+    @keyframes universeSpin {
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    /* =========================
+       TOP BAR
+    ========================= */
+
+    header {
+      width: 100%;
+      padding: 24px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .brand-mark {
+      width: 35px;
+      height: 35px;
+      position: relative;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      transform: rotate(-25deg);
+    }
+
+    .brand-mark::before {
+      border-left-color: var(--red);
+      border-top-color: var(--red);
+      box-shadow: 0 0 12px rgba(255, 48, 79, .55);
+    }
+
+    .brand-mark::after {
+      border-right-color: var(--blue);
+      border-bottom-color: var(--blue);
+      transform: rotate(25deg);
+      box-shadow: 0 0 12px rgba(38, 140, 255, .55);
+    }
+
+    .brand-name {
+      font-size: 17px;
+      letter-spacing: .28em;
+      font-weight: 700;
+    }
+
+    .menu {
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 50%;
+      background: rgba(255,255,255,.035);
+      color: white;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+    }
+
+    .menu span {
+      width: 14px;
+      height: 1px;
+      background: white;
+      position: relative;
+    }
+
+    .menu span::before,
+    .menu span::after {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 1px;
+      background: white;
+      left: 0;
+    }
+
+    .menu span::before {
+      top: -5px;
+    }
+
+    .menu span::after {
+      top: 5px;
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    main {
+      min-height: calc(100vh - 85px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px 20px 45px;
+    }
+
+    .gate {
+      width: min(1080px, 100%);
+      position: relative;
+      text-align: center;
+      transition: transform .25s ease-out;
+    }
+
+    /* outer rings */
+
+    .portal {
+      width: min(73vw, 650px);
+      height: min(73vw, 650px);
+      max-width: 650px;
+      max-height: 650px;
+      min-width: 310px;
+      min-height: 310px;
+
+      position: absolute;
+      left: 50%;
+      top: 50%;
       transform: translate(-50%, -50%);
 
       border-radius: 50%;
-      background: white;
 
-      box-shadow:
-        0 0 12px white,
-        0 0 30px rgba(120,150,255,0.9);
+      background:
+        conic-gradient(
+          from 0deg,
+          transparent 0deg,
+          rgba(255,48,79,.85) 65deg,
+          transparent 125deg,
+          transparent 180deg,
+          rgba(38,140,255,.9) 245deg,
+          transparent 310deg,
+          transparent 360deg
+        );
+
+      filter: blur(1px);
+
+      animation: portalSpin 18s linear infinite;
+      opacity: .75;
     }
 
-    @keyframes logoFloat {
+    .portal::before {
+      content: "";
+      position: absolute;
+      inset: 13px;
+      border-radius: 50%;
+      background: #05060d;
+    }
+
+    .portal::after {
+      content: "";
+      position: absolute;
+      inset: -18px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow:
+        0 0 35px rgba(255,40,70,.18),
+        0 0 55px rgba(40,130,255,.16);
+    }
+
+    @keyframes portalSpin {
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    /* smaller orbit */
+
+    .orbit {
+      position: absolute;
+      width: min(55vw, 470px);
+      height: min(55vw, 470px);
+      max-width: 470px;
+      max-height: 470px;
+      min-width: 245px;
+      min-height: 245px;
+
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 50%;
+
+      left: 50%;
+      top: 50%;
+
+      transform:
+        translate(-50%, -50%)
+        rotate(-17deg);
+
+      animation: orbitMove 12s ease-in-out infinite;
+    }
+
+    .orbit::before {
+      content: "";
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 18px var(--red);
+      top: 12%;
+      left: 12%;
+    }
+
+    .orbit::after {
+      content: "";
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 18px var(--blue);
+      bottom: 11%;
+      right: 12%;
+    }
+
+    @keyframes orbitMove {
       0%, 100% {
-        transform: translateY(0) rotate(0deg);
+        transform: translate(-50%, -50%) rotate(-17deg);
       }
 
       50% {
-        transform: translateY(-7px) rotate(4deg);
+        transform: translate(-50%, -50%) rotate(17deg);
       }
     }
 
     /* =========================
-       BRAND
-       ========================= */
+       CONTENT
+    ========================= */
 
-    .brand {
-      font-size: clamp(42px, 12vw, 72px);
-      font-weight: 800;
-      letter-spacing: 0.16em;
-      margin-left: 0.16em;
+    .content {
+      position: relative;
+      z-index: 5;
+      padding: 45px 15px;
+    }
 
-      background:
-        linear-gradient(
-          120deg,
-          #ffffff,
-          #b8c1ff,
-          #ffffff,
-          #ffb6c8
-        );
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: .38em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
 
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 14px;
+    }
 
-      text-shadow: 0 0 35px rgba(120, 120, 255, 0.18);
+    .logo-symbol {
+      width: 50px;
+      height: 50px;
+      position: relative;
+      transform: rotate(-8deg);
+    }
+
+    .logo-symbol i {
+      position: absolute;
+      inset: 4px;
+      border: 3px solid transparent;
+      border-radius: 50%;
+    }
+
+    .logo-symbol i:nth-child(1) {
+      border-top-color: var(--red);
+      border-left-color: var(--red);
+      transform: rotate(25deg);
+    }
+
+    .logo-symbol i:nth-child(2) {
+      border-right-color: var(--blue);
+      border-bottom-color: var(--blue);
+      transform: rotate(25deg);
+    }
+
+    .logo-symbol i:nth-child(3) {
+      inset: 15px;
+      border: 2px solid white;
+      opacity: .9;
+    }
+
+    h1 {
+      font-size: clamp(45px, 9vw, 88px);
+      line-height: .95;
+      letter-spacing: .22em;
+      margin-left: .22em;
+      font-weight: 700;
+      text-shadow:
+        0 0 20px rgba(255,255,255,.13);
     }
 
     .tagline {
-      margin-top: 8px;
-      margin-bottom: 45px;
-
-      color: rgba(255,255,255,0.52);
-      font-size: 13px;
-      letter-spacing: 0.24em;
+      font-size: clamp(11px, 1.7vw, 14px);
+      letter-spacing: .38em;
       text-transform: uppercase;
+      color: #b5bdcf;
+      margin-top: 18px;
+    }
+
+    .description {
+      max-width: 430px;
+      margin: 22px auto 30px;
+      color: #858da0;
+      font-size: 13px;
+      line-height: 1.8;
     }
 
     /* =========================
-       BUTTONS
-       ========================= */
+       ACTIONS
+    ========================= */
 
     .actions {
-      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      width: min(520px, 100%);
+      margin: 0 auto;
+    }
+
+    .action {
+      flex: 1;
+      min-height: 70px;
+      border-radius: 15px;
+      padding: 13px 17px;
+
+      text-decoration: none;
+      color: white;
+
       display: flex;
       flex-direction: column;
-      gap: 14px;
-    }
+      justify-content: center;
+      align-items: flex-start;
 
-    .portal-button {
       position: relative;
-      width: 100%;
-      min-height: 64px;
+      overflow: hidden;
 
-      border-radius: 17px;
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(8,10,20,.58);
 
-      color: white;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-
-      cursor: pointer;
+      backdrop-filter: blur(18px);
 
       transition:
-        transform 0.25s ease,
-        border-color 0.25s ease,
-        box-shadow 0.25s ease,
-        background 0.25s ease;
-
-      overflow: hidden;
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
     }
 
-    .portal-button::before {
+    .action:hover {
+      transform: translateY(-4px);
+    }
+
+    .action::after {
       content: "";
       position: absolute;
-      top: 0;
-      left: -120%;
-      width: 80%;
-      height: 100%;
-
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,0.16),
-        transparent
-      );
-
-      transform: skewX(-20deg);
-      transition: left 0.6s ease;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      right: -55px;
+      top: -55px;
+      filter: blur(35px);
+      opacity: .25;
     }
 
-    .portal-button:hover::before {
-      left: 140%;
+    .visitor::after {
+      background: var(--red);
     }
 
-    .portal-button:hover {
-      transform: translateY(-2px);
-    }
-
-    .visitor {
-      background:
-        linear-gradient(
-          135deg,
-          rgba(30, 45, 110, 0.75),
-          rgba(20, 20, 55, 0.75)
-        );
-
-      box-shadow:
-        0 12px 35px rgba(20, 40, 120, 0.18);
+    .rid::after {
+      background: var(--blue);
     }
 
     .visitor:hover {
-      border-color: rgba(120,150,255,0.5);
-      box-shadow:
-        0 15px 45px rgba(30,50,160,0.25);
-    }
-
-    .rid {
-      background:
-        linear-gradient(
-          135deg,
-          rgba(110, 20, 45, 0.72),
-          rgba(45, 10, 25, 0.78)
-        );
-
-      box-shadow:
-        0 12px 35px rgba(120, 15, 45, 0.16);
+      border-color: rgba(255,48,79,.65);
+      box-shadow: 0 10px 40px rgba(255,48,79,.14);
     }
 
     .rid:hover {
-      border-color: rgba(255,110,145,0.5);
-      box-shadow:
-        0 15px 45px rgba(160,20,60,0.24);
+      border-color: rgba(38,140,255,.7);
+      box-shadow: 0 10px 40px rgba(38,140,255,.15);
     }
 
-    .button-small {
-      display: block;
-      margin-top: 7px;
+    .action strong {
+      font-size: 14px;
+      letter-spacing: .17em;
+    }
 
+    .action small {
+      margin-top: 5px;
+      color: #7e879b;
       font-size: 10px;
-      font-weight: 400;
-      letter-spacing: 0.15em;
+      letter-spacing: .04em;
+    }
 
-      color: rgba(255,255,255,0.42);
+    .arrow {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: #b8bfd0;
     }
 
     /* =========================
        FOOTER
-       ========================= */
+    ========================= */
 
-    .footer {
-      position: absolute;
-      bottom: 18px;
+    .bottom-note {
+      margin-top: 35px;
+      color: #646d80;
+      font-size: 9px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+    }
 
-      color: rgba(255,255,255,0.25);
-      font-size: 10px;
-      letter-spacing: 0.16em;
+    .bottom-note span {
+      color: #aeb6c8;
     }
 
     /* =========================
        MOBILE
-       ========================= */
+    ========================= */
 
-    @media (max-width: 500px) {
-      .portal {
-        min-height: 535px;
-        padding: 40px 22px 35px;
-        border-radius: 27px;
+    @media (max-width: 600px) {
+
+      header {
+        padding: 19px 18px;
       }
 
-      .logo {
-        width: 95px;
-        height: 95px;
-        margin-bottom: 22px;
+      .brand-name {
+        font-size: 14px;
+      }
+
+      main {
+        min-height: calc(100vh - 70px);
+        padding: 10px 15px 30px;
+      }
+
+      .portal {
+        width: 95vw;
+        height: 95vw;
+        opacity: .65;
+      }
+
+      .orbit {
+        width: 72vw;
+        height: 72vw;
+      }
+
+      .content {
+        padding: 38px 4px;
+      }
+
+      .eyebrow {
+        font-size: 8px;
+        letter-spacing: .28em;
+      }
+
+      h1 {
+        font-size: clamp(40px, 15vw, 62px);
+        letter-spacing: .13em;
+        margin-left: .13em;
+      }
+
+      .logo-symbol {
+        width: 38px;
+        height: 38px;
       }
 
       .tagline {
-        margin-bottom: 38px;
+        font-size: 9px;
+        letter-spacing: .25em;
+      }
+
+      .description {
+        font-size: 11px;
+        line-height: 1.7;
+        max-width: 310px;
+        margin-bottom: 25px;
+      }
+
+      .actions {
+        flex-direction: column;
+        width: min(330px, 100%);
+      }
+
+      .action {
+        min-height: 66px;
+      }
+
+      .bottom-note {
+        margin-top: 25px;
+        font-size: 7px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
       }
     }
   </style>
@@ -437,66 +632,123 @@
 
 <body>
 
-  <div class="background">
-    <div class="orb orb-one"></div>
-    <div class="orb orb-two"></div>
-    <div class="orb orb-three"></div>
-  </div>
+  <!-- RANDOM Universe Background -->
+  <div class="universe"></div>
 
-  <div class="stars"></div>
-
-  <div class="overlay"></div>
-
-  <main class="portal">
-
-    <div class="logo" aria-label="RANDOM Universe Logo">
-      <div class="logo-core"></div>
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div class="brand-name">RANDOM</div>
     </div>
 
-    <h1 class="brand">RANDOM</h1>
+    <button class="menu" aria-label="Open menu">
+      <span></span>
+    </button>
+  </header>
 
-    <p class="tagline">
-      Enter the unexpected
-    </p>
 
-    <div class="actions">
+  <!-- Main Portal -->
+  <main>
 
-      <button
-        class="portal-button visitor"
-        onclick="visitorMode()"
-      >
-        VISITOR
-        <span class="button-small">
-          Explore RANDOM
-        </span>
-      </button>
+    <section class="gate" id="gate">
 
-      <button
-        class="portal-button rid"
-        onclick="createRID()"
-      >
-        CREATE RID
-        <span class="button-small">
-          Create your RANDOM identity
-        </span>
-      </button>
+      <div class="portal"></div>
+      <div class="orbit"></div>
 
-    </div>
+      <div class="content">
 
-    <div class="footer">
-      RANDOM • EVERYTHING CAN CHANGE
-    </div>
+        <div class="eyebrow">
+          A universe without a fixed path
+        </div>
+
+        <div class="logo">
+
+          <div class="logo-symbol">
+            <i></i>
+            <i></i>
+            <i></i>
+          </div>
+
+          <h1>RANDOM</h1>
+
+        </div>
+
+        <div class="tagline">
+          Enter the unexpected
+        </div>
+
+        <p class="description">
+          One universe. Different paths.
+          Explore, compete, create, work and discover
+          what happens next.
+        </p>
+
+
+        <div class="actions">
+
+          <a href="#" class="action visitor">
+            <strong>VISITOR</strong>
+            <small>Explore without an account</small>
+            <span class="arrow">→</span>
+          </a>
+
+          <a href="#" class="action rid">
+            <strong>CREATE RID</strong>
+            <small>Create your RANDOM identity</small>
+            <span class="arrow">→</span>
+          </a>
+
+        </div>
+
+        <div class="bottom-note">
+          <span>RANDOM</span>
+          &nbsp; • &nbsp;
+          Nothing is predetermined
+        </div>
+
+      </div>
+
+    </section>
 
   </main>
 
+
   <script>
-    function visitorMode() {
-      alert("Visitor mode — coming next.");
+    /*
+      Subtle perspective reaction.
+      No external libraries.
+    */
+
+    const gate = document.getElementById("gate");
+
+    function moveGate(x, y) {
+      const rotateX = (y - window.innerHeight / 2) / 180;
+      const rotateY = (x - window.innerWidth / 2) / -180;
+
+      gate.style.transform =
+        `perspective(1200px)
+         rotateX(${rotateX}deg)
+         rotateY(${rotateY}deg)`;
     }
 
-    function createRID() {
-      alert("RID creation — coming next.");
-    }
+    window.addEventListener("mousemove", (event) => {
+      moveGate(event.clientX, event.clientY);
+    });
+
+    window.addEventListener("touchmove", (event) => {
+      if (!event.touches.length) return;
+
+      moveGate(
+        event.touches[0].clientX,
+        event.touches[0].clientY
+      );
+    }, { passive: true });
+
+    window.addEventListener("mouseleave", () => {
+      gate.style.transform =
+        "perspective(1200px) rotateX(0deg) rotateY(0deg)";
+    });
   </script>
 
 </body>
