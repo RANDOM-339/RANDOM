@@ -147,121 +147,110 @@
     .brand-mark:hover {
       opacity: 0.85;
     }
-      
-    /* ========================================================================
-       BLACK HOLE FUTURISTIC BRAND LOGO
-       ======================================================================== */
-    .brand-logo-svg {
-      width: 36px;
-      height: 36px;
-      overflow: visible;
+
+    /* =====================================================
+       RANDOM — LOGO / WATERMARK
+    ===================================================== */
+
+    .brand{
+      position:absolute;
+
+      left:20px;
+      top:18px;
+
+      width:38px;
+      height:38px;
+
+      z-index:30;
     }
 
-    .black-hole-ring {
-      fill: none;
-      stroke: var(--accent-lime);
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      opacity: 0.85;
-      transform-origin: 16px 16px;
-      animation: blackHoleOrbit 24s linear infinite;
-      filter: drop-shadow(0 0 5px var(--accent-lime-glow));
-    }
+    .brand-symbol{
+      position:relative;
 
-    .black-hole-ring-secondary {
-      fill: none;
-      stroke: var(--accent-cyan);
-      stroke-width: 1.1;
-      stroke-linecap: round;
-      opacity: 0.65;
-      transform-origin: 16px 16px;
-      animation: blackHoleOrbitReverse 34s linear infinite;
-      filter: drop-shadow(0 0 4px rgba(0, 240, 255, 0.18));
-    }
+      width:38px;
+      height:38px;
 
-    .black-hole-lens {
-      fill: none;
-      stroke: rgba(242, 247, 244, 0.32);
-      stroke-width: 0.8;
-      opacity: 0.8;
-      transform-origin: 16px 16px;
-      animation: blackHoleLens 18s ease-in-out infinite;
-    }
+      transform:rotate(-8deg);
 
-    .black-hole-core {
-      fill: #000000;
-      stroke: var(--accent-lime);
-      stroke-width: 1.2;
       filter:
-        drop-shadow(0 0 4px rgba(0, 0, 0, 1))
-        drop-shadow(0 0 7px var(--accent-lime-glow));
+        drop-shadow(
+          0 0 11px
+          rgba(216,255,69,.14)
+        );
     }
 
-    .black-hole-glow {
-      fill: none;
-      stroke: var(--accent-lime);
-      stroke-width: 2;
-      opacity: 0.22;
-      filter: blur(2px);
-      animation: blackHoleGlow 8s ease-in-out infinite;
+    .loop{
+      position:absolute;
+
+      width:31px;
+      height:17px;
+
+      border:
+        1.5px solid
+        #d8ff45;
+
+      border-radius:
+        55% 45% 55% 45%;
     }
 
-    .black-hole-node {
-      fill: var(--accent-cyan);
-      filter: drop-shadow(0 0 5px var(--accent-cyan));
-      transform-origin: 16px 16px;
-      animation: blackHoleNodeOrbit 20s linear infinite;
+    .loop.one{
+      left:1px;
+      top:10px;
+
+      transform:rotate(29deg);
+
+      border-right-color:
+        rgba(216,255,69,.18);
     }
 
-    @keyframes blackHoleOrbit {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
+    .loop.two{
+      right:1px;
+      top:10px;
+
+      transform:rotate(-29deg);
+
+      border-color:
+        #63e9dc;
+
+      border-left-color:
+        rgba(99,233,220,.18);
     }
 
-    @keyframes blackHoleOrbitReverse {
-      from {
-        transform: rotate(360deg);
-      }
-      to {
-        transform: rotate(0deg);
-      }
+    /* =====================================================
+       BLACK HOLE CORE
+    ===================================================== */
+
+    .brand-core{
+      position:absolute;
+
+      width:6px;
+      height:6px;
+
+      left:16px;
+      top:15px;
+
+      background:#000;
+
+      border-radius:50%;
+
+      box-shadow:
+        0 0 4px
+        rgba(0,0,0,.95),
+        0 0 9px
+        rgba(0,0,0,.85);
     }
 
-    @keyframes blackHoleLens {
-      0%, 100% {
-        transform: rotate(-8deg) scaleY(0.92);
-        opacity: 0.55;
+    /* =====================================================
+       MOBILE POSITION
+    ===================================================== */
+
+    @media(max-width:600px){
+
+      .brand{
+        left:16px;
+        top:16px;
       }
 
-      50% {
-        transform: rotate(8deg) scaleY(1.04);
-        opacity: 0.85;
-      }
-    }
-
-    @keyframes blackHoleGlow {
-      0%, 100% {
-        opacity: 0.16;
-        transform: scale(0.96);
-      }
-
-      50% {
-        opacity: 0.34;
-        transform: scale(1.04);
-      }
-    }
-
-    @keyframes blackHoleNodeOrbit {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
     }
       
     /* Top-Right Status Badge: EARLY ACCESS */
@@ -800,7 +789,8 @@
       border-color: var(--accent-amber);
       color: var(--accent-amber);
     }
-      /* Responsive Adaptation */
+
+    /* Responsive Adaptation */
     @media (max-width: 768px) {
       .spatial-actions {
         flex-direction: column;
@@ -847,78 +837,24 @@
   <div class="app-viewport">
           
     <header class="system-header">
+
+      <!-- =====================================================
+           RANDOM LOGO / WATERMARK
+      ===================================================== -->
+
       <a href="#" class="brand-mark" aria-label="RANDOM Home">
-
-        <!-- ================================================================
-             RANDOM BLACK HOLE BRAND MARK
-             Clean reusable symbol:
-             Event Horizon + Accretion Ring + Orbital Energy Node
-             ================================================================ -->
-        <svg class="brand-logo-svg"
-             viewBox="0 0 32 32"
-             fill="none"
-             xmlns="http://www.w3.org/2000/svg"
-             aria-hidden="true">
-
-          <!-- Outer gravitational glow -->
-          <circle
-            class="black-hole-glow"
-            cx="16"
-            cy="16"
-            r="11.5"
-          />
-
-          <!-- Primary accretion ring -->
-          <ellipse
-            class="black-hole-ring"
-            cx="16"
-            cy="16"
-            rx="12.5"
-            ry="6.2"
-            transform="rotate(-18 16 16)"
-          />
-
-          <!-- Secondary futuristic orbital ring -->
-          <ellipse
-            class="black-hole-ring-secondary"
-            cx="16"
-            cy="16"
-            rx="11"
-            ry="4.2"
-            transform="rotate(28 16 16)"
-          />
-
-          <!-- Subtle gravitational lens -->
-          <ellipse
-            class="black-hole-lens"
-            cx="16"
-            cy="16"
-            rx="8.8"
-            ry="13"
-          />
-
-          <!-- Event horizon / black-hole core -->
-          <circle
-            class="black-hole-core"
-            cx="16"
-            cy="16"
-            r="5.1"
-          />
-
-          <!-- Tiny orbital energy node -->
-          <circle
-            class="black-hole-node"
-            cx="16"
-            cy="3.5"
-            r="1.15"
-          />
-
-        </svg>
+        <div class="brand">
+          <div class="brand-symbol">
+            <div class="loop one"></div>
+            <div class="loop two"></div>
+            <div class="brand-core"></div>
+          </div>
+        </div>
       </a>
       
       <!-- Top-Right Badge: EARLY ACCESS -->
       <div class="early-access-badge">
-     <span class="badge-red-dot"></span>
+        <span class="badge-red-dot"></span>
         <span>EARLY ACCESS</span>
       </div>
     </header>
@@ -1198,7 +1134,7 @@
               label: "WHAT IS THE ULTIMATE GOAL?",
               response: "To build a seamless global discovery layer where requirements find solutions instantly.",
               nextSet: 0
-},
+            },
             {
               label: "[ SIMULATE UNRELATED SIGNAL ]",
               isOutOfScopeTrigger: true,
@@ -1311,3 +1247,4 @@
   </script>
 </body>
 </html>
+  
