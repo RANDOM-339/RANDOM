@@ -1,2498 +1,1313 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>RANDOM — Early Access</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-:root{
-  --bg:#020403;
-  --panel:#080c09;
-  --panel-hi:#0d130f;
-
-  --white:#f2f7f3;
-  --white-soft:#cbd5ce;
-  --muted:#78847b;
-  --dim:#4b574f;
-
-  --green:#d8ff45;
-  --sky:#63e9dc;
-
-  --violet:#9b8cff;
-  --red:#ff646c;
-
-  --line:rgba(255,255,255,.085);
-}
-
-html,
-body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-}
-
-body{
-  background:var(--bg);
-  color:var(--white);
-  font-family:"Space Grotesk",sans-serif;
-  -webkit-font-smoothing:antialiased;
-}
-
-button{
-  font:inherit;
-}
-
-button:focus-visible{
-  outline:1px solid var(--green);
-  outline-offset:3px;
-}
-
-
-/* =====================================================
-   APP
-===================================================== */
-
-.app{
-  position:relative;
-
-  width:100%;
-  height:100dvh;
-
-  overflow:hidden;
-  isolation:isolate;
-
-  background:
-    radial-gradient(
-      circle at 50% 19%,
-      rgba(99,233,220,.055),
-      transparent 22%
-    ),
-    radial-gradient(
-      circle at 50% 44%,
-      rgba(216,255,69,.035),
-      transparent 30%
-    ),
-    #020403;
-}
-
-
-/* =====================================================
-   BACKGROUND GRID
-===================================================== */
-
-.grid{
-  position:absolute;
-  inset:-40%;
-
-  pointer-events:none;
-
-  opacity:.085;
-
-  background-image:
-    linear-gradient(
-      rgba(255,255,255,.018) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,.018) 1px,
-      transparent 1px
-    );
-
-  background-size:84px 84px;
-
-  transform:
-    perspective(1000px)
-    rotateX(60deg)
-    translateY(25%);
-
-  mask-image:
-    linear-gradient(
-      to bottom,
-      transparent 3%,
-      black 25%,
-      black 69%,
-      transparent 96%
-    );
-}
-
-
-/* =====================================================
-   CENTRAL ORBIT FIELD
-===================================================== */
-
-.field{
-  position:absolute;
-
-  width:570px;
-  height:570px;
-
-  left:50%;
-  top:35%;
-
-  transform:translate(-50%,-50%);
-
-  border:
-    1px solid
-    rgba(255,255,255,.011);
-
-  border-radius:50%;
-
-  pointer-events:none;
-}
-
-.field::before,
-.field::after{
-  content:"";
-
-  position:absolute;
-
-  border:
-    1px solid
-    rgba(255,255,255,.009);
-
-  border-radius:50%;
-}
-
-.field::before{
-  inset:16%;
-}
-
-.field::after{
-  inset:31%;
-}
-
-.field-dot{
-  position:absolute;
-
-  left:50%;
-  top:50%;
-
-  width:4px;
-  height:4px;
-
-  border-radius:50%;
-
-  background:var(--green);
-
-  box-shadow:
-    0 0 16px
-    rgba(216,255,69,.42);
-
-  animation:
-    orbit 14s
-    linear
-    infinite;
-}
-
-@keyframes orbit{
-  from{
-    transform:
-      rotate(0deg)
-      translateX(250px);
-  }
-
-  to{
-    transform:
-      rotate(360deg)
-      translateX(250px);
-  }
-}
-
-
-/* =====================================================
-   OLD ATOM LOGO
-===================================================== */
-
-.brand{
-  position:absolute;
-
-  left:20px;
-  top:18px;
-
-  width:38px;
-  height:38px;
-
-  z-index:30;
-}
-
-.brand-symbol{
-  position:relative;
-
-  width:38px;
-  height:38px;
-
-  transform:rotate(-8deg);
-
-  filter:
-    drop-shadow(
-      0 0 11px
-      rgba(216,255,69,.14)
-    );
-}
-
-.loop{
-  position:absolute;
-
-  width:31px;
-  height:17px;
-
-  border:
-    1.5px solid
-    var(--green);
-
-  border-radius:
-    55% 45% 55% 45%;
-}
-
-.loop.one{
-  left:1px;
-  top:10px;
-
-  transform:rotate(29deg);
-
-  border-right-color:
-    rgba(216,255,69,.18);
-}
-
-.loop.two{
-  right:1px;
-  top:10px;
-
-  transform:rotate(-29deg);
-
-  border-color:
-    var(--sky);
-
-  border-left-color:
-    rgba(99,233,220,.18);
-}
-
-.brand-core{
-  position:absolute;
-
-  width:6px;
-  height:6px;
-
-  left:16px;
-  top:15px;
-
-  background:#f9fbf8;
-
-  transform:rotate(45deg);
-
-  box-shadow:
-    0 0 13px
-    rgba(216,255,69,.72);
-}
-
-
-/* =====================================================
-   TOP STATUS
-===================================================== */
-
-.status{
-  position:absolute;
-
-  right:21px;
-  top:23px;
-
-  z-index:20;
-
-  display:flex;
-  align-items:center;
-  gap:6px;
-
-  color:#465149;
-
-  font-size:6px;
-  font-weight:700;
-
-  letter-spacing:.17em;
-}
-
-.status-dot{
-  width:5px;
-  height:5px;
-
-  border-radius:50%;
-
-  background:#637068;
-
-  box-shadow:
-    0 0 8px
-    rgba(99,233,220,.17);
-}
-
-
-/* =====================================================
-   MAIN
-===================================================== */
-
-.main{
-  position:absolute;
-  inset:0;
-
-  display:flex;
-
-  justify-content:center;
-  align-items:center;
-
-  padding:
-    30px
-    18px
-    18px;
-}
-
-.inner{
-  width:min(430px,100%);
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-
-  transform:
-    translateY(-18px);
-}
-
-
-/* =====================================================
-   SMALL BRAND KICKER
-===================================================== */
-
-.kicker{
-  display:flex;
-  align-items:center;
-  gap:10px;
-
-  margin-bottom:11px;
-
-  color:#4b574f;
-
-  font-size:6px;
-  font-weight:700;
-
-  letter-spacing:.28em;
-}
-
-.kicker::before,
-.kicker::after{
-  content:"";
-
-  width:22px;
-  height:1px;
-}
-
-.kicker::before{
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(216,255,69,.58)
-    );
-}
-
-.kicker::after{
-  background:
-    linear-gradient(
-      90deg,
-      rgba(99,233,220,.58),
-      transparent
-    );
-}
-
-
-/* =====================================================
-   RANDOM BRAND STAGE
-===================================================== */
-
-.random-stage{
-  position:relative;
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-
-  padding:
-    12px
-    30px
-    11px;
-
-  animation:
-    brandIn
-    .85s
-    cubic-bezier(.16,.84,.2,1)
-    both;
-}
-
-
-/* technical frame */
-
-.random-stage::before,
-.random-stage::after{
-  content:"";
-
-  position:absolute;
-
-  width:24px;
-  height:39px;
-
-  opacity:.72;
-}
-
-.random-stage::before{
-  left:0;
-  top:2px;
-
-  border-left:
-    1px solid
-    rgba(216,255,69,.45);
-
-  border-top:
-    1px solid
-    rgba(216,255,69,.45);
-
-  border-bottom:
-    1px solid
-    rgba(216,255,69,.10);
-}
-
-.random-stage::after{
-  right:0;
-  bottom:2px;
-
-  border-right:
-    1px solid
-    rgba(99,233,220,.45);
-
-  border-bottom:
-    1px solid
-    rgba(99,233,220,.45);
-
-  border-top:
-    1px solid
-    rgba(99,233,220,.10);
-}
-
-
-/* =====================================================
-   RANDOM WORDMARK
-===================================================== */
-
-.random-mark{
-  position:relative;
-
-  display:flex;
-  align-items:center;
-
-  font-family:"Orbitron",sans-serif;
-
-  /*
-     Large enough to be the identity,
-     but no longer compressed.
-  */
-
-  font-size:
-    clamp(43px,11vw,68px);
-
-  font-weight:900;
-
-  line-height:.88;
-
-  letter-spacing:
-    -.075em;
-
-  transform:
-    skewX(-6deg);
-
-  filter:
-    drop-shadow(
-      0 15px 28px
-      rgba(0,0,0,.48)
-    );
-}
-
-
-/*
-   Dark dimensional duplicate.
-*/
-
-.random-mark::before{
-  content:"RANDOM";
-
-  position:absolute;
-
-  inset:0;
-
-  color:transparent;
-
-  -webkit-text-stroke:
-    1px
-    rgba(99,233,220,.075);
-
-  transform:
-    translate(7px,7px)
-    skewX(4deg);
-
-  opacity:.8;
-
-  pointer-events:none;
-}
-
-
-/*
-   Very subtle dark shine.
-*/
-
-.random-mark::after{
-  content:"";
-
-  position:absolute;
-
-  left:-14%;
-  width:128%;
-
-  top:48%;
-
-  height:2px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(216,255,69,0),
-      rgba(216,255,69,.72),
-      rgba(99,233,220,.55),
-      rgba(99,233,220,0),
-      transparent
-    );
-
-  opacity:.16;
-
-  filter:blur(.25px);
-
-  transform:
-    translateX(-55%);
-
-  animation:
-    brandScan
-    6s
-    ease-in-out
-    infinite;
-}
-
-
-/* =====================================================
-   RANDOM LETTER COLOUR SYSTEM
-===================================================== */
-
-/*
-   WHITE → GREEN → WHITE → SKY → WHITE → DARK-SILVER
-   This keeps the name premium instead of rainbow-like.
-*/
-
-.random-letter{
-  position:relative;
-
-  display:inline-block;
-
-  transition:
-    transform .35s cubic-bezier(.2,.8,.2,1),
-    filter .25s ease;
-}
-
-
-/* R — white */
-
-.random-letter:nth-child(1){
-  color:#f5f8f5;
-
-  text-shadow:
-    0 0 18px
-    rgba(255,255,255,.045);
-}
-
-
-/* A — green */
-
-.random-letter:nth-child(2){
-  color:#d8ff45;
-
-  text-shadow:
-    0 0 22px
-    rgba(216,255,69,.20);
-}
-
-
-/* N — white/greenish */
-
-.random-letter:nth-child(3){
-  color:#dfe9e2;
-
-  text-shadow:
-    0 0 16px
-    rgba(216,255,69,.035);
-}
-
-
-/* D — sky */
-
-.random-letter:nth-child(4){
-  color:#63e9dc;
-
-  text-shadow:
-    0 0 24px
-    rgba(99,233,220,.19);
-}
-
-
-/* O — white */
-
-.random-letter:nth-child(5){
-  color:#eef5ef;
-
-  text-shadow:
-    0 0 17px
-    rgba(255,255,255,.045);
-}
-
-
-/* M — dark polished silver */
-
-.random-letter:nth-child(6){
-  color:#87958c;
-
-  text-shadow:
-    0 0 14px
-    rgba(99,233,220,.035);
-}
-
-
-/* tiny green/sky cuts */
-
-.random-letter:nth-child(2)::after,
-.random-letter:nth-child(4)::after{
-  content:"";
-
-  position:absolute;
-
-  left:14%;
-  right:8%;
-
-  bottom:-6px;
-
-  height:2px;
-
-  transform:skewX(20deg);
-
-  opacity:.72;
-}
-
-.random-letter:nth-child(2)::after{
-  background:var(--green);
-}
-
-.random-letter:nth-child(4)::after{
-  background:var(--sky);
-}
-
-
-/* hover */
-
-.random-mark:hover
-.random-letter:nth-child(odd){
-  transform:translateY(-3px);
-}
-
-.random-mark:hover
-.random-letter:nth-child(even){
-  transform:translateY(3px);
-}
-
-
-/* =====================================================
-   BRAND ANIMATION
-===================================================== */
-
-@keyframes brandIn{
-  from{
-    opacity:0;
-
-    transform:
-      translateY(15px)
-      scale(.93);
-
-    filter:blur(6px);
-  }
-
-  to{
-    opacity:1;
-
-    transform:
-      translateY(0)
-      scale(1);
-
-    filter:none;
-  }
-}
-
-@keyframes brandScan{
-  0%,100%{
-    transform:translateX(-55%);
-    opacity:.02;
-  }
-
-  50%{
-    transform:translateX(55%);
-    opacity:.32;
-  }
-}
-
-
-/* =====================================================
-   TAGLINE
-===================================================== */
-
-.tagline{
-  margin-top:12px;
-
-  color:#69756d;
-
-  font-size:6px;
-
-  font-weight:600;
-
-  letter-spacing:.22em;
-}
-
-
-/* =====================================================
-   ACTIONS
-===================================================== */
-
-.actions{
-  width:100%;
-
-  /*
-     Hero is higher.
-     Cards deliberately stay lower.
-  */
-
-  margin-top:46px;
-
-  display:flex;
-  flex-direction:column;
-
-  gap:11px;
-
-  animation:
-    fadeUp
-    .7s
-    .15s
-    ease both;
-}
-
-
-/* =====================================================
-   ACTION CARD
-===================================================== */
-
-.action{
-  position:relative;
-
-  width:100%;
-
-  min-height:84px;
-
-  overflow:hidden;
-
-  border:
-    1px solid
-    var(--line);
-
-  border-radius:18px;
-
-  background:
-    linear-gradient(
-      125deg,
-      rgba(255,255,255,.045),
-      rgba(255,255,255,.010)
-    );
-
-  color:var(--white);
-
-  cursor:pointer;
-
-  text-align:left;
-
-  transition:
-    transform .22s ease,
-    border-color .25s ease,
-    box-shadow .25s ease;
-}
-
-.action:hover{
-  transform:translateY(-3px);
-
-  border-color:
-    rgba(255,255,255,.18);
-
-  box-shadow:
-    0 18px 45px
-    rgba(0,0,0,.30);
-}
-
-.action:active{
-  transform:
-    translateY(1px)
-    scale(.987);
-}
-
-
-/* explore */
-
-.explore{
-  border-color:
-    rgba(216,255,69,.32);
-
-  background:
-    linear-gradient(
-      120deg,
-      rgba(216,255,69,.075),
-      rgba(99,233,220,.024),
-      rgba(255,255,255,.010)
-    );
-}
-
-
-/* create */
-
-.create{
-  min-height:78px;
-
-  border-color:
-    rgba(99,233,220,.16);
-
-  background:
-    linear-gradient(
-      120deg,
-      rgba(99,233,220,.032),
-      rgba(255,255,255,.010)
-    );
-}
-
-
-/* content */
-
-.action-content{
-  position:relative;
-
-  z-index:3;
-
-  padding:
-    20px
-    72px
-    19px
-    22px;
-}
-
-
-/* requested uppercase */
-
-.action-label{
-  font-family:"Space Grotesk",sans-serif;
-
-  font-size:16px;
-
-  font-weight:700;
-
-  letter-spacing:.105em;
-
-  color:#edf5ef;
-}
-
-.action-sub{
-  margin-top:6px;
-
-  color:#707c74;
-
-  font-size:8px;
-
-  font-weight:500;
-
-  letter-spacing:.01em;
-}
-
-
-/* =====================================================
-   ACTION ICON
-===================================================== */
-
-.action-icon{
-  position:absolute;
-
-  right:18px;
-  top:50%;
-
-  width:38px;
-  height:38px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  transform:translateY(-50%);
-
-  border:
-    1px solid
-    rgba(255,255,255,.10);
-
-  border-radius:11px;
-
-  color:#77847c;
-
-  font-size:18px;
-
-  transition:
-    transform .3s ease,
-    border-color .25s ease,
-    color .25s ease,
-    background .25s ease;
-}
-
-.explore .action-icon{
-  color:var(--green);
-
-  border-color:
-    rgba(216,255,69,.28);
-}
-
-.action:hover .action-icon{
-  transform:
-    translateY(-50%)
-    rotate(45deg);
-
-  color:var(--green);
-
-  border-color:
-    rgba(216,255,69,.48);
-
-  background:
-    rgba(216,255,69,.035);
-}
-
-
-/* sweep */
-
-.sweep{
-  position:absolute;
-  inset:0;
-
-  pointer-events:none;
-
-  background:
-    linear-gradient(
-      110deg,
-      transparent 25%,
-      rgba(255,255,255,.065) 50%,
-      transparent 72%
-    );
-
-  transform:translateX(-125%);
-}
-
-.action:hover .sweep{
-  animation:
-    sweep .7s ease;
-}
-
-@keyframes sweep{
-  to{
-    transform:translateX(125%);
-  }
-}
-
-
-/* =====================================================
-   ROBOT GUIDE
-===================================================== */
-
-.assistant{
-  margin-top:18px;
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-
-  cursor:pointer;
-}
-
-
-/*
-   Robot starts SLEEPING.
-   Nothing activates until user clicks it.
-*/
-
-.robot{
-  position:relative;
-
-  width:60px;
-  height:49px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.14);
-
-  border-radius:
-    15px 11px 15px 11px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #151b17,
-      #070a08
-    );
-
-  box-shadow:
-    0 15px 35px
-    rgba(0,0,0,.5);
-
-  transition:
-    transform .35s ease,
-    border-color .3s ease,
-    box-shadow .3s ease;
-}
-
-
-/* antenna */
-
-.antenna{
-  position:absolute;
-
-  left:50%;
-  top:-8px;
-
-  width:1px;
-  height:8px;
-
-  background:#59655d;
-}
-
-.antenna::after{
-  content:"";
-
-  position:absolute;
-
-  left:-2px;
-  top:-4px;
-
-  width:5px;
-  height:5px;
-
-  border-radius:50%;
-
-  background:#727d74;
-}
-
-
-/* =====================================================
-   ROBOT EYES
-===================================================== */
-
-.robot-eyes{
-  position:absolute;
-
-  left:50%;
-  top:50%;
-
-  display:flex;
-
-  gap:7px;
-
-  transform:
-    translate(-50%,-50%);
-}
-
-.eye{
-  position:relative;
-
-  width:17px;
-  height:19px;
-
-  overflow:hidden;
-
-  border:
-    1px solid
-    rgba(255,255,255,.11);
-
-  border-radius:6px;
-
-  background:#020402;
-
-  transition:
-    transform .25s ease;
-}
-
-.pupil{
-  position:absolute;
-
-  left:50%;
-  top:50%;
-
-  width:8px;
-  height:8px;
-
-  border-radius:50%;
-
-  transform:
-    translate(-50%,-50%);
-
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      white 0 8%,
-      var(--green) 10% 44%,
-      #4b5d20 47% 62%,
-      #020302 65%
-    );
-
-  box-shadow:
-    0 0 10px
-    rgba(216,255,69,.32);
-}
-
-
-/* =====================================================
-   SLEEPING
-===================================================== */
-
-.robot.sleeping .pupil{
-  display:none;
-}
-
-.robot.sleeping .eye::after{
-  content:"";
-
-  position:absolute;
-
-  left:3px;
-  right:3px;
-  top:9px;
-
-  height:1px;
-
-  background:#59625b;
-
-  transform:rotate(-5deg);
-}
-
-.sleep-z{
-  position:absolute;
-
-  right:-14px;
-  top:-15px;
-
-  color:#4c574f;
-
-  font-size:8px;
-
-  font-weight:700;
-
-  animation:
-    sleepFloat
-    3.8s
-    ease-in-out
-    infinite;
-}
-
-@keyframes sleepFloat{
-  0%,100%{
-    opacity:.12;
-    transform:translate(0,4px);
-  }
-
-  50%{
-    opacity:.68;
-    transform:translate(4px,-2px);
-  }
-}
-
-
-/* =====================================================
-   ACTIVE
-===================================================== */
-
-.robot.active{
-  border-color:
-    rgba(216,255,69,.48);
-
-  box-shadow:
-    0 15px 37px
-    rgba(0,0,0,.48),
-    0 0 25px
-    rgba(216,255,69,.10);
-
-  animation:
-    robotFloat
-    3s
-    ease-in-out
-    infinite;
-}
-
-.robot.active .sleep-z{
-  display:none;
-}
-
-@keyframes robotFloat{
-  0%,100%{
-    transform:translateY(0);
-  }
-
-  50%{
-    transform:translateY(-2px);
-  }
-}
-
-
-/* =====================================================
-   CONFUSED
-===================================================== */
-
-.robot.confused{
-  border-color:
-    rgba(155,140,255,.55);
-
-  box-shadow:
-    0 15px 35px
-    rgba(0,0,0,.48),
-    0 0 20px
-    rgba(155,140,255,.07);
-}
-
-.robot.confused .sleep-z{
-  display:none;
-}
-
-.robot.confused .eye:first-child{
-  transform:translateY(-2px);
-}
-
-.robot.confused .eye:last-child{
-  transform:translateY(2px);
-}
-
-.robot.confused .pupil{
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      white 0 8%,
-      var(--violet) 10% 44%,
-      #403870 47% 62%,
-      #020302 65%
-    );
-}
-
-
-/* =====================================================
-   ANGRY
-===================================================== */
-
-.robot.angry{
-  border-color:
-    rgba(255,100,108,.58);
-
-  box-shadow:
-    0 15px 35px
-    rgba(0,0,0,.48),
-    0 0 20px
-    rgba(255,100,108,.07);
-
-  animation:
-    angry
-    .4s
-    ease;
-}
-
-.robot.angry .sleep-z{
-  display:none;
-}
-
-.robot.angry .pupil{
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      white 0 8%,
-      var(--red) 10% 44%,
-      #702c28 47% 62%,
-      #020302 65%
-    );
-}
-
-@keyframes angry{
-  0%,100%{
-    transform:translateX(0);
-  }
-
-  25%{
-    transform:
-      translateX(-4px)
-      rotate(-3deg);
-  }
-
-  75%{
-    transform:
-      translateX(4px)
-      rotate(3deg);
-  }
-}
-
-
-/* =====================================================
-   GUIDE LABEL
-===================================================== */
-
-.assistant-label{
-  margin-top:7px;
-
-  color:#505a52;
-
-  font-size:6px;
-
-  font-weight:800;
-
-  letter-spacing:.18em;
-}
-
-
-/* =====================================================
-   GUIDE PANEL
-===================================================== */
-
-.ai-panel{
-  width:100%;
-
-  max-height:0;
-
-  opacity:0;
-
-  overflow:hidden;
-
-  pointer-events:none;
-
-  margin-top:0;
-
-  padding:0;
-
-  border:
-    1px solid
-    transparent;
-
-  border-radius:17px;
-
-  background:
-    rgba(7,10,8,.985);
-
-  transition:
-    max-height .4s ease,
-    opacity .25s ease,
-    margin-top .25s ease,
-    padding .25s ease;
-}
-
-.ai-panel.open{
-  max-height:245px;
-
-  opacity:1;
-
-  pointer-events:auto;
-
-  margin-top:10px;
-
-  padding:14px;
-
-  border-color:
-    rgba(255,255,255,.09);
-
-  box-shadow:
-    0 22px 60px
-    rgba(0,0,0,.48);
-}
-
-.ai-title{
-  color:#eef5ef;
-
-  font-size:9px;
-
-  font-weight:800;
-
-  margin-bottom:6px;
-}
-
-.ai-message{
-  color:#78847b;
-
-  font-size:8px;
-
-  line-height:1.5;
-
-  margin-bottom:11px;
-}
-
-
-/*
-   ALWAYS TWO OPTIONS.
-*/
-
-.ai-options{
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:7px;
-}
-
-.ai-option{
-  min-height:40px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.08);
-
-  border-radius:10px;
-
-  background:
-    rgba(255,255,255,.025);
-
-  color:#aab5ad;
-
-  font-size:7px;
-
-  font-weight:800;
-
-  letter-spacing:.04em;
-
-  cursor:pointer;
-
-  transition:
-    transform .16s ease,
-    background .18s ease,
-    border-color .18s ease,
-    color .18s ease;
-}
-
-.ai-option:hover{
-  transform:translateY(-2px);
-
-  color:#f3f7f3;
-
-  border-color:
-    rgba(216,255,69,.34);
-
-  background:
-    rgba(216,255,69,.045);
-}
-
-.ai-result{
-  display:none;
-
-  margin-top:10px;
-
-  color:#aeb9b1;
-
-  font-size:8px;
-
-  line-height:1.5;
-}
-
-.ai-result.show{
-  display:block;
-}
-
-
-    /* =====================================================
-   GUIDE CLOSE
-===================================================== */
-
-.guide-close{
-  width:100%;
-
-  margin-top:8px;
-
-  min-height:28px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.055);
-
-  border-radius:8px;
-
-  background:
-    rgba(255,255,255,.012);
-
-  color:#59645c;
-
-  font-size:7px;
-
-  font-weight:700;
-
-  letter-spacing:.08em;
-
-  cursor:pointer;
-
-  transition:
-    color .2s ease,
-    border-color .2s ease;
-}
-
-.guide-close:hover{
-  color:#9ca79f;
-
-  border-color:
-    rgba(255,255,255,.11);
-}
-
-
-/* =====================================================
-   FADE
-===================================================== */
-
-@keyframes fadeUp{
-  from{
-    opacity:0;
-    transform:translateY(8px);
-  }
-
-  to{
-    opacity:1;
-    transform:none;
-  }
-}
-
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media(max-width:600px){
-
-  .brand{
-    left:16px;
-    top:16px;
-  }
-
-  .status{
-    right:16px;
-    top:21px;
-  }
-
-  .main{
-    padding:
-      28px
-      15px
-      15px;
-  }
-
-  .inner{
-    transform:
-      translateY(-15px);
-  }
-
-  .field{
-    width:430px;
-    height:430px;
-  }
-
-  .random-mark{
-    font-size:
-      clamp(39px,11.5vw,60px);
-  }
-
-  .actions{
-    margin-top:42px;
-  }
-}
-
-
-/* =====================================================
-   SHORT SCREENS
-===================================================== */
-
-@media(max-height:720px){
-
-  .main{
-    padding-top:24px;
-  }
-
-  .inner{
-    transform:
-      translateY(-8px);
-  }
-
-  .kicker{
-    margin-bottom:7px;
-  }
-
-  .tagline{
-    margin-top:8px;
-  }
-
-  .actions{
-    margin-top:27px;
-    gap:8px;
-  }
-
-  .action{
-    min-height:72px;
-  }
-
-  .create{
-    min-height:68px;
-  }
-
-  .action-content{
-    padding:
-      16px
-      68px
-      15px
-      19px;
-  }
-
-  .assistant{
-    margin-top:9px;
-  }
-
-  .robot{
-    width:55px;
-    height:45px;
-  }
-
-  .assistant-label{
-    margin-top:5px;
-  }
-}
-
-
-/* =====================================================
-   VERY SMALL PHONES
-===================================================== */
-
-@media(max-width:380px){
-
-  .random-mark{
-    font-size:39px;
-  }
-
-  .random-stage{
-    padding-left:22px;
-    padding-right:22px;
-  }
-
-  .actions{
-    margin-top:31px;
-  }
-
-  .action-label{
-    font-size:14px;
-  }
-
-  .action-sub{
-    font-size:7px;
-  }
-
-  .action-icon{
-    right:14px;
-
-    width:34px;
-    height:34px;
-  }
-}
-
-
-/* =====================================================
-   REDUCED MOTION
-===================================================== */
-
-@media(prefers-reduced-motion:reduce){
-
-  *,
-  *::before,
-  *::after{
-    animation-duration:.01ms !important;
-    animation-iteration-count:1 !important;
-    transition-duration:.01ms !important;
-  }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>RANDOM — Everything is RANDOM.</title>
+  <meta name="description" content="Everything is RANDOM. The next-generation intelligent requirement and discovery network." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & INTENTIONAL VARIABLES
+       ========================================================================== */
+    :root {
+      --bg-deep: #030504;
+      --bg-surface: rgba(10, 15, 12, 0.55);
+      --bg-elevated: rgba(14, 21, 16, 0.75);
+            
+      --border-subtle: rgba(163, 255, 18, 0.12);
+      --border-glow: rgba(163, 255, 18, 0.35);
+      --border-cyan: rgba(0, 240, 255, 0.25);
+            
+      --accent-lime: #a3ff12;
+      --accent-lime-dim: rgba(163, 255, 18, 0.12);
+      --accent-lime-glow: rgba(163, 255, 18, 0.25);
+            
+      --accent-cyan: #00f0ff;
+      --accent-cyan-dim: rgba(0, 240, 255, 0.12);
+
+      --accent-amber: #ffb703;
+      --accent-red: #ff3366;
+      --accent-red-dim: rgba(255, 51, 102, 0.12);
+      
+      --text-main: #f2f7f4;
+      --text-muted: #7e9185;
+      --text-dim: #3d4c42;
+      
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+      
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+      
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--bg-deep);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      user-select: none;
+    }
+      
+    :focus-visible {
+      outline: 2px solid var(--accent-lime);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+      
+    button {
+      font-family: inherit;
+      color: inherit;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+      
+    /* ==========================================================================
+       ATMOSPHERIC CANVAS & BACKGROUND
+       ========================================================================== */
+    #network-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+      
+    .vignette-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: radial-gradient(circle at center, transparent 30%, rgba(3, 5, 4, 0.92) 90%);
+    }
+      
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 90px 90px;
+      mask-image: radial-gradient(circle at center, black 20%, transparent 80%);
+    }
+      
+    /* ==========================================================================
+       PRIMARY LAYOUT & SPATIAL COMPOSITION
+       ========================================================================== */
+    .app-viewport {
+      position: relative;
+      z-index: 2;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: clamp(1.25rem, 3vh, 2.5rem) clamp(1.25rem, 4vw, 3.5rem);
+    }
+      
+    /* Header */
+    .system-header {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+      
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      padding: 4px;
+      border-radius: 8px;
+      transition: opacity 0.3s ease;
+    }
+      
+    .brand-mark:hover {
+      opacity: 0.85;
+    }
+      
+    /* ========================================================================
+       BLACK HOLE FUTURISTIC BRAND LOGO
+       ======================================================================== */
+    .brand-logo-svg {
+      width: 36px;
+      height: 36px;
+      overflow: visible;
+    }
+
+    .black-hole-ring {
+      fill: none;
+      stroke: var(--accent-lime);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      opacity: 0.85;
+      transform-origin: 16px 16px;
+      animation: blackHoleOrbit 24s linear infinite;
+      filter: drop-shadow(0 0 5px var(--accent-lime-glow));
+    }
+
+    .black-hole-ring-secondary {
+      fill: none;
+      stroke: var(--accent-cyan);
+      stroke-width: 1.1;
+      stroke-linecap: round;
+      opacity: 0.65;
+      transform-origin: 16px 16px;
+      animation: blackHoleOrbitReverse 34s linear infinite;
+      filter: drop-shadow(0 0 4px rgba(0, 240, 255, 0.18));
+    }
+
+    .black-hole-lens {
+      fill: none;
+      stroke: rgba(242, 247, 244, 0.32);
+      stroke-width: 0.8;
+      opacity: 0.8;
+      transform-origin: 16px 16px;
+      animation: blackHoleLens 18s ease-in-out infinite;
+    }
+
+    .black-hole-core {
+      fill: #000000;
+      stroke: var(--accent-lime);
+      stroke-width: 1.2;
+      filter:
+        drop-shadow(0 0 4px rgba(0, 0, 0, 1))
+        drop-shadow(0 0 7px var(--accent-lime-glow));
+    }
+
+    .black-hole-glow {
+      fill: none;
+      stroke: var(--accent-lime);
+      stroke-width: 2;
+      opacity: 0.22;
+      filter: blur(2px);
+      animation: blackHoleGlow 8s ease-in-out infinite;
+    }
+
+    .black-hole-node {
+      fill: var(--accent-cyan);
+      filter: drop-shadow(0 0 5px var(--accent-cyan));
+      transform-origin: 16px 16px;
+      animation: blackHoleNodeOrbit 20s linear infinite;
+    }
+
+    @keyframes blackHoleOrbit {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes blackHoleOrbitReverse {
+      from {
+        transform: rotate(360deg);
+      }
+      to {
+        transform: rotate(0deg);
+      }
+    }
+
+    @keyframes blackHoleLens {
+      0%, 100% {
+        transform: rotate(-8deg) scaleY(0.92);
+        opacity: 0.55;
+      }
+
+      50% {
+        transform: rotate(8deg) scaleY(1.04);
+        opacity: 0.85;
+      }
+    }
+
+    @keyframes blackHoleGlow {
+      0%, 100% {
+        opacity: 0.16;
+        transform: scale(0.96);
+      }
+
+      50% {
+        opacity: 0.34;
+        transform: scale(1.04);
+      }
+    }
+
+    @keyframes blackHoleNodeOrbit {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+      
+    /* Top-Right Status Badge: EARLY ACCESS */
+    .early-access-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--accent-red);
+      text-transform: uppercase;
+      background: rgba(255, 51, 102, 0.06);
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1px solid rgba(255, 51, 102, 0.25);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 15px rgba(255, 51, 102, 0.08);
+      transition: border-color 0.3s ease;
+    }
+      
+    .early-access-badge:hover {
+      border-color: rgba(255, 51, 102, 0.45);
+    }
+      
+    .badge-red-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-red);
+      box-shadow: 0 0 8px var(--accent-red);
+      animation: badgeGlow 4s ease-in-out infinite;
+    }
+      
+    @keyframes badgeGlow {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: scale(0.85);
+      }
+    }
+      
+    /* Main Hero Center Spatial Container */
+    .hero-spatial {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 900px;
+      margin: auto;
+      position: relative;
+    }
+      
+    .wordmark-container {
+      position: relative;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+    }
+      
+    .wordmark {
+      font-size: clamp(3.8rem, 13vw, 9rem);
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      margin-right: -0.22em;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #ffffff 35%, rgba(180, 200, 190, 0.45) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 0.95;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.9));
+      position: relative;
+    }
+      
+    /* Light Sweep Across Wordmark */
+    .wordmark-container::after {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: -120%;
+      width: 45%;
+      height: 140%;
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.12) 50%, transparent 100%);
+      transform: skewX(-20deg);
+      animation: lightSweepSlow 14s ease-in-out infinite;
+      pointer-events: none;
+    }
+      
+    @keyframes lightSweepSlow {
+      0%, 65% {
+        left: -120%;
+      }
+
+      100% {
+        left: 220%;
+      }
+    }
+      
+    .philosophy-tag {
+      font-family: var(--font-mono);
+      font-size: clamp(0.85rem, 1.8vw, 1.15rem);
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 3.5rem;
+      opacity: 0.85;
+    }
+      
+    /* Primary Actions Navigation Pair */
+    .spatial-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      width: 100%;
+      max-width: 680px;
+      position: relative;
+    }
+      
+    .action-node {
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.6rem 1.8rem;
+      background: rgba(10, 16, 12, 0.45);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      backdrop-filter: blur(16px);
+      transition: all 0.4s var(--ease-expo);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      cursor: pointer;
+    }
+      
+    .action-node::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(163, 255, 18, 0.08), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+      
+    .action-node:hover::before {
+      opacity: 1;
+    }
+      
+    .action-node:hover {
+      border-color: var(--accent-lime);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px var(--accent-lime-dim);
+    }
+      
+    .node-title {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      color: var(--text-main);
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+      
+    .node-title svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--accent-lime);
+      transition: transform 0.3s var(--ease-expo);
+    }
+      
+    .action-node:hover .node-title svg {
+      transform: translateX(4px);
+    }
+      
+    .node-caption {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0u.05em;
+    }
+      
+    .action-node-create {
+      border-color: rgba(0, 240, 255, 0.18);
+    }
+      
+    .action-node-create:hover {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px var(--accent-cyan-dim);
+    }
+      
+    .action-node-create .node-title svg {
+      stroke: var(--accent-cyan);
+    }
+      
+    /* Transition Toast Overlay */
+    .toast-overlay {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      background: rgba(8, 14, 10, 0.92);
+      border: 1px solid var(--border-glow);
+      border-radius: 100px;
+      padding: 1rem 2.2rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      color: var(--accent-lime);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px var(--accent-lime-dim);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all 0.4s var(--ease-expo);
+      z-index: 1000;
+      text-align: center;
+    }
+      
+    .toast-overlay.cyan-theme {
+      border-color: var(--border-cyan);
+      color: var(--accent-cyan);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px var(--accent-cyan-dim);
+    }
+      
+    .toast-overlay.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+    }
+      
+    /* Footer / Minimal Credits */
+    .system-footer {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      z-index: 10;
+    }
+      
+    /* ==========================================================================
+       AI ROBOT/ENTITY & INTERACTION PANEL
+       ========================================================================== */
+    .robot-anchor {
+      position: fixed;
+      bottom: clamp(1.25rem, 3vh, 2.5rem);
+      right: clamp(1.25rem, 4vw, 3.5rem);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+      
+    .robot-entity-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 4px;
+      border-radius: 100px;
+      outline: none;
+      cursor: pointer;
+    }
+      
+    .robot-chassis {
+      width: 52px;
+      height: 52px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(8, 14, 10, 0.85);
+      border: 1px solid var(--border-subtle);
+      border-radius: 50%;
+      backdrop-filter: blur(16px);
+      transition: all 0.4s var(--ease-expo);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+    }
+      
+    .robot-entity-btn:hover .robot-chassis {
+      border-color: var(--border-glow);
+      box-shadow: 0 0 20px var(--accent-lime-dim);
+    }
+      
+    .robot-svg {
+      width: 32px;
+      height: 32px;
+      overflow: visible;
+      transition: transform 0.3s var(--ease-expo);
+    }
+      
+    .robot-eye {
+      transition: all 0.3s ease;
+      transform-origin: center;
+    }
+      
+    /* 1. SLEEPING STATE */
+    .robot-entity-btn[data-state="SLEEPING"] .robot-chassis {
+      border-color: rgba(255, 255, 255, 0.05);
+      animation: robotBreathing 6s infinite ease-in-out;
+    }
+
+    .robot-entity-btn[data-state="SLEEPING"] .robot-eye {
+      fill: rgba(163, 255, 18, 0.35);
+      transform: scaleY(0.15);
+      filter: drop-shadow(0 0 2px rgba(163, 255, 18, 0.2));
+    }
+
+    @keyframes robotBreathing {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(2px) scale(0.98);
+      }
+    }
+      
+    /* 2. ACTIVE STATE */
+    .robot-entity-btn[data-state="ACTIVE"] .robot-chassis {
+      border-color: var(--accent-lime);
+      box-shadow: 0 0 25px var(--accent-lime-dim);
+      animation: robotActivePulse 3.5s infinite ease-in-out;
+    }
+
+    .robot-entity-btn[data-state="ACTIVE"] .robot-eye {
+      fill: var(--accent-lime);
+      transform: scaleY(1);
+      filter: drop-shadow(0 0 8px var(--accent-lime));
+    }
+
+    @keyframes robotActivePulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.03);
+      }
+    }
+      
+    /* 3. CONFUSED STATE */
+    .robot-entity-btn[data-state="CONFUSED"] .robot-chassis {
+      border-color: var(--accent-amber);
+      box-shadow: 0 0 25px rgba(255, 183, 3, 0.25);
+    }
+
+    .robot-entity-btn[data-state="CONFUSED"] .robot-svg {
+      animation: robotConfusedHead 0.6s var(--ease-expo);
+    }
+
+    .robot-entity-btn[data-state="CONFUSED"] .robot-eye {
+      fill: var(--accent-amber);
+      transform: scaleY(0.6) rotate(-10deg);
+      filter: drop-shadow(0 0 8px var(--accent-amber));
+    }
+
+    @keyframes robotConfusedHead {
+      0%, 100% {
+        transform: rotate(0deg);
+      }
+
+      30% {
+        transform: rotate(-10deg) translateY(-2px);
+      }
+
+      70% {
+        transform: rotate(10deg) translateY(-1px);
+      }
+    }
+      
+    /* 4. ANGRY STATE */
+    .robot-entity-btn[data-state="ANGRY"] .robot-chassis {
+      border-color: var(--accent-red);
+      box-shadow: 0 0 30px rgba(255, 51, 102, 0.4);
+      animation: robotShake 0.4s ease-in-out;
+    }
+
+    .robot-entity-btn[data-state="ANGRY"] .robot-eye {
+      fill: var(--accent-red);
+      transform: scaleY(0.4) skewX(-15deg);
+      filter: drop-shadow(0 0 10px var(--accent-red));
+    }
+
+    @keyframes robotShake {
+      0%, 100% {
+        transform: translateX(0);
+      }
+
+      20% {
+        transform: translateX(-3px);
+      }
+
+      40% {
+        transform: translateX(3px);
+      }
+
+      60% {
+        transform: translateX(-2px);
+      }
+
+      80% {
+        transform: translateX(2px);
+      }
+    }
+      
+    .robot-state-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      background: rgba(8, 14, 10, 0.8);
+      padding: 4px 10px;
+      border-radius: 100px;
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      transform: translateX(8px);
+      transition: all 0.3s var(--ease-expo);
+      pointer-events: none;
+    }
+      
+    .robot-entity-btn:hover .robot-state-tag {
+      opacity: 1;
+      transform: translateX(0);
+    }
+      
+    /* AI Option Interaction Card */
+    .ai-guide-card {
+      position: absolute;
+      bottom: 68px;
+      right: 0;
+      width: min(340px, 88vw);
+      background: rgba(8, 14, 10, 0.92);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      backdrop-filter: blur(24px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px) scale(0.96);
+      transition: all 0.4s var(--ease-expo);
+      pointer-events: none;
+    }
+      
+    .ai-guide-card.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+      
+    .ai-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 0.6rem;
+    }
+      
+    .ai-identity-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--accent-lime);
+      text-transform: uppercase;
+    }
+      
+    .ai-response-box {
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: var(--text-main);
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+    }
+      
+    .ai-options-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+      
+    .ai-option-btn {
+      width: 100%;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 0.65rem 0.85rem;
+      font-family: var(--font-mono);
+      font-size: 0.725rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+      
+    .ai-option-btn:hover {
+      background: rgba(163, 255, 18, 0.08);
+      border-color: var(--accent-lime);
+      color: var(--text-main);
+      transform: translateX(2px);
+    }
+      
+    .ai-option-btn svg {
+      width: 12px;
+      height: 12px;
+      stroke: var(--accent-lime);
+    }
+      
+    .ai-option-btn.out-of-scope-btn {
+      border-color: rgba(255, 183, 3, 0.2);
+    }
+      
+    .ai-option-btn.out-of-scope-btn:hover {
+      background: rgba(255, 183, 3, 0.1);
+      border-color: var(--accent-amber);
+      color: var(--accent-amber);
+    }
+      /* Responsive Adaptation */
+    @media (max-width: 768px) {
+      .spatial-actions {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .action-node {
+        width: 100%;
+      }
+
+      .wordmark {
+        letter-spacing: 0.15em;
+      }
+
+      .philosophy-tag {
+        letter-spacing: 0.2em;
+        margin-bottom: 2.5rem;
+      }
+
+      .ai-guide-card {
+        right: -10px;
+        width: calc(100vw - 2.5rem);
+      }
+    }
+      
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: opacity 0.1s ease !important;
+      }
+
+      #network-canvas {
+        display: none;
+      }
+    }
+  </style>
 </head>
-
-
 <body>
+      
+  <canvas id="network-canvas"></canvas>
+  <div class="vignette-overlay"></div>
+  <div class="grid-overlay"></div>
+      
+  <div class="app-viewport">
+          
+    <header class="system-header">
+      <a href="#" class="brand-mark" aria-label="RANDOM Home">
 
-<div class="app">
+        <!-- ================================================================
+             RANDOM BLACK HOLE BRAND MARK
+             Clean reusable symbol:
+             Event Horizon + Accretion Ring + Orbital Energy Node
+             ================================================================ -->
+        <svg class="brand-logo-svg"
+             viewBox="0 0 32 32"
+             fill="none"
+             xmlns="http://www.w3.org/2000/svg"
+             aria-hidden="true">
 
-  <!-- background -->
-  <div class="grid"></div>
+          <!-- Outer gravitational glow -->
+          <circle
+            class="black-hole-glow"
+            cx="16"
+            cy="16"
+            r="11.5"
+          />
 
-  <div class="field">
-    <div class="field-dot"></div>
-  </div>
+          <!-- Primary accretion ring -->
+          <ellipse
+            class="black-hole-ring"
+            cx="16"
+            cy="16"
+            rx="12.5"
+            ry="6.2"
+            transform="rotate(-18 16 16)"
+          />
 
+          <!-- Secondary futuristic orbital ring -->
+          <ellipse
+            class="black-hole-ring-secondary"
+            cx="16"
+            cy="16"
+            rx="11"
+            ry="4.2"
+            transform="rotate(28 16 16)"
+          />
 
-  <!-- =================================================
-       OLD ATOM LOGO
-  ================================================== -->
+          <!-- Subtle gravitational lens -->
+          <ellipse
+            class="black-hole-lens"
+            cx="16"
+            cy="16"
+            rx="8.8"
+            ry="13"
+          />
 
-  <div class="brand">
+          <!-- Event horizon / black-hole core -->
+          <circle
+            class="black-hole-core"
+            cx="16"
+            cy="16"
+            r="5.1"
+          />
 
-    <div class="brand-symbol">
+          <!-- Tiny orbital energy node -->
+          <circle
+            class="black-hole-node"
+            cx="16"
+            cy="3.5"
+            r="1.15"
+          />
 
-      <div class="loop one"></div>
-      <div class="loop two"></div>
-
-      <div class="brand-core"></div>
-
+        </svg>
+      </a>
+      
+      <!-- Top-Right Badge: EARLY ACCESS -->
+      <div class="early-access-badge">
+     <span class="badge-red-dot"></span>
+        <span>EARLY ACCESS</span>
+      </div>
+    </header>
+      
+    <main class="hero-spatial">
+      <div class="wordmark-container">
+        <h1 class="wordmark">RANDOM</h1>
+      </div>
+            
+      <p class="philosophy-tag">Everything is RANDOM.</p>
+      
+      <div class="spatial-actions">
+        <div class="action-node" id="btnExplore" tabindex="0" role="button" aria-label="Explore RANDOM Network">
+          <div class="node-title">
+            <span>EXPLORE</span>
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3.33 8h9.34M8 3.33L12.67 8 8 12.67" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="node-caption">Discover existing signals & opportunities</span>
+        </div>
+      
+        <div class="action-node action-node-create" id="btnCreateRID" tabindex="0" role="button" aria-label="Create a RID requirement">
+          <div class="node-title">
+            <span>CREATE RID</span>
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 3.33v9.34M3.33 8h9.34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="node-caption">Signal your requirement or request</span>
+        </div>
+      </div>
+    </main>
+      
+    <footer class="system-footer">
+      <span>RANDOM DISCOVERY NETWORK // CONCEPT LANDING</span>
+    </footer>
+      
+    <div class="robot-anchor">
+      <div class="ai-guide-card" id="aiGuideCard" role="dialog" aria-label="RANDOM Guide Options">
+        <div class="ai-card-header">
+          <span class="ai-identity-label">RANDOM // GUIDE</span>
+          <span style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-dim);">SELECT SIGNAL</span>
+        </div>
+      
+        <div class="ai-response-box" id="aiResponseText">
+          Choose a signal option below to query the guide:
+        </div>
+      
+        <div class="ai-options-stack" id="aiOptionsStack"></div>
+      </div>
+      
+      <button class="robot-entity-btn" id="robotEntity" data-state="SLEEPING" aria-expanded="false" aria-label="Wake RANDOM AI Guide">
+        <span class="robot-state-tag" id="robotStateLabel">SLEEPING</span>
+        <div class="robot-chassis">
+          <svg class="robot-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="9" width="20" height="14" rx="5" fill="rgba(8, 14, 10, 0.9)" stroke="rgba(163, 255, 18, 0.3)" stroke-width="1.2"/>
+            <ellipse class="robot-eye" cx="12" cy="16" rx="2.2" ry="2.2"/>
+            <ellipse class="robot-eye" cx="20" cy="16" rx="2.2" ry="2.2"/>
+            <line x1="16" y1="9" x2="16" y2="4" stroke="rgba(163, 255, 18, 0.4)" stroke-width="1.2"/>
+            <circle cx="16" cy="3" r="1.5" fill="var(--accent-lime)"/>
+          </svg>
+        </div>
+      </button>
     </div>
-
+      
   </div>
-
-
-  <!-- status -->
-
-  <div class="status">
-
-    <span class="status-dot"></span>
-
-    <span>EARLY ACCESS</span>
-
-  </div>
-
-
-  <!-- =================================================
-       MAIN
-  ================================================== -->
-
-  <main class="main">
-
-    <div class="inner">
-
-
-      <!-- small identity -->
-
-      <div class="kicker">
-        A NEW WAY TO CONNECT
-      </div>
-
-
-      <!-- =================================================
-           RANDOM WORDMARK
-      ================================================== -->
-
-      <div class="random-stage">
-
-        <div class="random-mark"
-             aria-label="RANDOM">
-
-          <span class="random-letter">R</span>
-          <span class="random-letter">A</span>
-          <span class="random-letter">N</span>
-          <span class="random-letter">D</span>
-          <span class="random-letter">O</span>
-          <span class="random-letter">M</span>
-
-        </div>
-
-      </div>
-
-
-      <div class="tagline">
-        FIND • CONNECT • CREATE
-      </div>
-
-
-      <!-- =================================================
-           PRIMARY ACTIONS
-      ================================================== -->
-
-      <section class="actions">
-
-        <button
-          class="action explore"
-          type="button"
-          data-action="explore"
-        >
-
-          <div class="action-content">
-
-            <div class="action-label">
-              EXPLORE
-            </div>
-
-            <div class="action-sub">
-              Discover people, needs and opportunities.
-            </div>
-
-          </div>
-
-          <div class="action-icon">
-            ↗
-          </div>
-
-          <div class="sweep"></div>
-
-        </button>
-
-
-        <button
-          class="action create"
-          type="button"
-          data-action="create"
-        >
-
-          <div class="action-content">
-
-            <div class="action-label">
-              CREATE RID
-            </div>
-
-            <div class="action-sub">
-              Turn what you need into a clear request.
-            </div>
-
-          </div>
-
-          <div class="action-icon">
-            +
-          </div>
-
-          <div class="sweep"></div>
-
-        </button>
-
-      </section>
-
-
-      <!-- =================================================
-           RANDOM GUIDE ROBOT
-      ================================================== -->
-
-      <section
-        class="assistant"
-        id="assistant"
-        aria-label="RANDOM Guide"
-      >
-
-        <div
-          class="robot sleeping"
-          id="robot"
-          title="Click to ask RANDOM Guide"
-        >
-
-          <div class="antenna"></div>
-
-          <div class="robot-eyes">
-
-            <div class="eye">
-              <div class="pupil"></div>
-            </div>
-
-            <div class="eye">
-              <div class="pupil"></div>
-            </div>
-
-          </div>
-
-          <div class="sleep-z">z</div>
-
-        </div>
-
-        <div class="assistant-label">
-          RANDOM GUIDE
-        </div>
-
-      </section>
-
-
-      <!-- =================================================
-           GUIDE PANEL
-      ================================================== -->
-
-      <section
-        class="ai-panel"
-        id="aiPanel"
-        aria-live="polite"
-      >
-
-        <div
-          class="ai-title"
-          id="aiTitle"
-        >
-          RANDOM GUIDE
-        </div>
-
-        <div
-          class="ai-message"
-          id="aiMessage"
-        >
-          Hey. I can help you understand RANDOM.
-          What do you want to explore?
-        </div>
-
-
-        <!-- exactly two choices -->
-
-        <div
-          class="ai-options"
-          id="aiOptions"
-        >
-
-          <button
-            class="ai-option"
-            type="button"
-            data-choice="what"
-          >
-            WHAT IS RANDOM?
-          </button>
-
-          <button
-            class="ai-option"
-            type="button"
-            data-choice="how"
-          >
-            HOW DOES IT WORK?
-          </button>
-
-        </div>
-
-
-        <div
-          class="ai-result"
-          id="aiResult"
-        ></div>
-
-
-        <button
-          class="guide-close"
-          id="guideClose"
-          type="button"
-        >
-          CLOSE GUIDE
-        </button>
-
-      </section>
-
-    </div>
-
-  </main>
-
-
-</div>
-
-
-<script>
-/* =========================================================
-   RANDOM GUIDE
-========================================================= */
-
-const robot =
-  document.getElementById("robot");
-
-const assistant =
-  document.getElementById("assistant");
-
-const aiPanel =
-  document.getElementById("aiPanel");
-
-const aiTitle =
-  document.getElementById("aiTitle");
-
-const aiMessage =
-  document.getElementById("aiMessage");
-
-const aiOptions =
-  document.getElementById("aiOptions");
-
-const aiResult =
-  document.getElementById("aiResult");
-
-const guideClose =
-  document.getElementById("guideClose");
-
-
-let guideActive = false;
-
-
-/* =========================================================
-   STATE
-========================================================= */
-
-function setRobotState(state){
-
-  robot.classList.remove(
-    "sleeping",
-    "active",
-    "confused",
-    "angry"
-  );
-
-  robot.classList.add(state);
-
-}
-
-
-/* =========================================================
-   OPEN GUIDE
-========================================================= */
-
-function openGuide(){
-
-  guideActive = true;
-
-  setRobotState("active");
-
-  aiPanel.classList.add("open");
-
-  showRootQuestion();
-
-}
-
-
-/* =========================================================
-   CLOSE GUIDE
-========================================================= */
-
-function closeGuide(){
-
-  guideActive = false;
-
-  aiPanel.classList.remove("open");
-
-  setRobotState("sleeping");
-
-  aiResult.classList.remove("show");
-
-  aiResult.textContent = "";
-
-}
-
-
-/* =========================================================
-   ROOT QUESTION
-========================================================= */
-
-function showRootQuestion(){
-
-  setRobotState("active");
-
-  aiTitle.textContent =
-    "RANDOM GUIDE";
-
-  aiMessage.textContent =
-    "Hey. I can help you understand RANDOM. What do you want to explore?";
-
-  aiResult.classList.remove("show");
-
-  aiResult.textContent = "";
-
-  aiOptions.innerHTML = `
-
-    <button
-      class="ai-option"
-      type="button"
-      data-choice="what"
-    >
-      WHAT IS RANDOM?
-    </button>
-
-    <button
-      class="ai-option"
-      type="button"
-      data-choice="how"
-    >
-      HOW DOES IT WORK?
-    </button>
-
-  `;
-
-}
-
-
-/* =========================================================
-   QUESTION — WHAT
-========================================================= */
-
-function showWhat(){
-
-  setRobotState("active");
-
-  aiTitle.textContent =
-    "RANDOM";
-
-  aiMessage.textContent =
-    "RANDOM is being built as a place where people can find the right person, opportunity or solution for what they need.";
-
-  aiResult.classList.remove("show");
-
-  aiOptions.innerHTML = `
-
-    <button
-      class="ai-option"
-      type="button"
-      data-choice="matching"
-    >
-      FINDING PEOPLE
-    </button>
-
-    <button
-      class="ai-option"
-      type="button"
-      data-choice="needs"
-    >
-      POSTING A NEED
-    </button>
-
-  `;
-}
-
-
-/* =========================================================
-   QUESTION — HOW
-========================================================= */
-
-function showHow(){
-
-  setRobotState("active");
-
-  aiTitle.textContent =
-    "HOW RANDOM WORKS";
-
-  aiMessage.textContent =
-    "The idea is simple: describe what you need, discover relevant people or opportunities, then connect and continue from there.";
-
-  aiResult.classList.remove("show");
-
-  aiOptions.innerHTML = `
-
-    <button
-      class="ai-option"
-      type="button"
-      data-choice="explore"
-    >
-      EXPLORE
-    </button>
-
-    <button
-      class="ai-option"
-      type="button"
-      data-choice="create"
-    >
-      CREATE RID
-    </button>
-
-  `;
-}
-
-
-/* =========================================================
-   SUB-QUESTIONS
-========================================================= */
-
-function showMatching(){
-
-  setRobotState("active");
-
-  aiTitle.textContent =
-    "FINDING PEOPLE";
-
-  aiMessage.textContent =
-    "Explore is where you can discover people and opportunities that may match what you are looking for.";
-
-  aiOptions.innerHTML = `
-
-    <button
-      class="ai-option"
-      type="button"
-      data-choice="explore"
-    >
-      OPEN EXPLORE
-    </button>
-
-    <button
-      class="ai-option"
-      type="button"
-      data-choice="root"
-    >
-      BACK TO GUIDE
-    </button>
-
-  `;
-}
-
-
-function showNeeds(){
-
-  setRobotState("active");
-
-  aiTitle.textContent =
-    "CREATE RID";
-
-  aiMessage.textContent =
-    "Create RID is for turning your need into a clearer request so RANDOM can understand what you are looking for.";
-
-  aiOptions.innerHTML = `
-
-    <button
-      class="ai-option"
-      type="button"
-      data-choice="create"
-    >
-      OPEN CREATE RID
-    </button>
-
-    <button
-      class="ai-option"
-      type="button"
-      data-choice="root"
-    >
-      BACK TO GUIDE
-    </button>
-
-  `;
-}
-
-
-/* =========================================================
-   ACTION RESPONSE
-========================================================= */
-
-function showExplore(){
-
-  setRobotState("active");
-
-  aiTitle.textContent =
-    "EXPLORE";
-
-  aiMessage.textContent =
-    "Explore is the discovery side of RANDOM.";
-
-  aiOptions.innerHTML = `
-
-    <button
-      class="ai-option"
-      type="button"
-      data-choice="root"
-    >
-      MORE ABOUT RANDOM
-    </button>
-
-    <button
-      class="ai-option"
-      type="button"
-      data-choice="close"
-    >
-      CLOSE GUIDE
-    </button>
-
-  `;
-}
-
-
-function showCreate(){
-
-  setRobotState("active");
-
-  aiTitle.textContent =
-    "CREATE RID";
-
-  aiMessage.textContent =
-    "Create RID helps you structure what you need before connecting with people on RANDOM.";
-
-  aiOptions.innerHTML = `
-
-    <button
-      class="ai-option"
-      type="button"
-      data-choice="root"
-    >
-      MORE ABOUT RANDOM
-    </button>
-
-    <button
-      class="ai-option"
-      type="button"
-      data-choice="close"
-    >
-      CLOSE GUIDE
-    </button>
-
-  `;
-}
-
-
-/* =========================================================
-   GUIDE CLICK ROUTER
-========================================================= */
-
-aiOptions.addEventListener(
-  "click",
-  function(event){
-
-    const button =
-      event.target.closest(".ai-option");
-
-    if(!button) return;
-
-    const choice =
-      button.dataset.choice;
-
-
-    if(choice === "what"){
-      showWhat();
-      return;
-    }
-
-
-    if(choice === "how"){
-      showHow();
-      return;
-    }
-
-
-    if(choice === "matching"){
-      showMatching();
-      return;
-    }
-
-
-    if(choice === "needs"){
-      showNeeds();
-      return;
-    }
-
-
-    if(choice === "explore"){
-      showExplore();
-      return;
-    }
-
-
-    if(choice === "create"){
-      showCreate();
-      return;
-    }
-
-
-    if(choice === "root"){
-      showRootQuestion();
-      return;
-    }
-
-
-    if(choice === "close"){
-      closeGuide();
-      return;
-    }
-
-  }
-);
-
-
-/* =========================================================
-   ROBOT ONLY ACTIVATES ON CLICK
-========================================================= */
-
-assistant.addEventListener(
-  "click",
-  function(){
-
-    if(!guideActive){
-
-      openGuide();
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   CLOSE
-========================================================= */
-
-guideClose.addEventListener(
-  "click",
-  function(event){
-
-    event.stopPropagation();
-
-    closeGuide();
-
-  }
-);
-
-
-/* =========================================================
-   MAIN ACTIONS
-========================================================= */
-
-document.querySelectorAll(".action")
-.forEach(function(action){
-
-  action.addEventListener(
-    "click",
-    function(){
-
-      const type =
-        action.dataset.action;
-
-
-      /*
-        Placeholder behaviour for Early Access.
-        Connect these to your actual routes later.
-      */
-
-      if(type === "explore"){
-
-        console.log(
-          "RANDOM → EXPLORE"
-        );
-
+      
+  <div class="toast-overlay" id="toastOverlay">EXPLORE — COMING NEXT</div>
+      
+  <script>
+    /* ==========================================================================
+       ATMOSPHERIC NETWORK CANVAS BACKDROP
+       ========================================================================== */
+    (function initNetworkBackground() {
+      const canvas = document.getElementById('network-canvas');
+      const ctx = canvas.getContext('2d');
+      let width, height;
+      let nodes = [];
+      
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
       }
-
-
-      if(type === "create"){
-
-        console.log(
-          "RANDOM → CREATE RID"
-        );
-
+      window.addEventListener('resize', resize);
+      resize();
+      
+      const nodeCount = Math.floor(Math.min(width, height) / 25);
+      for (let i = 0; i < nodeCount; i++) {
+        nodes.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.15,
+          vy: (Math.random() - 0.5) * 0.15,
+          radius: Math.random() * 1.5 + 0.8
+        });
       }
-
-    }
-  );
-
-});
-
-
-/* =========================================================
-   INITIAL STATE
-========================================================= */
-
-setRobotState("sleeping");
-
-</script>
-
+      
+      function render() {
+        ctx.clearRect(0, 0, width, height);
+      
+        for (let i = 0; i < nodes.length; i++) {
+          const n1 = nodes[i];
+          n1.x += n1.vx;
+          n1.y += n1.vy;
+      
+          if (n1.x < 0 || n1.x > width) n1.vx *= -1;
+          if (n1.y < 0 || n1.y > height) n1.vy *= -1;
+      
+          ctx.fillStyle = 'rgba(163, 255, 18, 0.45)';
+          ctx.beginPath();
+          ctx.arc(n1.x, n1.y, n1.radius, 0, Math.PI * 2);
+          ctx.fill();
+      
+          for (let j = i + 1; j < nodes.length; j++) {
+            const n2 = nodes[j];
+            const dx = n1.x - n2.x;
+            const dy = n1.y - n2.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+      
+            if (dist < 140) {
+              const alpha = (1 - dist / 140) * 0.04;
+              ctx.strokeStyle = `rgba(163, 255, 18, ${alpha})`;
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(n1.x, n1.y);
+              ctx.lineTo(n2.x, n2.y);
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(render);
+      }
+      
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        render();
+      }
+    })();
+      
+    /* ==========================================================================
+       PRIMARY ACTIONS OVERLAY TRANSITION ENGINE
+       ========================================================================== */
+    (function initActionButtons() {
+      const btnExplore = document.getElementById('btnExplore');
+      const btnCreateRID = document.getElementById('btnCreateRID');
+      const toast = document.getElementById('toastOverlay');
+      let timeoutId;
+      
+      function showToast(text, isCyan = false) {
+        clearTimeout(timeoutId);
+        toast.innerText = text;
+        if (isCyan) {
+          toast.classList.add('cyan-theme');
+        } else {
+          toast.classList.remove('cyan-theme');
+        }
+        toast.classList.add('active');
+      
+        timeoutId = setTimeout(() => {
+          toast.classList.remove('active');
+        }, 1800);
+      }
+      
+      btnExplore.addEventListener('click', () => showToast('EXPLORE — COMING NEXT', false));
+      btnCreateRID.addEventListener('click', () => showToast('CREATE RID — COMING NEXT', true));
+      
+      btnExplore.addEventListener('keydown', (e) => { if(e.key === 'Enter') showToast('EXPLORE — COMING NEXT', false); });
+      btnCreateRID.addEventListener('keydown', (e) => { if(e.key === 'Enter') showToast('CREATE RID — COMING NEXT', true); });
+      
+      // Mouse tracking micro-interactions
+      document.querySelectorAll('.action-node').forEach(node => {
+        node.addEventListener('mousemove', (e) => {
+          const rect = node.getBoundingClientRect();
+          const x = ((e.clientX - rect.left) / rect.width) * 100;
+          const y = ((e.clientY - rect.top) / rect.height) * 100;
+          node.style.setProperty('--mouse-x', `${x}%`);
+          node.style.setProperty('--mouse-y', `${y}%`);
+        });
+      });
+    })();
+      
+    /* ==========================================================================
+       ROBOT RESTRAINED AI GUIDE SYSTEM
+       ========================================================================== */
+    const RobotGuideSystem = (function() {
+      const robotEntity = document.getElementById('robotEntity');
+      const robotStateLabel = document.getElementById('robotStateLabel');
+      const aiGuideCard = document.getElementById('aiGuideCard');
+      const aiResponseText = document.getElementById('aiResponseText');
+      const aiOptionsStack = document.getElementById('aiOptionsStack');
+      
+      let currentState = 'SLEEPING';
+      let inactivityTimer;
+      let abuseCount = 0;
+      
+      // Knowledge Base Sets
+      const QUESTION_SETS = [
+        {
+          pairId: 'SET_PRIMARY',
+          options: [
+            {
+              label: "WHAT IS RANDOM?",
+              response: "RANDOM is an intelligent discovery and requirement network designed to match needs dynamically without noisy dashboards.",
+              nextSet: 1
+            },
+            {
+              label: "WHAT IS A RID?",
+              response: "A RID is a created Requirement ID—a structured signal representing what you need or offer in the RANDOM network.",
+              nextSet: 2
+            }
+          ]
+        },
+        {
+          pairId: 'SET_CONCEPT_DEEP',
+          options: [
+            {
+              label: "WHY DOES RANDOM EXIST?",
+              response: "RANDOM exists to replace rigid search bars and noisy feeds with direct, intelligent signal alignment.",
+              nextSet: 3
+            },
+            {
+              label: "HOW DOES MATCHING WORK?",
+              response: "The network aligns complementary RIDs through context-aware signal matching without middleman clutter.",
+              nextSet: 4
+            }
+          ]
+        },
+        {
+          pairId: 'SET_RID_DEEP',
+          options: [
+            {
+              label: "WHAT CAN A RID REPRESENT?",
+              response: "A RID can signal any human or technical requirement—from talent and services to physical resources or dynamic requests.",
+              nextSet: 4
+            },
+            {
+              label: "HOW ARE RIDs CREATED?",
+              response: "By selecting 'CREATE RID', you broadcast a clean, structured requirement signal directly into the living network.",
+              nextSet: 3
+            }
+          ]
+        },
+        {
+          pairId: 'SET_EXPLORE_DEEP',
+          options: [
+            {
+              label: "WHAT DOES EXPLORE DO?",
+              response: "EXPLORE connects you to the live network matrix, letting you discover open requirements matched to your scope.",
+              nextSet: 5
+            },
+            {
+              label: "IS RANDOM A DASHBOARD?",
+              response: "No. RANDOM strips away static dashboards in favor of direct, dynamic signal discovery.",
+              nextSet: 0
+            }
+          ]
+        },
+        {
+          pairId: 'SET_SIGNAL_INTELLIGENCE',
+          options: [
+            {
+              label: "HOW DO SIGNALS WORK?",
+              response: "Signals are concise intent vectors. Instead of searching keywords, signals continuously align complementary needs.",
+              nextSet: 5
+            },
+            {
+              label: "IS RANDOM FREE TO USE?",
+              response: "During Early Access, core signal broadcasting and discovery are completely open for network participants.",
+              nextSet: 0
+            }
+          ]
+        },
+        {
+          pairId: 'SET_OUT_OF_SCOPE_TEST',
+          options: [
+            {
+              label: "WHAT IS THE ULTIMATE GOAL?",
+              response: "To build a seamless global discovery layer where requirements find solutions instantly.",
+              nextSet: 0
+},
+            {
+              label: "[ SIMULATE UNRELATED SIGNAL ]",
+              isOutOfScopeTrigger: true,
+              response: "That is outside the RANDOM network scope.",
+              nextSet: 0
+            }
+          ]
+        }
+      ];
+      
+      function setState(newState) {
+        currentState = newState;
+        robotEntity.setAttribute('data-state', newState);
+        robotStateLabel.innerText = newState;
+      
+        if (newState === 'SLEEPING') {
+          aiGuideCard.classList.remove('open');
+          robotEntity.setAttribute('aria-expanded', 'false');
+          clearTimeout(inactivityTimer);
+        } else {
+          aiGuideCard.classList.add('open');
+          robotEntity.setAttribute('aria-expanded', 'true');
+          resetInactivityTimer();
+        }
+      }
+      
+      function resetInactivityTimer() {
+        clearTimeout(inactivityTimer);
+        inactivityTimer = setTimeout(() => {
+          setState('SLEEPING');
+        }, 14000);
+      }
+      
+      function renderOptions(setIndex) {
+        const currentSet = QUESTION_SETS[setIndex] || QUESTION_SETS[0];
+        aiOptionsStack.innerHTML = '';
+      
+        currentSet.options.slice(0, 2).forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = `ai-option-btn ${opt.isOutOfScopeTrigger ? 'out-of-scope-btn' : ''}`;
+          btn.innerHTML = `
+            <span>${opt.label}</span>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="M3.33 8h9.34M8 3.33L12.67 8 8 12.67" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          `;
+      
+          btn.addEventListener('click', () => {
+            handleOptionSelect(opt);
+          });
+      
+          aiOptionsStack.appendChild(btn);
+        });
+      }
+      
+      function handleOptionSelect(option) {
+        resetInactivityTimer();
+      
+        if (option.isOutOfScopeTrigger) {
+          abuseCount++;
+          if (abuseCount >= 2) {
+            setState('ANGRY');
+            aiResponseText.innerText = "Signal error. Focus strictly on RANDOM concepts.";
+            setTimeout(() => {
+              setState('ACTIVE');
+              renderOptions(0);
+            }, 1800);
+          } else {
+            setState('CONFUSED');
+            aiResponseText.innerText = option.response;
+            setTimeout(() => {
+              setState('ACTIVE');
+              renderOptions(option.nextSet);
+            }, 1600);
+          }
+          return;
+        }
+      
+        aiResponseText.innerText = option.response;
+        renderOptions(option.nextSet);
+      }
+      
+      function initListeners() {
+        robotEntity.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (currentState === 'SLEEPING') {
+            setState('ACTIVE');
+            aiResponseText.innerText = "Select a signal option below to query the guide:";
+            renderOptions(0);
+          } else {
+            setState('SLEEPING');
+          }
+        });
+      
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && currentState !== 'SLEEPING') {
+            setState('SLEEPING');
+          }
+        });
+      
+        document.addEventListener('click', (e) => {
+          if (!robotEntity.contains(e.target) && !aiGuideCard.contains(e.target) && currentState !== 'SLEEPING') {
+            setState('SLEEPING');
+          }
+        });
+      }
+      
+      initListeners();
+      
+      return { setState };
+    })();
+  </script>
 </body>
 </html>
