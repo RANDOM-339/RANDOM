@@ -2,526 +2,324 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neon Energy Logo</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RANDOM</title>
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+  :root{
+    --bg:#050806;
+    --panel:#0a120d;
+    --line:#1c3324;
+    --green:#8effa0;
+    --green-dim:#4a7a55;
+    --pink:#ff3d78;
+    --cyan:#39e6e0;
+    --text:#e9f2ea;
+    --muted:#7d9184;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Courier New',ui-monospace,Consolas,monospace;
+    overflow-x:hidden;
+    position:relative;
+  }
+  #field{position:fixed;inset:0;z-index:0;}
+  .wrap{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:20px 20px 100px;min-height:100%;}
 
-html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: #080823;
-}
+  header{display:flex;align-items:center;justify-content:space-between;padding:12px 0 40px;}
+  .logo{display:flex;align-items:center;gap:2px;font-weight:700;letter-spacing:.15em;font-size:15px;}
+  .brand-icon{width:19px;height:23px;flex:none;margin:0 -2px;transform:translateY(-2px) rotate(-18deg);}
+  .brand-mark{width:60px;height:72px;flex:none;margin:0 -6px;transform:translateY(-4px) rotate(-18deg);}
 
-svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
+  /* Neon energy logo animations */
+  .black-hole{transform-box:fill-box;transform-origin:center;animation:blackHoleBreath 40s ease-in-out infinite;}
+  @keyframes blackHoleBreath{0%,100%{transform:scale(1);}50%{transform:scale(1.012);}}
+  .hole-arcs{pointer-events:none;}
+  .hole-arc{fill:none;stroke-linecap:round;stroke-linejoin:round;}
+  .fire-shape{transform-box:fill-box;transform-origin:center;animation:fireMotion 28s ease-in-out infinite;}
+  @keyframes fireMotion{
+    0%,100%{transform:translate(0,0) scale(1);}
+    25%{transform:translate(-1px,-1.5px) scale(1.002);}
+    50%{transform:translate(1.5px,-3px) scale(1.004);}
+    75%{transform:translate(-0.5px,-1px) scale(1.001);}
+  }
+  .fire-glow{transform-box:fill-box;transform-origin:center;animation:fireGlowBreath 32s ease-in-out infinite;}
+  @keyframes fireGlowBreath{0%,100%{opacity:.08;transform:scale(1);}50%{opacity:.12;transform:scale(1.025);}}
+  @media (prefers-reduced-motion: reduce){
+    .black-hole,.fire-shape,.fire-glow{animation:none;}
+  }
 
-/* =========================================
-   BLACK HOLE - VERY SLOW BREATHING
-========================================= */
+  .badge{
+    border:1px solid var(--pink);color:var(--pink);font-size:10px;letter-spacing:.15em;
+    padding:6px 12px;border-radius:20px;display:flex;align-items:center;gap:6px;
+  }
+  .badge .dot{width:6px;height:6px;border-radius:50%;background:var(--pink);animation:pulse 1.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.35;transform:scale(.7);}}
 
-.black-hole {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: blackHoleBreath 40s ease-in-out infinite;
-}
+  .hero{text-align:center;margin-top:40px;}
+  h1{
+    font-size:56px;letter-spacing:.05em;margin:0;line-height:1;font-weight:800;
+    display:flex;justify-content:center;align-items:center;gap:0;
+  }
+  h1 .r{color:transparent;-webkit-text-stroke:1.5px #cfe9d6;text-shadow:0 0 18px rgba(207,233,214,.35);}
+  h1 .rest{background:linear-gradient(180deg,#fff,#b9c9be);-webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 30px rgba(255,255,255,.15);}
+  .tagline{margin-top:16px;color:var(--muted);letter-spacing:.3em;font-size:12px;}
 
-@keyframes blackHoleBreath {
-    0%, 100% {
-        transform: scale(1);
-    }
+  .stack{margin-top:44px;display:flex;flex-direction:column;gap:16px;}
+  .card{
+    border:1px solid var(--line);background:rgba(20,40,28,.25);border-radius:14px;
+    padding:20px;text-align:center;cursor:pointer;transition:border-color .25s,background .25s,transform .15s;
+  }
+  .card:hover{border-color:var(--green-dim);background:rgba(30,60,42,.35);}
+  .card:active{transform:scale(.98);}
+  .card .title{font-weight:700;letter-spacing:.2em;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;}
+  .card .title span.arrow{color:var(--green);}
+  .card .sub{margin-top:8px;color:var(--muted);font-size:12px;letter-spacing:.02em;}
 
-    50% {
-        transform: scale(1.012);
-    }
-}
+  footer{margin-top:70px;text-align:center;color:#3a4a3f;font-size:10px;letter-spacing:.15em;}
 
-/* =========================================
-   THREE SMALL ROTATING BROKEN ARCS
-========================================= */
+  /* Bot launcher */
+  .bot-btn{
+    position:fixed;right:20px;bottom:calc(24px + env(safe-area-inset-bottom,0px));
+    width:52px;height:52px;border-radius:50%;background:#0a140d;border:1px solid var(--green-dim);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;
+    box-shadow:0 0 0 0 rgba(142,255,160,.5);
+    transition:box-shadow .3s;
+  }
+  .bot-btn.active{box-shadow:0 0 0 6px rgba(142,255,160,.12),0 0 18px rgba(142,255,160,.6);border-color:var(--green);}
+  .bot-btn svg{width:22px;height:22px;stroke:var(--green);}
 
-.hole-arcs {
-    pointer-events: none;
-}
-
-.hole-arc {
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-/* =========================================
-   FIRE - ONE SMOOTH MOVEMENT ANIMATION
-========================================= */
-
-.fire-shape {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: fireMotion 28s ease-in-out infinite;
-}
-
-@keyframes fireMotion {
-    0%, 100% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    25% {
-        transform: translate(-1px, -1.5px) scale(1.002);
-    }
-
-    50% {
-        transform: translate(1.5px, -3px) scale(1.004);
-    }
-
-    75% {
-        transform: translate(-0.5px, -1px) scale(1.001);
-    }
-}
-
-/* =========================================
-   FIRE GLOW - SOFT BREATHING
-========================================= */
-
-.fire-glow {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: fireGlowBreath 32s ease-in-out infinite;
-}
-
-@keyframes fireGlowBreath {
-    0%, 100% {
-        opacity: 0.08;
-        transform: scale(1);
-    }
-
-    50% {
-        opacity: 0.12;
-        transform: scale(1.025);
-    }
-}
-
-/* =========================================
-   REDUCED MOTION
-========================================= */
-
-@media (prefers-reduced-motion: reduce) {
-    .black-hole,
-    .fire-shape,
-    .fire-glow {
-        animation: none;
-    }
-}
+  /* Guide panel */
+  .guide{
+    margin-top:16px;border:1px solid var(--line);background:rgba(15,30,20,.5);border-radius:14px;
+    padding:18px;max-height:0;opacity:0;overflow:hidden;transition:max-height .35s ease,opacity .35s ease,padding .35s ease;
+  }
+  .guide.open{max-height:340px;opacity:1;}
+  .guide-head{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.15em;color:var(--green);}
+  .guide-head .right{color:var(--muted);}
+  .guide hr{border:none;border-top:1px solid var(--line);margin:14px 0;}
+  .guide p{font-size:13px;color:#cfe0d3;margin:0 0 14px;}
+  .qopt{
+    display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);
+    border-radius:10px;padding:14px 16px;font-size:11px;letter-spacing:.1em;color:#d8e6db;
+    margin-bottom:10px;cursor:pointer;transition:border-color .2s,background .2s;
+  }
+  .qopt:hover{border-color:var(--green-dim);background:rgba(142,255,160,.05);}
+  .qopt .arrow{color:var(--green);}
+  .status-row{display:flex;justify-content:flex-end;margin-top:6px;}
+  .status{border:1px solid var(--green-dim);color:var(--green);font-size:9px;letter-spacing:.15em;padding:4px 10px;border-radius:12px;}
 </style>
 </head>
-
 <body>
+<canvas id="field"></canvas>
 
-<svg viewBox="0 0 864 1536"
-     preserveAspectRatio="xMidYMid meet"
-     xmlns="http://www.w3.org/2000/svg">
-
-<defs>
-
-    <!-- Background glow -->
-
-    <radialGradient id="bgGlow">
-        <stop offset="0%" stop-color="#06334b"/>
-        <stop offset="45%" stop-color="#10113d"/>
-        <stop offset="100%" stop-color="#080823"/>
-    </radialGradient>
-
-    <!-- Blue lightning gradient -->
-
-    <linearGradient id="blue"
-        x1="0" y1="1" x2="1" y2="0">
-        <stop offset="0%" stop-color="#00bfff"/>
-        <stop offset="100%" stop-color="#00dfff"/>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="blue" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00bfff"/>
+      <stop offset="100%" stop-color="#00dfff"/>
     </linearGradient>
-
-    <!-- Green lightning gradient -->
-
-    <linearGradient id="green"
-        x1="0" y1="1" x2="1" y2="0">
-        <stop offset="0%" stop-color="#7cff00"/>
-        <stop offset="100%" stop-color="#a5ff00"/>
+    <linearGradient id="green" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7cff00"/>
+      <stop offset="100%" stop-color="#a5ff00"/>
     </linearGradient>
-
-    <!-- Green glow -->
-
-    <filter id="greenGlow"
-        x="-100%" y="-100%"
-        width="300%" height="300%">
-        <feGaussianBlur stdDeviation="28"/>
+    <filter id="greenGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="28"/>
+    </filter>
+    <filter id="blueGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="35"/>
+    </filter>
+    <filter id="fireFlow" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.006 0.012" numOctaves="2" seed="8" result="turbulence">
+        <animate attributeName="baseFrequency" dur="36s"
+          values="0.006 0.012;0.009 0.016;0.005 0.010;0.008 0.014;0.006 0.012"
+          keyTimes="0;0.25;0.5;0.75;1" calcMode="spline"
+          keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"
+          repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="4" xChannelSelector="R" yChannelSelector="G">
+        <animate attributeName="scale" dur="34s" values="2.5;5.5;3;5;2.5"
+          keyTimes="0;0.25;0.5;0.75;1" calcMode="spline"
+          keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"
+          repeatCount="indefinite"/>
+      </feDisplacementMap>
     </filter>
 
-    <!-- Blue glow -->
+    <symbol id="randomLogo" viewBox="80 390 710 850">
+      <ellipse class="fire-glow" cx="430" cy="900" rx="350" ry="330" fill="#00dfff" opacity=".08" filter="url(#blueGlow)"/>
+      <ellipse class="fire-glow" cx="340" cy="920" rx="260" ry="250" fill="#00ff88" opacity=".16" filter="url(#greenGlow)"/>
 
-    <filter id="blueGlow"
-        x="-100%" y="-100%"
-        width="300%" height="300%">
-        <feGaussianBlur stdDeviation="35"/>
-    </filter>
+      <path class="fire-shape" fill="url(#blue)" filter="url(#fireFlow)" d="
+        M 180 914 L 210 837 L 246 785 L 285 753 L 321 710 L 350 667 L 381 625 L 418 595 L 407 638
+        L 442 605 L 474 584 L 501 571 L 497 584 L 528 561 L 563 543 L 600 523 L 625 505 L 650 480
+        L 673 453 L 665 507 L 704 469 L 727 437 L 750 399 L 740 451 L 722 497 L 701 543 L 679 578
+        L 650 614 L 673 613 L 643 648 L 616 680 L 648 663 L 623 701 L 597 738 L 578 772 L 560 813
+        L 547 855 L 532 895 L 515 938 L 497 976 L 475 1005 L 449 1027 L 420 1044 L 387 1055 L 350 1062
+        L 309 1061 L 271 1052 L 237 1034 L 210 1009 L 191 978 Z"/>
 
-    <!-- =====================================
-         FIRE TURBULENCE
-    ====================================== -->
+      <path class="fire-shape" fill="url(#green)" filter="url(#fireFlow)" d="
+        M 183 916 L 201 855 L 224 817 L 253 788 L 286 769 L 315 762 L 344 762 L 375 769 L 402 782
+        L 427 801 L 448 825 L 465 853 L 478 883 L 488 916 L 494 945 L 493 973 L 511 901 L 498 914
+        L 500 878 L 510 851 L 525 825 L 538 800 L 550 771 L 562 733 L 560 695 L 530 724 L 542 685
+        L 557 647 L 570 600 L 549 637 L 528 668 L 504 692 L 478 713 L 451 729 L 438 740 L 443 716
+        L 453 690 L 432 711 L 411 728 L 386 742 L 357 755 L 358 736 L 372 714 L 348 730 L 321 746
+        L 291 761 L 263 776 L 237 794 L 216 818 L 200 846 Z"/>
 
-    <filter id="fireFlow"
-        x="-5%" y="-5%"
-        width="110%" height="110%"
-        color-interpolation-filters="sRGB">
+      <circle class="black-hole" cx="340" cy="914" r="150" fill="#030407"/>
 
-        <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.006 0.012"
-            numOctaves="2"
-            seed="8"
-            result="turbulence">
+      <g class="hole-arcs">
+        <g>
+          <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#65cce5" stroke-width="0.8" opacity="0.22"/>
+          <animateTransform attributeName="transform" type="rotate" from="0 340 914" to="360 340 914" dur="180s" repeatCount="indefinite"/>
+        </g>
+        <g>
+          <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#91c5d8" stroke-width="0.7" opacity="0.187"/>
+          <animateTransform attributeName="transform" type="rotate" from="120 340 914" to="480 340 914" dur="220s" repeatCount="indefinite"/>
+        </g>
+        <g>
+          <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#a0ffb8" stroke-width="0.65" opacity="0.165"/>
+          <animateTransform attributeName="transform" type="rotate" from="240 340 914" to="600 340 914" dur="200s" repeatCount="indefinite"/>
+        </g>
+      </g>
 
-            <animate
-                attributeName="baseFrequency"
-                dur="36s"
-                values="
-                    0.006 0.012;
-                    0.009 0.016;
-                    0.005 0.010;
-                    0.008 0.014;
-                    0.006 0.012
-                "
-                keyTimes="0;0.25;0.5;0.75;1"
-                calcMode="spline"
-                keySplines="
-                    0.42 0 0.58 1;
-                    0.42 0 0.58 1;
-                    0.42 0 0.58 1;
-                    0.42 0 0.58 1
-                "
-                repeatCount="indefinite"/>
-        </feTurbulence>
+      <circle cx="340" cy="914" r="157" fill="none" stroke="#a0ff00" stroke-width="9"/>
+      <circle cx="340" cy="914" r="150" fill="none" stroke="#00eaff" stroke-width="3"/>
+    </symbol>
 
-        <feDisplacementMap
-            in="SourceGraphic"
-            in2="turbulence"
-            scale="4"
-            xChannelSelector="R"
-            yChannelSelector="G">
-
-            <animate
-                attributeName="scale"
-                dur="34s"
-                values="2.5;5.5;3;5;2.5"
-                keyTimes="0;0.25;0.5;0.75;1"
-                calcMode="spline"
-                keySplines="
-                    0.42 0 0.58 1;
-                    0.42 0 0.58 1;
-                    0.42 0 0.58 1;
-                    0.42 0 0.58 1
-                "
-                repeatCount="indefinite"/>
-        </feDisplacementMap>
-
-    </filter>
-
-</defs>
-
-<!-- BACKGROUND -->
-
-<rect width="864" height="1536"
-      fill="url(#bgGlow)"/>
-
-<!-- BACKGROUND SPACE PARTICLES - UNCHANGED -->
-
-<g stroke-linecap="round">
-
-    <g stroke="#7835c7" stroke-width="3">
-
-        <path d="M145 20l7-10 M140 50l7-10"/>
-        <path d="M455 20l7-10 M360 47l7-10"/>
-        <path d="M752 20l7-10 M780 32l7-10"/>
-        <path d="M313 121l7-8 M694 125l8-10"/>
-        <path d="M333 145l8-10 M717 150l8-10"/>
-        <path d="M210 195l7-10 M465 195l7-10"/>
-        <path d="M28 247l7-10 M250 247l7-10"/>
-        <path d="M115 265l12-14 M635 265l9-13"/>
-        <path d="M619 297l8-12 M728 295l9-12"/>
-        <path d="M290 310l8-11 M305 300l8-11"/>
-        <path d="M76 423l9-9 M140 445l8-10"/>
-        <path d="M340 425l8-10 M362 441l8-10"/>
-        <path d="M115 474l9-11 M507 472l8-10"/>
-        <path d="M146 575l8-10 M778 577l9-11"/>
-        <path d="M30 638l8-11 M210 660l8-10"/>
-        <path d="M704 821l8-12 M84 889l8-10"/>
-        <path d="M153 1129l8-10 M473 1135l9-12"/>
-        <path d="M119 1172l10-12 M635 1190l10-13"/>
-        <path d="M365 1230l7-9 M706 1510l8-11"/>
-
-    </g>
-
-    <g stroke="#442477"
-       stroke-width="2"
-       opacity=".5">
-
-        <path d="M38 146l7-9 M107 75l8-9"/>
-        <path d="M258 25l8-10 M384 150l1-9"/>
-        <path d="M529 145l2-9 M719 54l2-9"/>
-        <path d="M737 190l8-10 M268 305l8-10"/>
-        <path d="M31 462l7-10 M379 459l8-10"/>
-        <path d="M535 485l8-10 M634 301l9-11"/>
-        <path d="M804 303l8-10 M804 449l8-10"/>
-        <path d="M220 404l8-10 M726 1079l8-10"/>
-        <path d="M290 1231l8-10 M431 1230l8-10"/>
-        <path d="M43 1352l8-10 M808 1234l8-10"/>
-
-    </g>
-
-</g>
-
-<!-- MAIN ATMOSPHERIC GLOW -->
-
-<ellipse class="fire-glow"
-         cx="430" cy="900"
-         rx="350" ry="330"
-         fill="#00dfff"
-         opacity=".08"
-         filter="url(#blueGlow)"/>
-
-<ellipse class="fire-glow"
-         cx="340" cy="920"
-         rx="260" ry="250"
-         fill="#00ff88"
-         opacity=".16"
-         filter="url(#greenGlow)"/>
-
-<!-- BLUE OUTER ENERGY SILHOUETTE -->
-
-<path
-    class="fire-shape"
-    fill="url(#blue)"
-    filter="url(#fireFlow)"
-    d="
-    M 180 914
-    L 210 837
-    L 246 785
-    L 285 753
-    L 321 710
-    L 350 667
-    L 381 625
-    L 418 595
-    L 407 638
-    L 442 605
-    L 474 584
-    L 501 571
-    L 497 584
-    L 528 561
-    L 563 543
-    L 600 523
-    L 625 505
-    L 650 480
-    L 673 453
-    L 665 507
-    L 704 469
-    L 727 437
-    L 750 399
-    L 740 451
-    L 722 497
-    L 701 543
-    L 679 578
-    L 650 614
-    L 673 613
-    L 643 648
-    L 616 680
-    L 648 663
-    L 623 701
-    L 597 738
-    L 578 772
-    L 560 813
-    L 547 855
-    L 532 895
-    L 515 938
-    L 497 976
-    L 475 1005
-    L 449 1027
-    L 420 1044
-    L 387 1055
-    L 350 1062
-    L 309 1061
-    L 271 1052
-    L 237 1034
-    L 210 1009
-    L 191 978
-    Z
-"/>
-
-<!-- GREEN INNER ENERGY -->
-
-<path
-    class="fire-shape"
-    fill="url(#green)"
-    filter="url(#fireFlow)"
-    d="
-    M 183 916
-    L 201 855
-    L 224 817
-    L 253 788
-    L 286 769
-    L 315 762
-    L 344 762
-    L 375 769
-    L 402 782
-    L 427 801
-    L 448 825
-    L 465 853
-    L 478 883
-    L 488 916
-    L 494 945
-    L 493 973
-    L 511 901
-    L 498 914
-    L 500 878
-    L 510 851
-    L 525 825
-    L 538 800
-    L 550 771
-    L 562 733
-    L 560 695
-    L 530 724
-    L 542 685
-    L 557 647
-    L 570 600
-    L 549 637
-    L 528 668
-    L 504 692
-    L 478 713
-    L 451 729
-    L 438 740
-    L 443 716
-    L 453 690
-    L 432 711
-    L 411 728
-    L 386 742
-    L 357 755
-    L 358 736
-    L 372 714
-    L 348 730
-    L 321 746
-    L 291 761
-    L 263 776
-    L 237 794
-    L 216 818
-    L 200 846
-    Z
-"/>
-
-<!-- CENTRAL BLACK HOLE -->
-
-<circle
-    class="black-hole"
-    cx="340"
-    cy="914"
-    r="150"
-    fill="#030407"/>
-
-<!-- =====================================
-     THREE SMALL BROKEN ORBITAL ARCS
-     Evenly spaced 120 degrees apart.
-     Slightly increased visibility.
-====================================== -->
-
-<g class="hole-arcs">
-
-    <!-- ARC 1 - STARTING POSITION -->
-
-    <g>
-        <path
-            class="hole-arc"
-            d="M 372 783
-               A 142 142 0 0 1 419 807"
-            stroke="#65cce5"
-            stroke-width="0.8"
-            opacity="0.22"/>
-
-        <animateTransform
-            attributeName="transform"
-            type="rotate"
-            from="0 340 914"
-            to="360 340 914"
-            dur="180s"
-            repeatCount="indefinite"/>
-    </g>
-
-    <!-- ARC 2 - 120 DEGREES AHEAD -->
-
-    <g>
-        <path
-            class="hole-arc"
-            d="M 372 783
-               A 142 142 0 0 1 419 807"
-            stroke="#91c5d8"
-            stroke-width="0.7"
-            opacity="0.187"/>
-
-        <animateTransform
-            attributeName="transform"
-            type="rotate"
-            from="120 340 914"
-            to="480 340 914"
-            dur="220s"
-            repeatCount="indefinite"/>
-    </g>
-
-    <!-- ARC 3 - 240 DEGREES AHEAD -->
-
-    <g>
-        <path
-            class="hole-arc"
-            d="M 372 783
-               A 142 142 0 0 1 419 807"
-            stroke="#a0ffb8"
-            stroke-width="0.65"
-            opacity="0.165"/>
-
-        <animateTransform
-            attributeName="transform"
-            type="rotate"
-            from="240 340 914"
-            to="600 340 914"
-            dur="200s"
-            repeatCount="indefinite"/>
-    </g>
-
-</g>
-
-<!-- NEON OUTER RING -->
-
-<circle
-    cx="340"
-    cy="914"
-    r="157"
-    fill="none"
-    stroke="#a0ff00"
-    stroke-width="9"/>
-
-<!-- CYAN INNER EDGE -->
-
-<circle
-    cx="340"
-    cy="914"
-    r="150"
-    fill="none"
-    stroke="#00eaff"
-    stroke-width="3"/>
-
+    <symbol id="randomO" viewBox="175 748 330 332">
+      <circle class="black-hole" cx="340" cy="914" r="150" fill="#030407"/>
+      <g class="hole-arcs">
+        <g>
+          <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#65cce5" stroke-width="1.4" opacity="0.5"/>
+          <animateTransform attributeName="transform" type="rotate" from="0 340 914" to="360 340 914" dur="180s" repeatCount="indefinite"/>
+        </g>
+        <g>
+          <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#91c5d8" stroke-width="1.2" opacity="0.4"/>
+          <animateTransform attributeName="transform" type="rotate" from="120 340 914" to="480 340 914" dur="220s" repeatCount="indefinite"/>
+        </g>
+        <g>
+          <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#a0ffb8" stroke-width="1.1" opacity="0.35"/>
+          <animateTransform attributeName="transform" type="rotate" from="240 340 914" to="600 340 914" dur="200s" repeatCount="indefinite"/>
+        </g>
+      </g>
+      <circle cx="340" cy="914" r="157" fill="none" stroke="#a0ff00" stroke-width="9"/>
+      <circle cx="340" cy="914" r="150" fill="none" stroke="#00eaff" stroke-width="3"/>
+    </symbol>
+  </defs>
 </svg>
 
+<div class="wrap">
+  <header>
+    <div class="logo">
+      RAND<svg class="brand-icon"><use href="#randomLogo" width="100%" height="100%"></use></svg>M
+    </div>
+    <div class="badge"><span class="dot"></span>EARLY ACCESS</div>
+  </header>
+
+  <div class="hero">
+    <h1><span class="rest">RAND</span><svg class="brand-mark"><use href="#randomLogo" width="100%" height="100%"></use></svg><span class="rest">M</span></h1>
+    <div class="tagline">EVERYTHING IS RANDOM.</div>
+  </div>
+
+  <div class="stack">
+    <div class="card">
+      <div class="title">EXPLORE <span class="arrow">&#8594;</span></div>
+      <div class="sub">Discover existing signals &amp; opportunities</div>
+    </div>
+    <div class="card">
+      <div class="title">CREATE RID <span class="arrow">+</span></div>
+      <div class="sub">Signal your requirement or request</div>
+    </div>
+  </div>
+
+  <div class="guide" id="guide">
+    <div class="guide-head"><span>RANDOM // GUIDE</span><span class="right">SELECT SIGNAL</span></div>
+    <hr>
+    <p>Select a signal option below to query the guide:</p>
+    <div class="qopt"><span>WHAT IS RANDOM?</span><span class="arrow">&#8594;</span></div>
+    <div class="qopt"><span>WHAT IS A RID?</span><span class="arrow">&#8594;</span></div>
+    <div class="status-row"><span class="status">ACTIVE</span></div>
+  </div>
+
+  <footer>RANDOM DISCOVERY NETWORK // CONCEPT LANDING PAGE</footer>
+</div>
+
+<div class="bot-btn" id="botBtn">
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="8" width="16" height="11" rx="3"></rect>
+    <path d="M12 8V4"></path>
+    <circle cx="12" cy="3" r="1"></circle>
+    <circle cx="9" cy="13.5" r="1.3" fill="currentColor" stroke="none"></circle>
+    <circle cx="15" cy="13.5" r="1.3" fill="currentColor" stroke="none"></circle>
+  </svg>
+</div>
+
+<script>
+// Particle field
+const canvas = document.getElementById('field');
+const ctx = canvas.getContext('2d');
+let w,h,particles=[];
+function resize(){
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+const N = Math.round((window.innerWidth*window.innerHeight)/26000);
+for(let i=0;i<N;i++){
+  particles.push({
+    x: Math.random()*w, y: Math.random()*h,
+    vx:(Math.random()-0.5)*0.15, vy:(Math.random()-0.5)*0.15,
+    r: Math.random()*1.6+0.4,
+    a: Math.random()*0.6+0.2
+  });
+}
+function step(){
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle = '#050806';
+  for(const p of particles){
+    p.x += p.vx; p.y += p.vy;
+    if(p.x<0) p.x=w; if(p.x>w) p.x=0;
+    if(p.y<0) p.y=h; if(p.y>h) p.y=0;
+    ctx.beginPath();
+    ctx.fillStyle = `rgba(142,255,160,${p.a})`;
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+  }
+  // faint connecting lines for nearby particles
+  ctx.strokeStyle = 'rgba(142,255,160,0.06)';
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+      const d2=dx*dx+dy*dy;
+      if(d2<120*120){
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x,particles[i].y);
+        ctx.lineTo(particles[j].x,particles[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(step);
+}
+step();
+
+// Guide toggle
+const botBtn = document.getElementById('botBtn');
+const guide = document.getElementById('guide');
+botBtn.addEventListener('click', ()=>{
+  guide.classList.toggle('open');
+  botBtn.classList.toggle('active');
+});
+</script>
 </body>
-</html>
+          </html>
+          
