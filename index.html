@@ -1,972 +1,527 @@
-
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Energy Logo</title>
 
-  <title>RANDOM — Everything is RANDOM.</title>
-  <meta
-    name="description"
-    content="Everything is RANDOM. The next-generation intelligent requirement and discovery network."
-  />
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #080823;
+}
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
-    rel="stylesheet"
-  >
+svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
 
-  <style>
-    :root {
-      --bg-deep: #030504;
-      --bg-surface: rgba(10, 15, 12, 0.55);
-      --bg-elevated: rgba(14, 21, 16, 0.75);
+/* =========================================
+   BLACK HOLE - VERY SLOW BREATHING
+========================================= */
 
-      --border-subtle: rgba(163, 255, 18, 0.12);
-      --border-glow: rgba(163, 255, 18, 0.35);
-      --border-cyan: rgba(0, 240, 255, 0.25);
+.black-hole {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: blackHoleBreath 40s ease-in-out infinite;
+}
 
-      --accent-lime: #a3ff12;
-      --accent-lime-dim: rgba(163, 255, 18, 0.12);
-      --accent-lime-glow: rgba(163, 255, 18, 0.25);
-
-      --accent-cyan: #00f0ff;
-      --accent-cyan-dim: rgba(0, 240, 255, 0.12);
-
-      --accent-amber: #ffb703;
-      --accent-red: #ff3366;
-      --accent-red-dim: rgba(255, 51, 102, 0.12);
-
-      --text-main: #f2f7f4;
-      --text-muted: #7e9185;
-      --text-dim: #3d4c42;
-
-      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-
-      --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
-      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+@keyframes blackHoleBreath {
+    0%, 100% {
+        transform: scale(1);
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    50% {
+        transform: scale(1.012);
+    }
+}
 
-    html, body {
-      width: 100%; height: 100%; overflow: hidden;
-      background-color: var(--bg-deep);
-      color: var(--text-main);
-      font-family: var(--font-sans);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      user-select: none;
+/* =========================================
+   THREE SMALL ROTATING BROKEN ARCS
+========================================= */
+
+.hole-arcs {
+    pointer-events: none;
+}
+
+.hole-arc {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* =========================================
+   FIRE - ONE SMOOTH MOVEMENT ANIMATION
+========================================= */
+
+.fire-shape {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: fireMotion 28s ease-in-out infinite;
+}
+
+@keyframes fireMotion {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
     }
 
-    :focus-visible { outline: 2px solid var(--accent-lime); outline-offset: 4px; border-radius: 4px; }
-
-    button { font-family: inherit; color: inherit; background: none; border: none; cursor: pointer; }
-
-    #network-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
-
-    .vignette-overlay {
-      position: fixed; inset: 0; z-index: 1; pointer-events: none;
-      background: radial-gradient(circle at center, transparent 30%, rgba(3, 5, 4, 0.92) 90%);
+    25% {
+        transform: translate(-1px, -1.5px) scale(1.002);
     }
 
-    .grid-overlay {
-      position: fixed; inset: 0; z-index: 1; pointer-events: none;
-      background-image:
-        linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-      background-size: 90px 90px;
-      mask-image: radial-gradient(circle at center, black 20%, transparent 80%);
+    50% {
+        transform: translate(1.5px, -3px) scale(1.004);
     }
 
-    .app-viewport {
-      position: relative; z-index: 2;
-      width: 100vw; height: 100vh;
-      display: flex; flex-direction: column; justify-content: space-between; align-items: center;
-      padding: clamp(1.25rem, 3vh, 2.5rem) clamp(1.25rem, 4vw, 3.5rem);
+    75% {
+        transform: translate(-0.5px, -1px) scale(1.001);
+    }
+}
+
+/* =========================================
+   FIRE GLOW - SOFT BREATHING
+========================================= */
+
+.fire-glow {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: fireGlowBreath 32s ease-in-out infinite;
+}
+
+@keyframes fireGlowBreath {
+    0%, 100% {
+        opacity: 0.08;
+        transform: scale(1);
     }
 
-    .system-header {
-      width: 100%; max-width: 1200px;
-      display: flex; justify-content: space-between; align-items: center;
-      z-index: 10;
+    50% {
+        opacity: 0.12;
+        transform: scale(1.025);
     }
+}
 
-    .brand-mark {
-      display: inline-flex; align-items: center; justify-content: center;
-      text-decoration: none; padding: 4px; border-radius: 8px;
-      transition: opacity 0.3s ease;
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .black-hole,
+    .fire-shape,
+    .fire-glow {
+        animation: none;
     }
-    .brand-mark:hover { opacity: 0.85; }
-
-    /* HEADER WATERMARK */
-    .brand-watermark {
-      display: inline-flex; align-items: center; gap: 0.05em;
-      font-family: var(--font-sans); font-weight: 700;
-      font-size: 0.92rem; letter-spacing: 0.16em; text-transform: uppercase;
-      background: linear-gradient(180deg, #ffffff 35%, rgba(180, 200, 190, 0.45) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 10px rgba(163, 255, 18, 0.15));
-      user-select: none; line-height: 1;
-    }
-
-    .brand-logo-o {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 0.88em; height: 0.88em;
-      margin: 0 -0.02em;
-      transform: translateY(0.03em);
-      -webkit-text-fill-color: initial;
-    }
-
-    .brand-logo-svg { width: 100%; height: 100%; overflow: visible; display: block; }
-
-    @media (max-width: 600px) { .brand-watermark { font-size: 0.78rem; } }
-
-    .early-access-badge {
-      display: flex; align-items: center; gap: 8px;
-      font-family: var(--font-mono); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em;
-      color: var(--accent-red); text-transform: uppercase;
-      background: rgba(255, 51, 102, 0.06);
-      padding: 6px 14px; border-radius: 100px;
-      border: 1px solid rgba(255, 51, 102, 0.25);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 0 15px rgba(255, 51, 102, 0.08);
-      transition: border-color 0.3s ease;
-    }
-    .early-access-badge:hover { border-color: rgba(255, 51, 102, 0.45); }
-
-    .badge-red-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--accent-red);
-      box-shadow: 0 0 8px var(--accent-red);
-      animation: badgeGlow 4s ease-in-out infinite;
-    }
-    @keyframes badgeGlow {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
-    }
-
-    .hero-spatial {
-      display: flex; flex-direction: column; align-items: center;
-      text-align: center; max-width: 900px; margin: auto; position: relative;
-    }
-
-    .wordmark-container { position: relative; margin-bottom: 0.75rem; overflow: hidden; }
-
-    .wordmark {
-      font-size: clamp(3.8rem, 13vw, 9rem);
-      font-weight: 700;
-      letter-spacing: 0.22em; margin-right: -0.22em;
-      text-transform: uppercase;
-      background: linear-gradient(180deg, #ffffff 35%, rgba(180, 200, 190, 0.45) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      line-height: 0.95;
-      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.9));
-      position: relative;
-    }
-
-    .wordmark-o-slot {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 0.76em; height: 0.82em;
-      vertical-align: baseline;
-      transform: translateY(0.045em);
-      margin: 0 -0.015em;
-      -webkit-text-fill-color: initial;
-    }
-
-    .wordmark-logo-svg {
-      width: 100%; height: 100%; overflow: visible; display: block;
-      filter: drop-shadow(0 0 26px rgba(163, 255, 18, 0.22));
-    }
-
-    /* SHARED LOGO ARTWORK ANIMATIONS */
-    .black-hole { transform-box: fill-box; transform-origin: center; animation: blackHoleBreath 40s ease-in-out infinite; }
-    @keyframes blackHoleBreath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.012); } }
-
-    .hole-arcs { pointer-events: none; }
-    .hole-arc { fill: none; stroke-linecap: round; stroke-linejoin: round; }
-
-    .fire-shape { transform-box: fill-box; transform-origin: center; animation: fireMotion 28s ease-in-out infinite; }
-    @keyframes fireMotion {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      25% { transform: translate(-1px, -1.5px) scale(1.002); }
-      50% { transform: translate(1.5px, -3px) scale(1.004); }
-      75% { transform: translate(-0.5px, -1px) scale(1.001); }
-    }
-
-    .fire-glow { transform-box: fill-box; transform-origin: center; animation: fireGlowBreath 32s ease-in-out infinite; }
-    @keyframes fireGlowBreath {
-      0%, 100% { opacity: 0.08; transform: scale(1); }
-      50% { opacity: 0.12; transform: scale(1.025); }
-    }
-
-    .wordmark-container::after {
-      content: '';
-      position: absolute; top: -20%; left: -120%;
-      width: 45%; height: 140%;
-      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.12) 50%, transparent 100%);
-      transform: skewX(-20deg);
-      animation: lightSweepSlow 14s ease-in-out infinite;
-      pointer-events: none;
-    }
-    @keyframes lightSweepSlow { 0%, 65% { left: -120%; } 100% { left: 220%; } }
-
-    .philosophy-tag {
-      font-family: var(--font-mono);
-      font-size: clamp(0.85rem, 1.8vw, 1.15rem);
-      font-weight: 400; letter-spacing: 0.35em;
-      color: var(--text-muted); text-transform: uppercase;
-      margin-bottom: 3.5rem; opacity: 0.85;
-    }
-
-    .spatial-actions {
-      display: flex; align-items: center; justify-content: center;
-      gap: 2rem; width: 100%; max-width: 680px; position: relative;
-    }
-
-    .action-node {
-      position: relative; flex: 1;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 1.6rem 1.8rem;
-      background: rgba(10, 16, 12, 0.45);
-      border: 1px solid var(--border-subtle);
-      border-radius: 20px;
-      backdrop-filter: blur(16px);
-      transition: all 0.4s var(--ease-expo);
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-      cursor: pointer;
-    }
-
-    .action-node::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(163, 255, 18, 0.08), transparent 70%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .action-node:hover::before { opacity: 1; }
-
-    .action-node:hover {
-      border-color: var(--accent-lime);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px var(--accent-lime-dim);
-    }
-
-    .node-title {
-      font-family: var(--font-mono);
-      font-size: 1.1rem; font-weight: 600; letter-spacing: 0.22em;
-      color: var(--text-main); text-transform: uppercase;
-      margin-bottom: 0.35rem;
-      display: flex; align-items: center; gap: 10px;
-    }
-
-    .node-title svg { width: 18px; height: 18px; stroke: var(--accent-lime); transition: transform 0.3s var(--ease-expo); }
-    .action-node:hover .node-title svg { transform: translateX(4px); }
-
-    .node-caption { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.05em; }
-
-    .action-node-create { border-color: rgba(0, 240, 255, 0.18); }
-    .action-node-create:hover {
-      border-color: var(--accent-cyan);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px var(--accent-cyan-dim);
-    }
-    .action-node-create .node-title svg { stroke: var(--accent-cyan); }
-
-    .toast-overlay {
-      position: fixed; top: 50%; left: 50%;
-      transform: translate(-50%, -50%) scale(0.9);
-      background: rgba(8, 14, 10, 0.92);
-      border: 1px solid var(--border-glow);
-      border-radius: 100px;
-      padding: 1rem 2.2rem;
-      font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.2em;
-      color: var(--accent-lime);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px var(--accent-lime-dim);
-      opacity: 0; visibility: hidden; pointer-events: none;
-      transition: all 0.4s var(--ease-expo);
-      z-index: 1000; text-align: center;
-    }
-
-    .toast-overlay.cyan-theme {
-      border-color: var(--border-cyan);
-      color: var(--accent-cyan);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px var(--accent-cyan-dim);
-    }
-
-    .toast-overlay.active { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
-
-    .system-footer {
-      font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.2em;
-      color: var(--text-dim); text-transform: uppercase; z-index: 10;
-    }
-
-    .robot-anchor {
-      position: fixed;
-      bottom: clamp(1.25rem, 3vh, 2.5rem);
-      right: clamp(1.25rem, 4vw, 3.5rem);
-      z-index: 100;
-      display: flex; flex-direction: column; align-items: flex-end;
-    }
-
-    .robot-entity-btn {
-      position: relative; display: flex; align-items: center; gap: 12px;
-      padding: 4px; border-radius: 100px; outline: none; cursor: pointer;
-    }
-
-    .robot-chassis {
-      width: 52px; height: 52px; position: relative;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(8, 14, 10, 0.85);
-      border: 1px solid var(--border-subtle);
-      border-radius: 50%;
-      backdrop-filter: blur(16px);
-      transition: all 0.4s var(--ease-expo);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
-    }
-
-    .robot-entity-btn:hover .robot-chassis { border-color: var(--border-glow); box-shadow: 0 0 20px var(--accent-lime-dim); }
-
-    .robot-svg { width: 32px; height: 32px; overflow: visible; transition: transform 0.3s var(--ease-expo); }
-    .robot-eye { transition: all 0.3s ease; transform-origin: center; }
-
-    .robot-entity-btn[data-state="SLEEPING"] .robot-chassis {
-      border-color: rgba(255, 255, 255, 0.05);
-      animation: robotBreathing 6s infinite ease-in-out;
-    }
-    .robot-entity-btn[data-state="SLEEPING"] .robot-eye {
-      fill: rgba(163, 255, 18, 0.35);
-      transform: scaleY(0.15);
-      filter: drop-shadow(0 0 2px rgba(163, 255, 18, 0.2));
-    }
-    @keyframes robotBreathing {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(2px) scale(0.98); }
-    }
-
-    .robot-entity-btn[data-state="ACTIVE"] .robot-chassis {
-      border-color: var(--accent-lime);
-      box-shadow: 0 0 25px var(--accent-lime-dim);
-      animation: robotActivePulse 3.5s infinite ease-in-out;
-    }
-    .robot-entity-btn[data-state="ACTIVE"] .robot-eye {
-      fill: var(--accent-lime);
-      transform: scaleY(1);
-      filter: drop-shadow(0 0 8px var(--accent-lime));
-    }
-    @keyframes robotActivePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
-
-    .robot-entity-btn[data-state="CONFUSED"] .robot-chassis {
-      border-color: var(--accent-amber);
-      box-shadow: 0 0 25px rgba(255, 183, 3, 0.25);
-    }
-    .robot-entity-btn[data-state="CONFUSED"] .robot-svg { animation: robotConfusedHead 0.6s var(--ease-expo); }
-    .robot-entity-btn[data-state="CONFUSED"] .robot-eye {
-      fill: var(--accent-amber);
-      transform: scaleY(0.6) rotate(-10deg);
-      filter: drop-shadow(0 0 8px var(--accent-amber));
-    }
-    @keyframes robotConfusedHead {
-      0%, 100% { transform: rotate(0deg); }
-      30% { transform: rotate(-10deg) translateY(-2px); }
-      70% { transform: rotate(10deg) translateY(-1px); }
-    }
-
-    .robot-entity-btn[data-state="ANGRY"] .robot-chassis {
-      border-color: var(--accent-red);
-      box-shadow: 0 0 30px rgba(255, 51, 102, 0.4);
-      animation: robotShake 0.4s ease-in-out;
-    }
-    .robot-entity-btn[data-state="ANGRY"] .robot-eye {
-      fill: var(--accent-red);
-      transform: scaleY(0.4) skewX(-15deg);
-      filter: drop-shadow(0 0 10px var(--accent-red));
-    }
-    @keyframes robotShake {
-      0%, 100% { transform: translateX(0); }
-      20% { transform: translateX(-3px); }
-      40% { transform: translateX(3px); }
-      60% { transform: translateX(-2px); }
-      80% { transform: translateX(2px); }
-    }
-
-    .robot-state-tag {
-      font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.18em;
-      color: var(--text-muted); text-transform: uppercase;
-      background: rgba(8, 14, 10, 0.8);
-      padding: 4px 10px; border-radius: 100px;
-      border: 1px solid var(--border-subtle);
-      backdrop-filter: blur(8px);
-      opacity: 0; transform: translateX(8px);
-      transition: all 0.3s var(--ease-expo);
-      pointer-events: none;
-    }
-    .robot-entity-btn:hover .robot-state-tag { opacity: 1; transform: translateX(0); }
-</style
-</head
-  
-
-      padding: 1.25rem;
-      display: flex; flex-direction: column; gap: 1rem;
-      opacity: 0; visibility: hidden;
-      transform: translateY(12px) scale(0.96);
-      transition: all 0.4s var(--ease-expo);
-      pointer-events: none;
-    }
-    .ai-guide-card.open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); pointer-events: auto; }
-
-    .ai-card-header {
-      display: flex; justify-content: space-between; align-items: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      padding-bottom: 0.6rem;
-    }
-
-    .ai-identity-label {
-      font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.2em;
-      color: var(--accent-lime); text-transform: uppercase;
-    }
-
-    .ai-response-box {
-      font-size: 0.85rem; line-height: 1.5; color: var(--text-main);
-      min-height: 48px; display: flex; align-items: center;
-    }
-
-    .ai-options-stack { display: flex; flex-direction: column; gap: 0.6rem; }
-
-    .ai-option-btn {
-      width: 100%; text-align: left;
-      background: rgba(255, 255, 255, 0.025);
-      border: 1px solid var(--border-subtle);
-      border-radius: 10px;
-      padding: 0.65rem 0.85rem;
-      font-family: var(--font-mono); font-size: 0.725rem; letter-spacing: 0.08em;
-      color: var(--text-muted);
-      transition: all 0.2s ease;
-      display: flex; align-items: center; justify-content: space-between;
-      cursor: pointer;
-    }
-    .ai-option-btn:hover {
-      background: rgba(163, 255, 18, 0.08);
-      border-color: var(--accent-lime);
-      color: var(--text-main);
-      transform: translateX(2px);
-    }
-    .ai-option-btn svg { width: 12px; height: 12px; stroke: var(--accent-lime); }
-
-    .ai-option-btn.out-of-scope-btn { border-color: rgba(255, 183, 3, 0.2); }
-    .ai-option-btn.out-of-scope-btn:hover {
-      background: rgba(255, 183, 3, 0.1);
-      border-color: var(--accent-amber);
-      color: var(--accent-amber);
-    }
-
-    @media (max-width: 768px) {
-      .spatial-actions { flex-direction: column; gap: 1rem; }
-      .action-node { width: 100%; }
-      .wordmark { letter-spacing: 0.15em; }
-      .philosophy-tag { letter-spacing: 0.2em; margin-bottom: 2.5rem; }
-      .ai-guide-card { right: -10px; width: calc(100vw - 2.5rem); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; transition: opacity 0.1s ease !important; }
-      #network-canvas { display: none; }
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
-  <canvas id="network-canvas"></canvas>
-
-  <div class="vignette-overlay"></div>
-  <div class="grid-overlay"></div>
-
-  <div class="app-viewport">
-
-    <header class="system-header">
-
-      <a href="#" class="brand-mark" aria-label="RANDOM Home">
-        <span class="brand-watermark">
-          <span>R</span><span>A</span><span>ND</span><span class="brand-logo-o"><svg class="brand-logo-svg" viewBox="170 744 340 340" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="blue-hdr" x1="0" y1="1" x2="1" y2="0">
-                <stop offset="0%" stop-color="#00bfff"/>
-                <stop offset="100%" stop-color="#00dfff"/>
-              </linearGradient>
-              <linearGradient id="green-hdr" x1="0" y1="1" x2="1" y2="0">
-                <stop offset="0%" stop-color="#7cff00"/>
-                <stop offset="100%" stop-color="#a5ff00"/>
-              </linearGradient>
-              <filter id="greenGlow-hdr" x="-100%" y="-100%" width="300%" height="300%">
-                <feGaussianBlur stdDeviation="28"/>
-              </filter>
-              <filter id="blueGlow-hdr" x="-100%" y="-100%" width="300%" height="300%">
-                <feGaussianBlur stdDeviation="35"/>
-              </filter>
-              <filter id="fireFlow-hdr" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
-                <feTurbulence type="fractalNoise" baseFrequency="0.006 0.012" numOctaves="2" seed="8" result="turbulence">
-                  <animate attributeName="baseFrequency" dur="36s"
-                    values="0.006 0.012;0.009 0.016;0.005 0.010;0.008 0.014;0.006 0.012"
-                    keyTimes="0;0.25;0.5;0.75;1"
-                    calcMode="spline"
-                    keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"
-                    repeatCount="indefinite"/>
-                </feTurbulence>
-                <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="4" xChannelSelector="R" yChannelSelector="G">
-                  <animate attributeName="scale" dur="34s"
-                    values="2.5;5.5;3;5;2.5"
-                    keyTimes="0;0.25;0.5;0.75;1"
-                    calcMode="spline"
-                    keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"
-                    repeatCount="indefinite"/>
-                </feDisplacementMap>
-              </filter>
-            </defs>
-
-            <ellipse class="fire-glow" cx="430" cy="900" rx="350" ry="330" fill="#00dfff" opacity=".08" filter="url(#blueGlow-hdr)"/>
-            <ellipse class="fire-glow" cx="340" cy="920" rx="260" ry="250" fill="#00ff88" opacity=".16" filter="url(#greenGlow-hdr)"/>
-
-            <path class="fire-shape" fill="url(#blue-hdr)" filter="url(#fireFlow-hdr)" d="
-              M 180 914 L 210 837 L 246 785 L 285 753 L 321 710 L 350 667 L 381 625 L 418 595
-              L 407 638 L 442 605 L 474 584 L 501 571 L 497 584 L 528 561 L 563 543 L 600 523
-              L 625 505 L 650 480 L 673 453 L 665 507 L 704 469 L 727 437 L 750 399 L 740 451
-              L 722 497 L 701 543 L 679 578 L 650 614 L 673 613 L 643 648 L 616 680 L 648 663
-              L 623 701 L 597 738 L 578 772 L 560 813 L 547 855 L 532 895 L 515 938 L 497 976
-              L 475 1005 L 449 1027 L 420 1044 L 387 1055 L 350 1062 L 309 1061 L 271 1052
-              L 237 1034 L 210 1009 L 191 978 Z"/>
-
-            <path class="fire-shape" fill="url(#green-hdr)" filter="url(#fireFlow-hdr)" d="
-              M 183 916 L 201 855 L 224 817 L 253 788 L 286 769 L 315 762 L 344 762 L 375 769
-              L 402 782 L 427 801 L 448 825 L 465 853 L 478 883 L 488 916 L 494 945 L 493 973
-              L 511 901 L 498 914 L 500 878 L 510 851 L 525 825 L 538 800 L 550 771 L 562 733
-              L 560 695 L 530 724 L 542 685 L 557 647 L 570 600 L 549 637 L 528 668 L 504 692
-              L 478 713 L 451 729 L 438 740 L 443 716 L 453 690 L 432 711 L 411 728 L 386 742
-              L 357 755 L 358 736 L 372 714 L 348 730 L 321 746 L 291 761 L 263 776 L 237 794
-              L 216 818 L 200 846 Z"/>
-
-            <circle class="black-hole" cx="340" cy="914" r="150" fill="#030407"/>
-
-            <g class="hole-arcs">
-              <g>
-                <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#65cce5" stroke-width="0.8" opacity="0.22"/>
-                <animateTransform attributeName="transform" type="rotate" from="0 340 914" to="360 340 914" dur="180s" repeatCount="indefinite"/>
-              </g>
-              <g>
-                <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#91c5d8" stroke-width="0.7" opacity="0.187"/>
-                <animateTransform attributeName="transform" type="rotate" from="120 340 914" to="480 340 914" dur="220s" repeatCount="indefinite"/>
-              </g>
-              <g>
-                <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#a0ffb8" stroke-width="0.65" opacity="0.165"/>
-                <animateTransform attributeName="transform" type="rotate" from="240 340 914" to="600 340 914" dur="200s" repeatCount="indefinite"/>
-              </g>
-            </g>
-
-            <circle cx="340" cy="914" r="157" fill="none" stroke="#a0ff00" stroke-width="9"/>
-            <circle cx="340" cy="914" r="150" fill="none" stroke="#00eaff" stroke-width="3"/>
-          </svg></span><span>M</span>
-        </span>
-      </a>
-
-      <div class="early-access-badge">
-        <span class="badge-red-dot"></span>
-        <span>EARLY ACCESS</span>
-      </div>
-
-    </header>
-
-    <main class="hero-spatial">
-
-      <div class="wordmark-container">
-        <h1 class="wordmark"><span>R</span><span>A</span><span>ND</span><span class="wordmark-o-slot"><svg class="wordmark-logo-svg" viewBox="170 744 340 340" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="blue-word" x1="0" y1="1" x2="1" y2="0">
-                <stop offset="0%" stop-color="#00bfff"/>
-                <stop offset="100%" stop-color="#00dfff"/>
-              </linearGradient>
-              <linearGradient id="green-word" x1="0" y1="1" x2="1" y2="0">
-                <stop offset="0%" stop-color="#7cff00"/>
-                <stop offset="100%" stop-color="#a5ff00"/>
-              </linearGradient>
-              <filter id="greenGlow-word" x="-100%" y="-100%" width="300%" height="300%">
-                <feGaussianBlur stdDeviation="28"/>
-              </filter>
-              <filter id="blueGlow-word" x="-100%" y="-100%" width="300%" height="300%">
-                <feGaussianBlur stdDeviation="35"/>
-              </filter>
-              <filter id="fireFlow-word" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
-                <feTurbulence type="fractalNoise" baseFrequency="0.006 0.012" numOctaves="2" seed="8" result="turbulence">
-                  <animate attributeName="baseFrequency" dur="36s"
-                    values="0.006 0.012;0.009 0.016;0.005 0.010;0.008 0.014;0.006 0.012"
-                    keyTimes="0;0.25;0.5;0.75;1"
-                    calcMode="spline"
-                    keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"
-                    repeatCount="indefinite"/>
-                </feTurbulence>
-                <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="4" xChannelSelector="R" yChannelSelector="G">
-                  <animate attributeName="scale" dur="34s"
-                    values="2.5;5.5;3;5;2.5"
-                    keyTimes="0;0.25;0.5;0.75;1"
-                    calcMode="spline"
-                    keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"
-                    repeatCount="indefinite"/>
-                </feDisplacementMap>
-              </filter>
-            </defs>
-
-            <ellipse class="fire-glow" cx="430" cy="900" rx="350" ry="330" fill="#00dfff" opacity=".08" filter="url(#blueGlow-word)"/>
-            <ellipse class="fire-glow" cx="340" cy="920" rx="260" ry="250" fill="#00ff88" opacity=".16" filter="url(#greenGlow-word)"/>
-
-            <path class="fire-shape" fill="url(#blue-word)" filter="url(#fireFlow-word)" d="
-              M 180 914 L 210 837 L 246 785 L 285 753 L 321 710 L 350 667 L 381 625 L 418 595
-              L 407 638 L 442 605 L 474 584 L 501 571 L 497 584 L 528 561 L 563 543 L 600 523
-              L 625 505 L 650 480 L 673 453 L 665 507 L 704 469 L 727 437 L 750 399 L 740 451
-              L 722 497 L 701 543 L 679 578 L 650 614 L 673 613 L 643 648 L 616 680 L 648 663
-              L 623 701 L 597 738 L 578 772 L 560 813 L 547 855 L 532 895 L 515 938 L 497 976
-              L 475 1005 L 449 1027 L 420 1044 L 387 1055 L 350 1062 L 309 1061 L 271 1052
-              L 237 1034 L 210 1009 L 191 978 Z"/>
-
-            <path class="fire-shape" fill="url(#green-word)" filter="url(#fireFlow-word)" d="
-              M 183 916 L 201 855 L 224 817 L 253 788 L 286 769 L 315 762 L 344 762 L 375 769
-              L 402 782 L 427 801 L 448 825 L 465 853 L 478 883 L 488 916 L 494 945 L 493 973
-              L 511 901 L 498 914 L 500 878 L 510 851 L 525 825 L 538 800 L 550 771 L 562 733
-              L 560 695 L 530 724 L 542 685 L 557 647 L 570 600 L 549 637 L 528 668 L 504 692
-              L 478 713 L 451 729 L 438 740 L 443 716 L 453 690 L 432 711 L 411 728 L 386 742
-              L 357 755 L 358 736 L 372 714 L 348 730 L 321 746 L 291 761 L 263 776 L 237 794
-              L 216 818 L 200 846 Z"/>
-
-            <circle class="black-hole" cx="340" cy="914" r="150" fill="#030407"/>
-
-            <g class="hole-arcs">
-              <g>
-                <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#65cce5" stroke-width="0.8" opacity="0.22"/>
-                <animateTransform attributeName="transform" type="rotate" from="0 340 914" to="360 340 914" dur="180s" repeatCount="indefinite"/>
-              </g>
-              <g>
-                <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#91c5d8" stroke-width="0.7" opacity="0.187"/>
-                <animateTransform attributeName="transform" type="rotate" from="120 340 914" to="480 340 914" dur="220s" repeatCount="indefinite"/>
-              </g>
-              <g>
-                <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#a0ffb8" stroke-width="0.65" opacity="0.165"/>
-                <animateTransform attributeName="transform" type="rotate" from="240 340 914" to="600 340 914" dur="200s" repeatCount="indefinite"/>
-              </g>
-            </g>
-
-            <circle cx="340" cy="914" r="157" fill="none" stroke="#a0ff00" stroke-width="9"/>
-            <circle cx="340" cy="914" r="150" fill="none" stroke="#00eaff" stroke-width="3"/>
-          </svg></span><span>M</span></h1>
-      </div>
-
-      <p class="philosophy-tag">Everything is RANDOM.</p>
-
-      <div class="spatial-actions">
-
-        <div class="action-node" id="btnExplore" tabindex="0" role="button" aria-label="Explore RANDOM Network">
-          <div class="node-title">
-            <span>EXPLORE</span>
-            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3.33 8h9.34M8 3.33L12.67 8 8 12.67" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <span class="node-caption">Discover existing signals &amp; opportunities</span>
-        </div>
-
-        <div class="action-node action-node-create" id="btnCreateRID" tabindex="0" role="button" aria-label="Create a RID requirement">
-          <div class="node-title">
-            <span>CREATE RID</span>
-            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 3.33v9.34M3.33 8h9.34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <span class="node-caption">Signal your requirement or request</span>
-        </div>
-
-      </div>
-
-    </main>
-
-    <footer class="system-footer">
-      <span>RANDOM DISCOVERY NETWORK // CONCEPT LANDING</span>
-    </footer>
-
-    <div class="robot-anchor">
-
-      <div class="ai-guide-card" id="aiGuideCard" role="dialog" aria-label="RANDOM Guide Options">
-        <div class="ai-card-header">
-          <span class="ai-identity-label">RANDOM // GUIDE</span>
-          <span style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-dim);">SELECT SIGNAL</span>
-        </div>
-        <div class="ai-response-box" id="aiResponseText">Choose a signal option below to query the guide:</div>
-        <div class="ai-options-stack" id="aiOptionsStack"></div>
-      </div>
-
-      <button class="robot-entity-btn" id="robotEntity" data-state="SLEEPING" aria-expanded="false" aria-label="Wake RANDOM AI Guide">
-        <span class="robot-state-tag" id="robotStateLabel">SLEEPING</span>
-        <div class="robot-chassis">
-          <svg class="robot-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="6" y="9" width="20" height="14" rx="5" fill="rgba(8, 14, 10, 0.9)" stroke="rgba(163, 255, 18, 0.3)" stroke-width="1.2"/>
-            <ellipse class="robot-eye" cx="12" cy="16" rx="2.2" ry="2.2"/>
-            <ellipse class="robot-eye" cx="20" cy="16" rx="2.2" ry="2.2"/>
-            <line x1="16" y1="9" x2="16" y2="4" stroke="rgba(163, 255, 18, 0.4)" stroke-width="1.2"/>
-            <circle cx="16" cy="3" r="1.5" fill="var(--accent-lime)"/>
-          </svg>
-        </div>
-      </button>
-
-    </div>
-
-  </div>
-
-  <div class="toast-overlay" id="toastOverlay">EXPLORE — COMING NEXT</div>
-
-  <script>
-
-    (function initNetworkBackground() {
-      const canvas = document.getElementById('network-canvas');
-      const ctx = canvas.getContext('2d');
-      let width; let height; let nodes = [];
-
-      function resize() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-      }
-      window.addEventListener('resize', resize);
-      resize();
-
-      const nodeCount = Math.floor(Math.min(width, height) / 25);
-      for (let i = 0; i < nodeCount; i++) {
-        nodes.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.15,
-          vy: (Math.random() - 0.5) * 0.15,
-          radius: Math.random() * 1.5 + 0.8
-        });
-      }
-
-      function render() {
-        ctx.clearRect(0, 0, width, height);
-        for (let i = 0; i < nodes.length; i++) {
-          const n1 = nodes[i];
-          n1.x += n1.vx;
-          n1.y += n1.vy;
-          if (n1.x < 0 || n1.x > width) { n1.vx *= -1; }
-          if (n1.y < 0 || n1.y > height) { n1.vy *= -1; }
-
-          ctx.fillStyle = 'rgba(163, 255, 18, 0.45)';
-          ctx.beginPath();
-          ctx.arc(n1.x, n1.y, n1.radius, 0, Math.PI * 2);
-          ctx.fill();
-
-          for (let j = i + 1; j < nodes.length; j++) {
-            const n2 = nodes[j];
-            const dx = n1.x - n2.x;
-            const dy = n1.y - n2.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 140) {
-              const alpha = (1 - dist / 140) * 0.04;
-              ctx.strokeStyle = `rgba(163, 255, 18, ${alpha})`;
-              ctx.lineWidth = 1;
-              ctx.beginPath();
-              ctx.moveTo(n1.x, n1.y);
-              ctx.lineTo(n2.x, n2.y);
-              ctx.stroke();
-            }
-          }
-        }
-        requestAnimationFrame(render);
-      }
-
-      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        render();
-      }
-    })();
-
-    (function initActionButtons() {
-      const btnExplore = document.getElementById('btnExplore');
-      const btnCreateRID = document.getElementById('btnCreateRID');
-      const toast = document.getElementById('toastOverlay');
-      let timeoutId;
-
-      function showToast(text, isCyan = false) {
-        clearTimeout(timeoutId);
-        toast.innerText = text;
-        if (isCyan) { toast.classList.add('cyan-theme'); }
-        else { toast.classList.remove('cyan-theme'); }
-        toast.classList.add('active');
-        timeoutId = setTimeout(() => { toast.classList.remove('active'); }, 1800);
-      }
-
-      btnExplore.addEventListener('click', () => showToast('EXPLORE — COMING NEXT', false));
-      btnCreateRID.addEventListener('click', () => showToast('CREATE RID — COMING NEXT', true));
-
-      btnExplore.addEventListener('keydown', (e) => { if (e.key === 'Enter') { showToast('EXPLORE — COMING NEXT', false); } });
-      btnCreateRID.addEventListener('keydown', (e) => { if (e.key === 'Enter') { showToast('CREATE RID — COMING NEXT', true); } });
-
-      document.querySelectorAll('.action-node').forEach(node => {
-        node.addEventListener('mousemove', (e) => {
-          const rect = node.getBoundingClientRect();
-          const x = ((e.clientX - rect.left) / rect.width) * 100;
-          const y = ((e.clientY - rect.top) / rect.height) * 100;
-          node.style.setProperty('--mouse-x', `${x}%`);
-          node.style.setProperty('--mouse-y', `${y}%`);
-        });
-      });
-    })();
-
-    const RobotGuideSystem = (function () {
-      const robotEntity = document.getElementById('robotEntity');
-      const robotStateLabel = document.getElementById('robotStateLabel');
-      const aiGuideCard = document.getElementById('aiGuideCard');
-      const aiResponseText = document.getElementById('aiResponseText');
-      const aiOptionsStack = document.getElementById('aiOptionsStack');
-
-      let currentState = 'SLEEPING';
-      let inactivityTimer;
-      let abuseCount = 0;
-
-      const QUESTION_SETS = [
-        {
-          pairId: 'SET_PRIMARY',
-          options: [
-            { label: "WHAT IS RANDOM?", response: "RANDOM is an intelligent discovery and requirement network designed to match needs dynamically without noisy dashboards.", nextSet: 1 },
-            { label: "WHAT IS A RID?", response: "A RID is a created Requirement ID—a structured signal representing what you need or offer in the RANDOM network.", nextSet: 2 }
-          ]
-        },
-        {
-          pairId: 'SET_CONCEPT_DEEP',
-          options: [
-            { label: "WHY DOES RANDOM EXIST?", response: "RANDOM exists to replace rigid search bars and noisy feeds with direct, intelligent signal alignment.", nextSet: 3 },
-            { label: "HOW DOES MATCHING WORK?", response: "The network aligns complementary RIDs through context-aware signal matching without middleman clutter.", nextSet: 4 }
-          ]
-        },
-        {
-          pairId: 'SET_RID_DEEP',
-          options: [
-            { label: "WHAT CAN A RID REPRESENT?", response: "A RID can signal any human or technical requirement—from talent and services to physical resources or dynamic requests.", nextSet: 4 },
-            { label: "HOW ARE RIDs CREATED?", response: "By selecting 'CREATE RID', you broadcast a clean, structured requirement signal directly into the living network.", nextSet: 3 }
-          ]
-        },
-        {
-          pairId: 'SET_EXPLORE_DEEP',
-          options: [
-            { label: "WHAT DOES EXPLORE DO?", response: "EXPLORE connects you to the live network matrix, letting you discover open requirements matched to your scope.", nextSet: 5 },
-            { label: "IS RANDOM A DASHBOARD?", response: "No. RANDOM strips away static dashboards in favor of direct, dynamic signal discovery.", nextSet: 0 }
-          ]
-        },
-        {
-          pairId: 'SET_SIGNAL_INTELLIGENCE',
-          options: [
-            { label: "HOW DO SIGNALS WORK?", response: "Signals are concise intent vectors. Instead of searching keywords, signals continuously align complementary needs.", nextSet: 5 },
-            { label: "IS RANDOM FREE TO USE?", response: "During Early Access, core signal broadcasting and discovery are completely open for network participants.", nextSet: 0 }
-          ]
-        },
-        {
-          pairId: 'SET_OUT_OF_SCOPE_TEST',
-          options: [
-            { label: "WHAT IS THE ULTIMATE GOAL?", response: "To build a seamless global discovery layer where requirements find solutions instantly.", nextSet: 0 },
-            { label: "[ SIMULATE UNRELATED SIGNAL ]", isOutOfScopeTrigger: true, response: "That is outside the RANDOM network scope.", nextSet: 0 }
-          ]
-        }
-      ];
-
-      function setState(newState) {
-        currentState = newState;
-        robotEntity.setAttribute('data-state', newState);
-        robotStateLabel.innerText = newState;
-
-        if (newState === 'SLEEPING') {
-          aiGuideCard.classList.remove('open');
-          robotEntity.setAttribute('aria-expanded', 'false');
-          clearTimeout(inactivityTimer);
-        } else {
-          aiGuideCard.classList.add('open');
-          robotEntity.setAttribute('aria-expanded', 'true');
-          resetInactivityTimer();
-        }
-      }
-
-      function resetInactivityTimer() {
-        clearTimeout(inactivityTimer);
-        inactivityTimer = setTimeout(() => { setState('SLEEPING'); }, 14000);
-      }
-
-      function renderOptions(setIndex) {
-        const currentSet = QUESTION_SETS[setIndex] || QUESTION_SETS[0];
-        aiOptionsStack.innerHTML = '';
-
-        currentSet.options.slice(0, 2).forEach(opt => {
-          const btn = document.createElement('button');
-          btn.className = `ai-option-btn ${opt.isOutOfScopeTrigger ? 'out-of-scope-btn' : ''}`;
-          btn.innerHTML = `
-            <span>${opt.label}</span>
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
-              <path d="M3.33 8h9.34M8 3.33L12.67 8 8 12.67" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          `;
-          btn.addEventListener('click', () => { handleOptionSelect(opt); });
-          aiOptionsStack.appendChild(btn);
-        });
-      }
-
-      function handleOptionSelect(option) {
-        resetInactivityTimer();
-
-        if (option.isOutOfScopeTrigger) {
-          abuseCount++;
-
-          if (abuseCount >= 2) {
-            setState('ANGRY');
-            aiResponseText.innerText = "Signal error. Focus strictly on RANDOM concepts.";
-            setTimeout(() => { setState('ACTIVE'); renderOptions(0); }, 1800);
-          } else {
-            setState('CONFUSED');
-            aiResponseText.innerText = option.response;
-            setTimeout(() => { setState('ACTIVE'); renderOptions(option.nextSet); }, 1600);
-          }
-          return;
-        }
-
-        aiResponseText.innerText = option.response;
-        renderOptions(option.nextSet);
-      }
-
-      function initListeners() {
-        robotEntity.addEventListener('click', (e) => {
-          e.stopPropagation();
-          if (currentState === 'SLEEPING') {
-            setState('ACTIVE');
-            aiResponseText.innerText = "Select a signal option below to query the guide:";
-            renderOptions(0);
-          } else {
-            setState('SLEEPING');
-          }
-        });
-
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && currentState !== 'SLEEPING') { setState('SLEEPING'); }
-        });
-
-        document.addEventListener('click', (e) => {
-          if (!robotEntity.contains(e.target) && !aiGuideCard.contains(e.target) && currentState !== 'SLEEPING') {
-            setState('SLEEPING');
-          }
-        });
-      }
-
-      initListeners();
-
-      return { setState };
-    })();
-
-  </script>
+<svg viewBox="0 0 864 1536"
+     preserveAspectRatio="xMidYMid meet"
+     xmlns="http://www.w3.org/2000/svg">
+
+<defs>
+
+    <!-- Background glow -->
+
+    <radialGradient id="bgGlow">
+        <stop offset="0%" stop-color="#06334b"/>
+        <stop offset="45%" stop-color="#10113d"/>
+        <stop offset="100%" stop-color="#080823"/>
+    </radialGradient>
+
+    <!-- Blue lightning gradient -->
+
+    <linearGradient id="blue"
+        x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0%" stop-color="#00bfff"/>
+        <stop offset="100%" stop-color="#00dfff"/>
+    </linearGradient>
+
+    <!-- Green lightning gradient -->
+
+    <linearGradient id="green"
+        x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0%" stop-color="#7cff00"/>
+        <stop offset="100%" stop-color="#a5ff00"/>
+    </linearGradient>
+
+    <!-- Green glow -->
+
+    <filter id="greenGlow"
+        x="-100%" y="-100%"
+        width="300%" height="300%">
+        <feGaussianBlur stdDeviation="28"/>
+    </filter>
+
+    <!-- Blue glow -->
+
+    <filter id="blueGlow"
+        x="-100%" y="-100%"
+        width="300%" height="300%">
+        <feGaussianBlur stdDeviation="35"/>
+    </filter>
+
+    <!-- =====================================
+         FIRE TURBULENCE
+    ====================================== -->
+
+    <filter id="fireFlow"
+        x="-5%" y="-5%"
+        width="110%" height="110%"
+        color-interpolation-filters="sRGB">
+
+        <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.006 0.012"
+            numOctaves="2"
+            seed="8"
+            result="turbulence">
+
+            <animate
+                attributeName="baseFrequency"
+                dur="36s"
+                values="
+                    0.006 0.012;
+                    0.009 0.016;
+                    0.005 0.010;
+                    0.008 0.014;
+                    0.006 0.012
+                "
+                keyTimes="0;0.25;0.5;0.75;1"
+                calcMode="spline"
+                keySplines="
+                    0.42 0 0.58 1;
+                    0.42 0 0.58 1;
+                    0.42 0 0.58 1;
+                    0.42 0 0.58 1
+                "
+                repeatCount="indefinite"/>
+        </feTurbulence>
+
+        <feDisplacementMap
+            in="SourceGraphic"
+            in2="turbulence"
+            scale="4"
+            xChannelSelector="R"
+            yChannelSelector="G">
+
+            <animate
+                attributeName="scale"
+                dur="34s"
+                values="2.5;5.5;3;5;2.5"
+                keyTimes="0;0.25;0.5;0.75;1"
+                calcMode="spline"
+                keySplines="
+                    0.42 0 0.58 1;
+                    0.42 0 0.58 1;
+                    0.42 0 0.58 1;
+                    0.42 0 0.58 1
+                "
+                repeatCount="indefinite"/>
+        </feDisplacementMap>
+
+    </filter>
+
+</defs>
+
+<!-- BACKGROUND -->
+
+<rect width="864" height="1536"
+      fill="url(#bgGlow)"/>
+
+<!-- BACKGROUND SPACE PARTICLES - UNCHANGED -->
+
+<g stroke-linecap="round">
+
+    <g stroke="#7835c7" stroke-width="3">
+
+        <path d="M145 20l7-10 M140 50l7-10"/>
+        <path d="M455 20l7-10 M360 47l7-10"/>
+        <path d="M752 20l7-10 M780 32l7-10"/>
+        <path d="M313 121l7-8 M694 125l8-10"/>
+        <path d="M333 145l8-10 M717 150l8-10"/>
+        <path d="M210 195l7-10 M465 195l7-10"/>
+        <path d="M28 247l7-10 M250 247l7-10"/>
+        <path d="M115 265l12-14 M635 265l9-13"/>
+        <path d="M619 297l8-12 M728 295l9-12"/>
+        <path d="M290 310l8-11 M305 300l8-11"/>
+        <path d="M76 423l9-9 M140 445l8-10"/>
+        <path d="M340 425l8-10 M362 441l8-10"/>
+        <path d="M115 474l9-11 M507 472l8-10"/>
+        <path d="M146 575l8-10 M778 577l9-11"/>
+        <path d="M30 638l8-11 M210 660l8-10"/>
+        <path d="M704 821l8-12 M84 889l8-10"/>
+        <path d="M153 1129l8-10 M473 1135l9-12"/>
+        <path d="M119 1172l10-12 M635 1190l10-13"/>
+        <path d="M365 1230l7-9 M706 1510l8-11"/>
+
+    </g>
+
+    <g stroke="#442477"
+       stroke-width="2"
+       opacity=".5">
+
+        <path d="M38 146l7-9 M107 75l8-9"/>
+        <path d="M258 25l8-10 M384 150l1-9"/>
+        <path d="M529 145l2-9 M719 54l2-9"/>
+        <path d="M737 190l8-10 M268 305l8-10"/>
+        <path d="M31 462l7-10 M379 459l8-10"/>
+        <path d="M535 485l8-10 M634 301l9-11"/>
+        <path d="M804 303l8-10 M804 449l8-10"/>
+        <path d="M220 404l8-10 M726 1079l8-10"/>
+        <path d="M290 1231l8-10 M431 1230l8-10"/>
+        <path d="M43 1352l8-10 M808 1234l8-10"/>
+
+    </g>
+
+</g>
+
+<!-- MAIN ATMOSPHERIC GLOW -->
+
+<ellipse class="fire-glow"
+         cx="430" cy="900"
+         rx="350" ry="330"
+         fill="#00dfff"
+         opacity=".08"
+         filter="url(#blueGlow)"/>
+
+<ellipse class="fire-glow"
+         cx="340" cy="920"
+         rx="260" ry="250"
+         fill="#00ff88"
+         opacity=".16"
+         filter="url(#greenGlow)"/>
+
+<!-- BLUE OUTER ENERGY SILHOUETTE -->
+
+<path
+    class="fire-shape"
+    fill="url(#blue)"
+    filter="url(#fireFlow)"
+    d="
+    M 180 914
+    L 210 837
+    L 246 785
+    L 285 753
+    L 321 710
+    L 350 667
+    L 381 625
+    L 418 595
+    L 407 638
+    L 442 605
+    L 474 584
+    L 501 571
+    L 497 584
+    L 528 561
+    L 563 543
+    L 600 523
+    L 625 505
+    L 650 480
+    L 673 453
+    L 665 507
+    L 704 469
+    L 727 437
+    L 750 399
+    L 740 451
+    L 722 497
+    L 701 543
+    L 679 578
+    L 650 614
+    L 673 613
+    L 643 648
+    L 616 680
+    L 648 663
+    L 623 701
+    L 597 738
+    L 578 772
+    L 560 813
+    L 547 855
+    L 532 895
+    L 515 938
+    L 497 976
+    L 475 1005
+    L 449 1027
+    L 420 1044
+    L 387 1055
+    L 350 1062
+    L 309 1061
+    L 271 1052
+    L 237 1034
+    L 210 1009
+    L 191 978
+    Z
+"/>
+
+<!-- GREEN INNER ENERGY -->
+
+<path
+    class="fire-shape"
+    fill="url(#green)"
+    filter="url(#fireFlow)"
+    d="
+    M 183 916
+    L 201 855
+    L 224 817
+    L 253 788
+    L 286 769
+    L 315 762
+    L 344 762
+    L 375 769
+    L 402 782
+    L 427 801
+    L 448 825
+    L 465 853
+    L 478 883
+    L 488 916
+    L 494 945
+    L 493 973
+    L 511 901
+    L 498 914
+    L 500 878
+    L 510 851
+    L 525 825
+    L 538 800
+    L 550 771
+    L 562 733
+    L 560 695
+    L 530 724
+    L 542 685
+    L 557 647
+    L 570 600
+    L 549 637
+    L 528 668
+    L 504 692
+    L 478 713
+    L 451 729
+    L 438 740
+    L 443 716
+    L 453 690
+    L 432 711
+    L 411 728
+    L 386 742
+    L 357 755
+    L 358 736
+    L 372 714
+    L 348 730
+    L 321 746
+    L 291 761
+    L 263 776
+    L 237 794
+    L 216 818
+    L 200 846
+    Z
+"/>
+
+<!-- CENTRAL BLACK HOLE -->
+
+<circle
+    class="black-hole"
+    cx="340"
+    cy="914"
+    r="150"
+    fill="#030407"/>
+
+<!-- =====================================
+     THREE SMALL BROKEN ORBITAL ARCS
+     Evenly spaced 120 degrees apart.
+     Slightly increased visibility.
+====================================== -->
+
+<g class="hole-arcs">
+
+    <!-- ARC 1 - STARTING POSITION -->
+
+    <g>
+        <path
+            class="hole-arc"
+            d="M 372 783
+               A 142 142 0 0 1 419 807"
+            stroke="#65cce5"
+            stroke-width="0.8"
+            opacity="0.22"/>
+
+        <animateTransform
+            attributeName="transform"
+            type="rotate"
+            from="0 340 914"
+            to="360 340 914"
+            dur="180s"
+            repeatCount="indefinite"/>
+    </g>
+
+    <!-- ARC 2 - 120 DEGREES AHEAD -->
+
+    <g>
+        <path
+            class="hole-arc"
+            d="M 372 783
+               A 142 142 0 0 1 419 807"
+            stroke="#91c5d8"
+            stroke-width="0.7"
+            opacity="0.187"/>
+
+        <animateTransform
+            attributeName="transform"
+            type="rotate"
+            from="120 340 914"
+            to="480 340 914"
+            dur="220s"
+            repeatCount="indefinite"/>
+    </g>
+
+    <!-- ARC 3 - 240 DEGREES AHEAD -->
+
+    <g>
+        <path
+            class="hole-arc"
+            d="M 372 783
+               A 142 142 0 0 1 419 807"
+            stroke="#a0ffb8"
+            stroke-width="0.65"
+            opacity="0.165"/>
+
+        <animateTransform
+            attributeName="transform"
+            type="rotate"
+            from="240 340 914"
+            to="600 340 914"
+            dur="200s"
+            repeatCount="indefinite"/>
+    </g>
+
+</g>
+
+<!-- NEON OUTER RING -->
+
+<circle
+    cx="340"
+    cy="914"
+    r="157"
+    fill="none"
+    stroke="#a0ff00"
+    stroke-width="9"/>
+
+<!-- CYAN INNER EDGE -->
+
+<circle
+    cx="340"
+    cy="914"
+    r="150"
+    fill="none"
+    stroke="#00eaff"
+    stroke-width="3"/>
+
+</svg>
 
 </body>
 </html>
-
-     
