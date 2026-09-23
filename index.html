@@ -197,246 +197,72 @@
     }
 
     /* ==========================================================================
-       RANDOM LOGO
+       RANDOM HEADER WATERMARK
+       Small wordmark with the original animated SVG logo
+       standing in for the "O"
        ========================================================================== */
 
-    .brand {
-      position: absolute;
+    .brand-watermark {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.05em;
 
-      left: 20px;
-      top: 18px;
+      font-family: var(--font-sans);
+      font-weight: 700;
 
-      width: 38px;
-      height: 38px;
+      font-size: 0.92rem;
+      letter-spacing: 0.16em;
 
-      z-index: 30;
-    }
+      text-transform: uppercase;
 
-    .brand-symbol {
-      position: relative;
+      background:
+        linear-gradient(
+          180deg,
+          #ffffff 35%,
+          rgba(180, 200, 190, 0.45) 100%
+        );
 
-      width: 38px;
-      height: 38px;
-
-      transform: rotate(-8deg);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
 
       filter:
         drop-shadow(
-          0 0 11px
-          rgba(216, 255, 69, 0.14)
-        );
-    }
-
-    .loop {
-      position: absolute;
-
-      width: 31px;
-      height: 17px;
-
-      border: 1.5px solid #d8ff45;
-
-      border-radius: 55% 45% 55% 45%;
-    }
-
-    .loop.one {
-      left: 1px;
-      top: 10px;
-
-      transform: rotate(29deg);
-
-      border-right-color:
-        rgba(216, 255, 69, 0.18);
-    }
-
-    .loop.two {
-      right: 1px;
-      top: 10px;
-
-      transform: rotate(-29deg);
-
-      border-color: #63e9dc;
-
-      border-left-color:
-        rgba(99, 233, 220, 0.18);
-    }
-
-    /* ==========================================================================
-       BLACK HOLE CORE
-       Very slow + subtle futuristic animation
-       ========================================================================== */
-
-    .brand-core {
-      position: absolute;
-
-      width: 6px;
-      height: 6px;
-
-      left: 16px;
-      top: 15px;
-
-      background: #000;
-
-      border-radius: 50%;
-
-      z-index: 5;
-
-      box-shadow:
-        0 0 4px rgba(0, 0, 0, 0.95),
-        0 0 9px rgba(0, 0, 0, 0.85);
-
-      /*
-        Very slow gravitational breathing.
-        9 seconds = deliberately subtle.
-      */
-      animation:
-        blackHoleCore 9s ease-in-out infinite;
-    }
-
-    /*
-      Tiny gravitational ring around the black hole.
-
-      It doesn't create a big visible ring.
-      It simply gives the core a microscopic futuristic movement.
-    */
-    .brand-core::before {
-      content: "";
-
-      position: absolute;
-
-      left: 50%;
-      top: 50%;
-
-      width: 11px;
-      height: 5px;
-
-      transform:
-        translate(-50%, -50%)
-        rotate(-18deg);
-
-      border-radius: 50%;
-
-      border:
-        0.7px solid
-        rgba(216, 255, 69, 0.20);
-
-      opacity: 0.35;
-
-      filter:
-        blur(0.15px)
-        drop-shadow(
-          0 0 3px
-          rgba(216, 255, 69, 0.12)
+          0 0 10px
+          rgba(163, 255, 18, 0.15)
         );
 
-      animation:
-        blackHoleRing 11s linear infinite;
+      user-select: none;
+      line-height: 1;
     }
 
-    /*
-      Extremely small cyan secondary distortion.
-      Slow enough that it feels like gravitational motion,
-      not a normal UI animation.
-    */
-    .brand-core::after {
-      content: "";
+    .brand-logo-o {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
 
-      position: absolute;
+      width: 0.88em;
+      height: 0.88em;
 
-      left: 50%;
-      top: 50%;
+      margin: 0 -0.02em;
 
-      width: 8px;
-      height: 3px;
+      transform: translateY(0.03em);
 
-      transform:
-        translate(-50%, -50%)
-        rotate(62deg);
-
-      border-radius: 50%;
-
-      border:
-        0.6px solid
-        rgba(99, 233, 220, 0.16);
-
-      opacity: 0.28;
-
-      animation:
-        blackHoleSecondaryRing 13s ease-in-out infinite;
+      -webkit-text-fill-color: initial;
     }
 
-    @keyframes blackHoleCore {
-      0%,
-      100% {
-        transform: scale(1);
-        box-shadow:
-          0 0 4px rgba(0, 0, 0, 0.95),
-          0 0 9px rgba(0, 0, 0, 0.85);
-      }
-
-      50% {
-        transform: scale(0.86);
-        box-shadow:
-          0 0 5px rgba(0, 0, 0, 1),
-          0 0 12px rgba(0, 0, 0, 0.95);
-      }
+    .brand-logo-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      display: block;
     }
-
-    @keyframes blackHoleRing {
-      0% {
-        transform:
-          translate(-50%, -50%)
-          rotate(-18deg)
-          scaleX(0.9);
-        opacity: 0.20;
-      }
-
-      50% {
-        transform:
-          translate(-50%, -50%)
-          rotate(162deg)
-          scaleX(1.05);
-        opacity: 0.42;
-      }
-
-      100% {
-        transform:
-          translate(-50%, -50%)
-          rotate(342deg)
-          scaleX(0.9);
-        opacity: 0.20;
-      }
-    }
-
-    @keyframes blackHoleSecondaryRing {
-      0%,
-      100% {
-        transform:
-          translate(-50%, -50%)
-          rotate(62deg)
-          scaleX(0.85);
-
-        opacity: 0.16;
-      }
-
-      50% {
-        transform:
-          translate(-50%, -50%)
-          rotate(242deg)
-          scaleX(1.08);
-
-        opacity: 0.34;
-      }
-    }
-
-    /* ==========================================================================
-       MOBILE LOGO POSITION
-       ========================================================================== */
 
     @media (max-width: 600px) {
-      .brand {
-        left: 16px;
-        top: 16px;
+
+      .brand-watermark {
+        font-size: 0.78rem;
       }
+
     }
 
     /* ==========================================================================
@@ -515,7 +341,7 @@
        HERO
        ========================================================================== */
 
-    .hero-spatial {
+        .hero-spatial {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -567,6 +393,108 @@
         );
 
       position: relative;
+    }
+
+    /* ==========================================================================
+       WORDMARK "O" — ORIGINAL ANIMATED SVG LOGO SLOT
+       ========================================================================== */
+
+    .wordmark-o-slot {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 0.76em;
+      height: 0.82em;
+
+      vertical-align: baseline;
+
+      transform: translateY(0.045em);
+
+      margin: 0 -0.015em;
+
+      -webkit-text-fill-color: initial;
+    }
+
+    .wordmark-logo-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      display: block;
+
+      filter:
+        drop-shadow(
+          0 0 26px
+          rgba(163, 255, 18, 0.22)
+        );
+    }
+
+    /* ==========================================================================
+       ORIGINAL LOGO ARTWORK ANIMATIONS
+       (shared by every placement of the SVG logo)
+       ========================================================================== */
+
+    .black-hole {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: blackHoleBreath 40s ease-in-out infinite;
+    }
+
+    @keyframes blackHoleBreath {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.012);
+      }
+    }
+
+    .hole-arcs {
+      pointer-events: none;
+    }
+
+    .hole-arc {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .fire-shape {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: fireMotion 28s ease-in-out infinite;
+    }
+
+    @keyframes fireMotion {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+      }
+      25% {
+        transform: translate(-1px, -1.5px) scale(1.002);
+      }
+      50% {
+        transform: translate(1.5px, -3px) scale(1.004);
+      }
+      75% {
+        transform: translate(-0.5px, -1px) scale(1.001);
+      }
+    }
+
+    .fire-glow {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: fireGlowBreath 32s ease-in-out infinite;
+    }
+
+    @keyframes fireGlowBreath {
+      0%, 100% {
+        opacity: 0.08;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.12;
+        transform: scale(1.025);
+      }
     }
 
     /* ==========================================================================
@@ -629,7 +557,6 @@
 
       opacity: 0.85;
     }
-
     /* ==========================================================================
        ACTION BUTTONS
        ========================================================================== */
@@ -1150,9 +1077,8 @@
       80% {
         transform: translateX(2px);
       }
-    }
-
-    /* ==========================================================================
+      }
+       /* ==========================================================================
        ROBOT STATE TAG
        ========================================================================== */
 
@@ -1448,13 +1374,14 @@
 
   <div class="app-viewport">
 
+    
     <!-- =========================================================
          HEADER
     ========================================================== -->
 
     <header class="system-header">
 
-      <!-- RANDOM LOGO -->
+      <!-- RANDOM HEADER WATERMARK -->
 
       <a
         href="#"
@@ -1462,20 +1389,95 @@
         aria-label="RANDOM Home"
       >
 
-        <div class="brand">
+        <span class="brand-watermark">
+          <span>R</span><span>A</span><span>ND</span><span
+            class="brand-logo-o"
+          ><svg
+              class="brand-logo-svg"
+              viewBox="170 744 340 340"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id="blue-hdr" x1="0" y1="1" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#00bfff"/>
+                  <stop offset="100%" stop-color="#00dfff"/>
+                </linearGradient>
 
-          <div class="brand-symbol">
+                <linearGradient id="green-hdr" x1="0" y1="1" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#7cff00"/>
+                  <stop offset="100%" stop-color="#a5ff00"/>
+                </linearGradient>
 
-            <div class="loop one"></div>
+                <filter id="greenGlow-hdr" x="-100%" y="-100%" width="300%" height="300%">
+                  <feGaussianBlur stdDeviation="28"/>
+                </filter>
 
-            <div class="loop two"></div>
+                <filter id="blueGlow-hdr" x="-100%" y="-100%" width="300%" height="300%">
+                  <feGaussianBlur stdDeviation="35"/>
+                </filter>
 
-            <!-- BLACK HOLE -->
-            <div class="brand-core"></div>
+                <filter id="fireFlow-hdr" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.006 0.012" numOctaves="2" seed="8" result="turbulence">
+                    <animate attributeName="baseFrequency" dur="36s"
+                      values="0.006 0.012;0.009 0.016;0.005 0.010;0.008 0.014;0.006 0.012"
+                      keyTimes="0;0.25;0.5;0.75;1"
+                      calcMode="spline"
+                      keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"
+                      repeatCount="indefinite"/>
+                  </feTurbulence>
+                  <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="4" xChannelSelector="R" yChannelSelector="G">
+                    <animate attributeName="scale" dur="34s"
+                      values="2.5;5.5;3;5;2.5"
+                      keyTimes="0;0.25;0.5;0.75;1"
+                      calcMode="spline"
+                      keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"
+                      repeatCount="indefinite"/>
+                  </feDisplacementMap>
+                </filter>
+              </defs>
 
-          </div>
+              <ellipse class="fire-glow" cx="430" cy="900" rx="350" ry="330" fill="#00dfff" opacity=".08" filter="url(#blueGlow-hdr)"/>
+              <ellipse class="fire-glow" cx="340" cy="920" rx="260" ry="250" fill="#00ff88" opacity=".16" filter="url(#greenGlow-hdr)"/>
 
-        </div>
+              <path class="fire-shape" fill="url(#blue-hdr)" filter="url(#fireFlow-hdr)" d="
+                M 180 914 L 210 837 L 246 785 L 285 753 L 321 710 L 350 667 L 381 625 L 418 595
+                L 407 638 L 442 605 L 474 584 L 501 571 L 497 584 L 528 561 L 563 543 L 600 523
+                L 625 505 L 650 480 L 673 453 L 665 507 L 704 469 L 727 437 L 750 399 L 740 451
+                L 722 497 L 701 543 L 679 578 L 650 614 L 673 613 L 643 648 L 616 680 L 648 663
+                L 623 701 L 597 738 L 578 772 L 560 813 L 547 855 L 532 895 L 515 938 L 497 976
+                L 475 1005 L 449 1027 L 420 1044 L 387 1055 L 350 1062 L 309 1061 L 271 1052
+                L 237 1034 L 210 1009 L 191 978 Z"/>
+
+              <path class="fire-shape" fill="url(#green-hdr)" filter="url(#fireFlow-hdr)" d="
+                M 183 916 L 201 855 L 224 817 L 253 788 L 286 769 L 315 762 L 344 762 L 375 769
+                L 402 782 L 427 801 L 448 825 L 465 853 L 478 883 L 488 916 L 494 945 L 493 973
+                L 511 901 L 498 914 L 500 878 L 510 851 L 525 825 L 538 800 L 550 771 L 562 733
+                L 560 695 L 530 724 L 542 685 L 557 647 L 570 600 L 549 637 L 528 668 L 504 692
+                L 478 713 L 451 729 L 438 740 L 443 716 L 453 690 L 432 711 L 411 728 L 386 742
+                L 357 755 L 358 736 L 372 714 L 348 730 L 321 746 L 291 761 L 263 776 L 237 794
+                L 216 818 L 200 846 Z"/>
+
+              <circle class="black-hole" cx="340" cy="914" r="150" fill="#030407"/>
+
+              <g class="hole-arcs">
+                <g>
+                  <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#65cce5" stroke-width="0.8" opacity="0.22"/>
+                  <animateTransform attributeName="transform" type="rotate" from="0 340 914" to="360 340 914" dur="180s" repeatCount="indefinite"/>
+                </g>
+                <g>
+                  <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#91c5d8" stroke-width="0.7" opacity="0.187"/>
+                  <animateTransform attributeName="transform" type="rotate" from="120 340 914" to="480 340 914" dur="220s" repeatCount="indefinite"/>
+                </g>
+                <g>
+                  <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#a0ffb8" stroke-width="0.65" opacity="0.165"/>
+                  <animateTransform attributeName="transform" type="rotate" from="240 340 914" to="600 340 914" dur="200s" repeatCount="indefinite"/>
+                </g>
+              </g>
+
+              <circle cx="340" cy="914" r="157" fill="none" stroke="#a0ff00" stroke-width="9"/>
+              <circle cx="340" cy="914" r="150" fill="none" stroke="#00eaff" stroke-width="3"/>
+            </svg></span><span>M</span>
+        </span>
 
       </a>
 
@@ -1501,9 +1503,95 @@
 
       <div class="wordmark-container">
 
-        <h1 class="wordmark">
-          RANDOM
-        </h1>
+        <h1 class="wordmark">R</span><span>A</span>
+        <h1 class="wordmark">R</span
+        ><span>A</span><span>ND</span><span
+          class="wordmark-o-slot"
+        ><svg
+            class="wordmark-logo-svg"
+            viewBox="170 744 340 340"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id="blue-word" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0%" stop-color="#00bfff"/>
+                <stop offset="100%" stop-color="#00dfff"/>
+              </linearGradient>
+
+              <linearGradient id="green-word" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0%" stop-color="#7cff00"/>
+                <stop offset="100%" stop-color="#a5ff00"/>
+              </linearGradient>
+
+              <filter id="greenGlow-word" x="-100%" y="-100%" width="300%" height="300%">
+                <feGaussianBlur stdDeviation="28"/>
+              </filter>
+
+              <filter id="blueGlow-word" x="-100%" y="-100%" width="300%" height="300%">
+                <feGaussianBlur stdDeviation="35"/>
+              </filter>
+
+              <filter id="fireFlow-word" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+                <feTurbulence type="fractalNoise" baseFrequency="0.006 0.012" numOctaves="2" seed="8" result="turbulence">
+                  <animate attributeName="baseFrequency" dur="36s"
+                    values="0.006 0.012;0.009 0.016;0.005 0.010;0.008 0.014;0.006 0.012"
+                    keyTimes="0;0.25;0.5;0.75;1"
+                    calcMode="spline"
+                    keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"
+                    repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="4" xChannelSelector="R" yChannelSelector="G">
+                  <animate attributeName="scale" dur="34s"
+                    values="2.5;5.5;3;5;2.5"
+                    keyTimes="0;0.25;0.5;0.75;1"
+                    calcMode="spline"
+                    keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"
+                    repeatCount="indefinite"/>
+                </feDisplacementMap>
+              </filter>
+            </defs>
+
+            <ellipse class="fire-glow" cx="430" cy="900" rx="350" ry="330" fill="#00dfff" opacity=".08" filter="url(#blueGlow-word)"/>
+            <ellipse class="fire-glow" cx="340" cy="920" rx="260" ry="250" fill="#00ff88" opacity=".16" filter="url(#greenGlow-word)"/>
+
+            <path class="fire-shape" fill="url(#blue-word)" filter="url(#fireFlow-word)" d="
+              M 180 914 L 210 837 L 246 785 L 285 753 L 321 710 L 350 667 L 381 625 L 418 595
+              L 407 638 L 442 605 L 474 584 L 501 571 L 497 584 L 528 561 L 563 543 L 600 523
+              L 625 505 L 650 480 L 673 453 L 665 507 L 704 469 L 727 437 L 750 399 L 740 451
+              L 722 497 L 701 543 L 679 578 L 650 614 L 673 613 L 643 648 L 616 680 L 648 663
+              L 623 701 L 597 738 L 578 772 L 560 813 L 547 855 L 532 895 L 515 938 L 497 976
+              L 475 1005 L 449 1027 L 420 1044 L 387 1055 L 350 1062 L 309 1061 L 271 1052
+              L 237 1034 L 210 1009 L 191 978 Z"/>
+
+            <path class="fire-shape" fill="url(#green-word)" filter="url(#fireFlow-word)" d="
+              M 183 916 L 201 855 L 224 817 L 253 788 L 286 769 L 315 762 L 344 762 L 375 769
+              L 402 782 L 427 801 L 448 825 L 465 853 L 478 883 L 488 916 L 494 945 L 493 973
+              L 511 901 L 498 914 L 500 878 L 510 851 L 525 825 L 538 800 L 550 771 L 562 733
+              L 560 695 L 530 724 L 542 685 L 557 647 L 570 600 L 549 637 L 528 668 L 504 692
+              L 478 713 L 451 729 L 438 740 L 443 716 L 453 690 L 432 711 L 411 728 L 386 742
+              L 357 755 L 358 736 L 372 714 L 348 730 L 321 746 L 291 761 L 263 776 L 237 794
+              L 216 818 L 200 846 Z"/>
+
+            <circle class="black-hole" cx="340" cy="914" r="150" fill="#030407"/>
+
+            <g class="hole-arcs">
+              <g>
+                <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#65cce5" stroke-width="0.8" opacity="0.22"/>
+                <animateTransform attributeName="transform" type="rotate" from="0 340 914" to="360 340 914" dur="180s" repeatCount="indefinite"/>
+              </g>
+              <g>
+                <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#91c5d8" stroke-width="0.7" opacity="0.187"/>
+                <animateTransform attributeName="transform" type="rotate" from="120 340 914" to="480 340 914" dur="220s" repeatCount="indefinite"/>
+              </g>
+              <g>
+                <path class="hole-arc" d="M 372 783 A 142 142 0 0 1 419 807" stroke="#a0ffb8" stroke-width="0.65" opacity="0.165"/>
+                <animateTransform attributeName="transform" type="rotate" from="240 340 914" to="600 340 914" dur="200s" repeatCount="indefinite"/>
+              </g>
+            </g>
+
+            <circle cx="340" cy="914" r="157" fill="none" stroke="#a0ff00" stroke-width="9"/>
+            <circle cx="340" cy="914" r="150" fill="none" stroke="#00eaff" stroke-width="3"/>
+          </svg></span><span>M</span>
 
       </div>
 
@@ -1739,7 +1827,7 @@
   </div>
 
   <script>
-
+    
     /* ==========================================================================
        ATMOSPHERIC NETWORK CANVAS
        ========================================================================== */
@@ -2086,8 +2174,7 @@
 
     })();
 
-
-    /* ==========================================================================
+/* ==========================================================================
        RANDOM AI GUIDE
        ========================================================================== */
 
@@ -2646,3 +2733,4 @@
 
 </body>
 </html>
+    
