@@ -1,1 +1,55 @@
-
+/* ======== FILE HEADER
+js/spaces.js - Spaces: accounts, creation wizard, Space cards, localStorage (this device only)
+WD = the four Space types. SPS = created Spaces, NEEDS = posted freelancing needs (both saved in localStorage).
+Heads-up: fin() and the delete button call rDash(), rNeedList() and fbuilt from freelancing.js (only at click time).
+Also wraps openSheet() at the bottom. Styles: css/spaces.css.
+Loaded 6th. Needs: data.js, shared.js, sheets.js.
+======== */
+/* ===== added: SPACES (all four worlds) + FREELANCING world =====
+   Early Access: free, no payments. Storage is this device only (localStorage) until a backend exists.
+   Swap isFree() and the SPS/NEEDS store for real calls later. FD contract: works[], clips[], rated[] Item[] | official Item|null | top {category:[{name,rating}]} max 10 */
+const WD={
+ gaming:{n:'Gaming',c:'var(--gm)',cl:'sg',t:'Gaming Space',st:['RXP','Rank','Teams'],x:[['Play style',['Solo','Team','Competitive','Casual']],['Favorite genres',GC,1],['Plays on',['Mobile','PC','Console'],1]],b:['Loadout','Favorites, Team and challenge history will show here.']},
+ freelancing:{n:'Freelancing',c:'var(--fr)',cl:'sf',t:'Freelancer Space',st:['Rating','Projects','Reply time'],x:[['Main skill',FC.map(c=>c[0])],['Availability',['Open for work','Busy','Team projects only']],['Works on',['Mobile','PC'],1],['Delivery',['Fast','Standard','Flexible']],['Tools',0]],b:['Work showcase','Portfolio posts, showcase clips and client reviews will show here.']},
+ random:{n:'Random',c:'var(--rn)',cl:'sr',t:'Random Space',st:['Accuracy','Attempts','Streak'],x:[['Thinking style',['Analyst','Gut instinct','Debater','Contrarian']],['Topics',['Tech','Gaming','Future','Culture','Science','Work'],1]],b:['Prediction record','Your answers, pools and challenges will show here.']},
+ content:{n:'Content',c:'var(--ct)',cl:'sc2',t:'Creator Space',st:['Posts','Clips','Saves'],x:[['Creator type',['Poster','Clip maker','Showcaser','Curious viewer']],['Niches',['Gaming','Work showcases','AI','Design','Learning','Fun'],1]],b:['Your reel','Posts, clips and showcases will show here.']}};
+let SPS=store.g('rnd_spaces',{}),NEEDS=store.g('rnd_needs',[]);
+const saveS=()=>store.s('rnd_spaces',SPS),isFree=(w,u)=>!(SPS[w]&&SPS[w].user===u);
+const hash=async s=>{try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return btoa(unescape(encodeURIComponent(s)))}};
+const GL=['\u25b2','\u2b22','\u2739','\u2604','\u25c8','\u2726','\u2756','\u25c9'];
+const avEl=(i,big)=>{const a=E('span','av2'+(big?' big':''),GL[i]);a.style.setProperty('--h','hsl('+(i*47+20)+' 85% 62%)');return a};
+/* ---- Space creation wizard ---- */
+const STEPS=['intro','policy','name','user','pass','rec','clock','av','extra','about'];let wz;
+function openSpace(w){SPS[w]?viewSpace(w):(wz={w,i:0,d:{x:{}}},rz())}
+function reuse(f,w){wz={w,i:STEPS.indexOf('extra'),re:1,d:{...SPS[f],x:{}}};rz()}
+function rz(){const{w,d}=wz,c=WD[w],n=STEPS[wz.i],last2=n==='about'||(wz.re&&n==='extra');let get=()=>'';
+ sh(c.c,()=>{const bar=E('div','wbar'),f=E('i');f.style.width=(wz.i+1)/STEPS.length*100+'%';bar.append(f);
+  const H=E('h3'),P=E('p','d'),B=E('div'),er=E('div','err');H.id='sT';const T=(h,p)=>{H.textContent=h;P.textContent=p};
+  if(n==='intro'){T('Create your '+c.t,'Your identity inside '+c.n+'. No Google, email or Facebook login: just a name, a username and a password. It takes about a minute.');
+   Object.keys(SPS).filter(k=>k!==w).forEach(k=>{const u=SPS[k].user;B.append(isFree(w,u)?btn('gh2','Use my '+WD[k].n+' Space here',()=>reuse(k,w)):E('span','hint','Your username @'+u+' is taken in '+c.n+'. Create a new one below.'));B.lastChild.style.cssText='width:100%;margin-top:10px'})}
+  if(n==='policy'){T('Before you start','Accept the Early Access policy to continue.');const u=E('ul','pol');['Be honest. No fake work, scams or spam.','RANDOM is free in Early Access and never handles money between people.','Features can change while RANDOM is being built.','Your Space image is chosen from official RANDOM avatars.'].forEach(t=>u.append(E('li','',t)));
+   const l=E('label','chk'),cb=E('input');cb.type='checkbox';cb.checked=!!d.ok;l.append(cb,E('span','','I accept the policy'));B.append(u,l);get=()=>(d.ok=cb.checked)?'':'Accept the policy to continue.'}
+  if(n==='name'){T('Space name','Up to 19 characters. This is what people see first.');const e=inp(B,'Space name','text',d.name,19);get=()=>{d.name=e.value.trim();return d.name?'':'Enter a name.'}}
+  if(n==='user'){T('Username','Exactly 12 characters: a\u2013z, 0\u20139 or _. Must be free in '+c.n+'.');const e=inp(B,'12 characters','text',d.user,12);e.autocapitalize='none';get=()=>{d.user=e.value.trim().toLowerCase();return!/^[a-z0-9_]{12}$/.test(d.user)?'Use exactly 12 characters: a\u2013z, 0\u20139 or _. You have '+d.user.length+'.':isFree(w,d.user)?'':'That username is taken.'}}
+  if(n==='pass'){T('Password','At least 6 characters. Keep it to yourself.');const e=inp(B,'Password','password',d.pass);get=()=>{d.pass=e.value;return d.pass.length<6?'Use at least 6 characters.':''}}
+  if(n==='rec'){T('Recovery password','A second password, different from the first. Use it if you forget your main one.');const e=inp(B,'Recovery password','password',d.rec);get=()=>{d.rec=e.value;return d.rec.length<6?'Use at least 6 characters.':d.rec===d.pass?'It must be different from your password.':''}}
+  if(n==='clock'){T('RANDOM clock (optional)','Pick a time only you would remember as your best time. It works as a backup if you forget your passwords. You can skip this.');const e=inp(B,'','time',d.clock);get=()=>{d.clock=e.value;return''}}
+  if(n==='av'){T('Space image','Choose an official RANDOM avatar. Custom uploads are not allowed.');const g=E('div','avg');GL.forEach((_,i)=>{const b=E('button',d.av===i?'on':'');b.type='button';b.setAttribute('aria-label','Avatar '+(i+1));b.append(avEl(i));b.onclick=()=>{d.av=i;[...g.children].forEach(x=>x.classList.toggle('on',x===b))};g.append(b)});B.append(g);get=()=>d.av==null?'Choose an avatar.':''}
+  if(n==='extra'){T('Make it yours','Optional. These shape how your '+c.n+' Space looks to others.');c.x.forEach(([l,o,m])=>{B.append(E('span','gl',l));if(!o){const e=inp(B,'e.g. Premiere Pro, After Effects','text',d.x[l]||'',60);e.oninput=()=>d.x[l]=e.value.trim()}else{if(m&&!Array.isArray(d.x[l]))d.x[l]=[];opts(B,o,m,d.x[l]||'',v=>d.x[l]=v)}})}
+  if(n==='about'){T('About your Space','A short description. Up to 160 characters.');const e=E('textarea','fi');e.rows=4;e.maxLength=160;e.value=d.about||'';B.append(e);get=()=>{d.about=e.value.trim();return''}}
+  const nav=E('div','wnav');if(wz.i>0&&!(wz.re&&n==='extra'))nav.append(btn('gh2','Back',()=>{wz.i--;rz()}));
+  nav.append(btn('pkb',last2?'Create Space':n==='intro'?'Start':'Next',()=>{const m=get();if(m){er.textContent=m;return}last2?fin():(wz.i++,rz())}));
+  sp.append(xbar(c.t+' / '+(wz.i+1)+' of '+STEPS.length),bar,H,P,B,er,nav)})}
+async function fin(){const{w,d,re}=wz,c=WD[w];const s={...d};if(!re){s.pass=await hash(d.pass);s.rec=await hash(d.rec);s.clock=d.clock?await hash(d.clock):''}delete s.ok;SPS[w]=s;saveS();wz=null;
+ sh(c.c,()=>{const H=E('h3','','Space created');H.id='sT';sp.append(xbar(c.t),H,E('p','d','Created successfully. Enjoy your Space.'),btn('pkb','Open my Space',()=>viewSpace(w)));sp.lastChild.style.cssText='width:100%;margin-top:16px;padding:13px;background:var(--c);color:#0a0b10'});
+ if(fbuilt)rDash()}
+function viewSpace(w){const s=SPS[w],c=WD[w];sh(c.c,()=>{
+ const card=E('div','spx '+c.cl),H=E('h3','',s.name);H.id='sT';card.append(avEl(s.av,1),H,E('div','un','@'+s.user),E('p','d',s.about||'No description yet.'));
+ const st=E('div','stats');c.st.forEach(l=>{const d=E('div');d.append(E('b','','\u2014'),E('span','',l));st.append(d)});card.append(st);
+ const v=Object.values(s.x||{}).flat().filter(Boolean);if(v.length)card.append(chips(v));
+ const bl=E('div','em');bl.append(E('b','',c.b[0]),E('p','d',c.b[1]));bl.firstChild.style.display='block';
+ sp.append(xbar(c.t),card,bl);
+ Object.keys(WD).filter(k=>k!==w&&!SPS[k]).forEach(k=>{const b=btn('gh2','Also create in '+WD[k].n,()=>isFree(k,s.user)?reuse(w,k):openSpace(k));b.style.cssText='width:100%;margin-top:8px';sp.append(b)});
+ let sure=0;const dl=btn('gh2','Delete this Space',()=>{if(!sure){sure=1;dl.textContent='Tap again to delete';return}delete SPS[w];saveS();closeSheet();if(fbuilt){rDash();rNeedList()}});dl.style.cssText='width:100%;margin-top:8px;color:var(--mut)';sp.append(dl)})}
+const _os=openSheet;openSheet=k=>{if(k==='g_space')return openSpace('gaming');_os(k);if(k==='random'||k==='content'){const b=btn('pkb',(SPS[k]?'Open your ':'Create your ')+WD[k].t,()=>openSpace(k));b.style.cssText='width:100%;margin-top:16px;padding:14px;background:var(--c);color:#0a0b10';sp.append(b)}};
+    
